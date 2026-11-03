@@ -2,7 +2,7 @@
 <%-- Shell dùng chung cho các trang học và khu vực admin. --%>
 
 <header class="site-nav">
- <nav class="navbar navbar-expand-xl navbar-light">
+ <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container container-n11">
    <a class="navbar-brand" href="${pageContext.request.contextPath}/">
     <img class="brand-mark" src="${pageContext.request.contextPath}/assets/img/logo.svg" width="40" height="40" alt="Logo N11 TOEIC" /><span>N11 <span style="color:#505ce2">TOEIC</span></span>
@@ -12,23 +12,23 @@
    </button>
    <div class="collapse navbar-collapse" id="n11MainNav">
     <ul class="navbar-nav me-auto mb-2 mb-xl-0 align-items-xl-center">
-     <li class="nav-item"><a class="nav-link ${activePage eq 'home' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/">Trang chủ</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'vocabulary' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/vocabulary">Từ vựng</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'grammar' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/grammar">Ngữ pháp</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/listening">Listening</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/reading">Reading</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/exams">Thi thử</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/roadmap">Lộ trình</a></li>
-     <li class="nav-item"><a class="nav-link ${activePage eq 'progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/progress">Tiến độ</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'home' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/" data-nav="home"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#home"></use></svg>Trang chủ</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'vocabulary' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/vocabulary" data-nav="vocabulary"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#vocabulary"></use></svg>Từ vựng</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'grammar' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/grammar" data-nav="grammar"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#grammar"></use></svg>Ngữ pháp</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/listening" data-nav="listening"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#listening"></use></svg>Listening</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/reading" data-nav="reading"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#reading"></use></svg>Reading</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/exams" data-nav="exams"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#exams"></use></svg>Thi thử</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/roadmap" data-nav="roadmap"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#roadmap"></use></svg>Lộ trình</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/progress" data-nav="progress"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#progress"></use></svg>Tiến độ</a></li>
     </ul>
     <div class="nav-right d-flex align-items-center gap-2">
       <c:choose><c:when test="${not empty pageContext.request.userPrincipal}">
-        <a class="nav-pill-signin" href="${pageContext.request.contextPath}/grammar/history">Lịch sử học</a>
-        <c:if test="${pageContext.request.isUserInRole('ADMIN')}"><a class="btn btn-soft" href="${pageContext.request.contextPath}/admin/grammar">Quản trị</a></c:if>
+        <a class="nav-pill-signin" href="${pageContext.request.contextPath}/grammar/history" data-nav="history"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#history"></use></svg>Lịch sử học</a>
+        <c:if test="${pageContext.request.isUserInRole('ADMIN')}"><a class="btn btn-soft" href="${pageContext.request.contextPath}/admin/grammar" data-nav="admin"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#admin"></use></svg>Quản trị</a></c:if>
         <form method="post" action="${pageContext.request.contextPath}/logout"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><button class="btn btn-light btn-sm" type="submit">Đăng xuất</button></form>
       </c:when><c:otherwise>
-        <a href="${pageContext.request.contextPath}/login" class="nav-pill-signin nav-action">Đăng nhập</a>
-        <a href="${pageContext.request.contextPath}/register" class="btn btn-primary nav-action px-3 py-2">Đăng ký miễn phí</a>
+        <a href="${pageContext.request.contextPath}/login" class="nav-pill-signin nav-action" data-nav="login"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#login"></use></svg>Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/register" class="btn btn-primary nav-action px-3 py-2" data-nav="register"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#register"></use></svg>Đăng ký miễn phí</a>
       </c:otherwise></c:choose>
     </div>
    </div>

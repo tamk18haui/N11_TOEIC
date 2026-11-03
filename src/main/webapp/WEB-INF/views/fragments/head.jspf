@@ -14,5 +14,6 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grammar.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/theme.css" />
 </head>
 <body>

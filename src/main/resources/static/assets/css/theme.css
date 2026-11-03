@@ -1,0 +1,396 @@
+/* N11 TOEIC | Shared pastel color theme
+   Inspired by the light, airy, colorful TOEIC interface in the user's references.
+   Only navbar and registration are restyled; registration JS/server rules stay intact. */
+:root {
+  --n11-primary:#06a3c6;
+  --n11-primary-2:#1caec0;
+  --n11-cyan:#08a3c8;
+  --n11-ink:#0c2037;
+  --n11-muted:#627186;
+  --n11-bg:#f6fbfc;
+  --n11-border:#dceef2;
+  --n11-shadow:0 16px 50px rgba(27,111,139,.10);
+}
+
+/* A light, colorful navigation shared by every JSP, not copied from another site. */
+.site-nav {
+  background:rgba(250,253,255,.97)!important;
+  border-bottom:1px solid #e2eef1!important;
+  box-shadow:0 9px 24px rgba(28,83,108,.055)!important;
+  backdrop-filter:blur(18px);
+}
+.site-nav .container-n11 {
+  max-width:1770px;
+  padding-left:clamp(16px,2.4vw,38px);
+  padding-right:clamp(16px,2.4vw,38px);
+}
+.site-nav .navbar{min-height:82px;padding:9px 0}
+.site-nav .navbar-brand {
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  margin-right:20px;
+  color:#173149!important;
+  font-size:21px;
+  font-weight:850;
+  white-space:nowrap;
+  padding-bottom:15px;
+  letter-spacing:-.045em;
+}
+.site-nav .navbar-brand::after {
+  content:'LUYỆN THI TOEIC';
+  position:absolute;
+  left:52px;
+  bottom:2px;
+  color:#768895;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+.site-nav .navbar-brand .brand-mark {
+  width:43px;height:43px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#08aec5,#f0a343);
+  padding:3px;
+  box-shadow:0 7px 14px rgba(0,164,192,.13);
+}
+.site-nav .navbar-brand span span{color:#04a9c4!important}
+.site-nav .navbar-nav{gap:1px}
+.site-nav .nav-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  width:auto;
+  margin:0 1px!important;
+  padding:11px 10px!important;
+  min-height:44px;
+  border-radius:14px;
+  color:#566478!important;
+  font-size:13px;
+  font-weight:740;
+  line-height:1.3;
+  white-space:nowrap;
+  background:transparent;
+  transition:background .22s,color .22s,transform .22s,box-shadow .22s;
+}
+.site-nav .nav-link:hover {
+  background:#edfafd!important;
+  color:#008eb3!important;
+  transform:translateY(-1px);
+}
+.site-nav .nav-link.is-active {
+  background:#e1f6fa!important;
+  color:#0399bf!important;
+  box-shadow:inset 0 0 0 1px rgba(44,183,210,.08);
+}
+.site-nav .n11-nav-icon {
+  display:inline-block;
+  flex:0 0 auto;
+  width:21px;height:21px;
+  fill:none;stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:transform .2s;
+}
+.site-nav .nav-link:hover .n11-nav-icon{transform:scale(1.12) rotate(-3deg)}
+.site-nav [data-nav="home"] .n11-nav-icon{color:#5586ea}
+.site-nav [data-nav="vocabulary"] .n11-nav-icon{color:#ed4b99}
+.site-nav [data-nav="grammar"] .n11-nav-icon{color:#4e9ef0}
+.site-nav [data-nav="listening"] .n11-nav-icon{color:#f2a006}
+.site-nav [data-nav="reading"] .n11-nav-icon{color:#35ae78}
+.site-nav [data-nav="exams"] .n11-nav-icon{color:#ed7a1c}
+.site-nav [data-nav="roadmap"] .n11-nav-icon{color:#875be8}
+.site-nav [data-nav="progress"] .n11-nav-icon{color:#03a5bd}
+.site-nav .nav-right{gap:7px!important}
+.site-nav .nav-right .nav-pill-signin,
+.site-nav .nav-right .nav-action:not(.btn) {
+  display:inline-flex;align-items:center;gap:7px;
+  color:#4d5f70;
+  padding:10px 11px;
+  border-radius:12px;
+  font-weight:760;
+  font-size:13px;
+  white-space:nowrap;
+}
+.site-nav .nav-right .nav-pill-signin:hover{color:#008da9;background:#e6f8fc}
+.site-nav .nav-right [data-nav="login"] .n11-nav-icon{color:#0ba8c4}
+.site-nav .nav-right [data-nav="register"] .n11-nav-icon{color:#fff}
+.site-nav .nav-right .btn-primary,
+.site-nav .nav-right .btn-primary:hover,
+.site-nav .nav-right .btn-primary:focus {
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-color:transparent!important;
+  background:linear-gradient(110deg,#05a8ce,#1ab8b6)!important;
+  color:#fff!important;
+  border-radius:14px;
+  padding:11px 15px!important;
+  box-shadow:0 8px 18px rgba(7,163,198,.17)!important;
+  font-size:12.5px;
+  font-weight:780;
+}
+.site-nav .nav-right .btn-primary:hover{transform:translateY(-2px);filter:saturate(1.08)}
+.site-nav .navbar-toggler{border:1px solid #d7ecf2!important;background:#effafd;border-radius:12px}
+.site-nav a:focus-visible,.site-nav button:focus-visible{outline:3px solid #60d8df;outline-offset:3px}
+@media (max-width:1599.98px) and (min-width:1400px){
+  .site-nav .navbar-brand{font-size:19px;margin-right:10px}
+  .site-nav .nav-link{font-size:12px;padding:10px 7px!important;gap:5px}
+  .site-nav .n11-nav-icon{width:19px;height:19px}
+  .site-nav .nav-right .btn-primary{padding:10px 11px!important}
+  .site-nav .nav-right{gap:3px!important}
+}
+@media (max-width:1399.98px){
+  .site-nav .navbar-collapse{
+    margin-top:12px;
+    padding:13px 0 19px;
+    border-top:1px solid #dceef1;
+    max-height:calc(100vh - 110px);
+    overflow-y:auto;
+  }
+  .site-nav .navbar-nav{align-items:stretch!important;gap:3px}
+  .site-nav .navbar-nav .nav-link{display:flex;justify-content:flex-start;padding:12px 15px!important;font-size:14px}
+  .site-nav .nav-right{display:flex;flex-wrap:wrap;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid #e4f0f3}
+  .site-nav .nav-right .btn-primary{font-size:13px!important}
+}
+@media (max-width:575.98px){
+  .site-nav .navbar{min-height:71px}
+  .site-nav .navbar-brand{font-size:18px;margin-right:8px}
+  .site-nav .navbar-brand .brand-mark{height:39px;width:39px}
+  .site-nav .navbar-brand::after{font-size:8px;left:48px;bottom:2px}
+  .site-nav .nav-right .nav-action{min-width:0}
+}
+
+/* Registration page: airy paper-white, cyan watercolors, warm golden highlights. */
+.n11-reg-page {
+  background:
+    radial-gradient(ellipse at 2% 12%,rgba(161,228,238,.39),transparent 33%),
+    radial-gradient(ellipse at 95% 9%,rgba(255,227,166,.40),transparent 31%),
+    radial-gradient(ellipse at 84% 85%,rgba(169,222,248,.28),transparent 34%),
+    linear-gradient(132deg,#f1fbfe 0%,#ffffff 45%,#fffdf8 100%)!important;
+}
+.n11-reg-page .n11-reg-page-orb{opacity:.30}
+.n11-reg-page .n11-reg-shell {
+  border:1px solid rgba(205,231,236,.92)!important;
+  box-shadow:0 28px 72px rgba(31,105,130,.10)!important;
+  background:#fff;
+}
+.n11-reg-story {
+  color:#153047!important;
+  background:
+    radial-gradient(circle at 0% 6%,rgba(148,222,238,.54) 0,transparent 39%),
+    radial-gradient(circle at 95% 15%,rgba(255,226,146,.50) 0,transparent 34%),
+    radial-gradient(circle at 30% 93%,rgba(136,216,238,.39) 0,transparent 40%),
+    linear-gradient(145deg,#f5feff 0%,#f9fefe 49%,#fff8ec 100%)!important;
+  isolation:isolate;
+}
+.n11-reg-story::before{
+  border-color:rgba(49,176,201,.10)!important;
+  box-shadow:0 0 0 70px rgba(47,189,214,.035),0 0 0 145px rgba(255,185,62,.026)!important;
+}
+.n11-reg-story::after{background:rgba(80,189,212,.12)!important}
+.n11-reg-story .n11-reg-aurora-1{border-color:rgba(36,171,202,.10)!important;box-shadow:0 0 0 48px rgba(64,193,214,.026),0 0 0 100px rgba(250,183,66,.025)!important}
+.n11-reg-story .n11-reg-aurora-2{background:radial-gradient(circle,rgba(244,186,75,.17),transparent 65%)!important}
+.n11-reg-story .n11-reg-grain{opacity:.15}
+.n11-reg-story .n11-reg-story-monogram{color:#153b54!important}
+.n11-reg-story .n11-reg-story-monogram b{color:#09a2c2!important}
+.n11-reg-story .n11-reg-story-brand-mark{background:linear-gradient(135deg,#09acd0,#f3ad52)!important;color:#fff!important}
+.n11-reg-story .n11-reg-story-edition{color:#738da0!important}
+.n11-reg-story .n11-reg-story-edition-line{background:#9bcbd4!important}
+.n11-reg-story .n11-reg-intro-chip {
+  color:#058eb1!important;
+  background:rgba(217,247,250,.85)!important;
+  border-color:#9cdeea!important;
+  box-shadow:0 5px 14px rgba(17,144,176,.045);
+}
+.n11-reg-story .n11-reg-live-dot{background:#08a7bb!important}
+.n11-reg-story .n11-reg-chip-arrow{color:#f09a2e!important}
+.n11-reg-story .n11-reg-story-copy h2{
+  color:#071e36!important;
+  font-size:clamp(34px,3.1vw,49px);
+  line-height:1.24;
+  letter-spacing:-.045em;
+  font-weight:880;
+}
+.n11-reg-story .n11-reg-story-copy h2 span {
+  background:linear-gradient(100deg,#078db9 7%,#4b9d9d 45%,#d88433 98%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+}
+.n11-reg-story .n11-reg-story-copy p{color:#607284!important;font-size:14px;line-height:1.83}
+.n11-reg-story .n11-reg-stage-glint{color:#18b3c8!important}
+.n11-reg-story .n11-reg-stage-ring{border-color:rgba(16,160,195,.14)!important}
+.n11-reg-story .n11-reg-float{border-color:rgba(22,167,199,.13)!important;box-shadow:0 11px 26px rgba(42,116,148,.10)!important}
+.n11-reg-story .n11-reg-story-bottom{
+  color:#506c7e!important;
+  border-color:rgba(32,146,177,.13)!important;
+}
+.n11-reg-story .n11-reg-benefit-separator{background:rgba(63,154,180,.19)!important}
+.n11-reg-story .n11-reg-benefit-icon{color:#099e9b!important;background:rgba(24,179,150,.10)!important;border-color:rgba(24,179,150,.15)!important}
+.n11-reg-form-side{background:linear-gradient(160deg,#fff 0%,#fff 75%,#f8fdfe 100%)!important}
+.n11-reg-form-side .n11-reg-breadcrumb{color:#138fae!important}
+.n11-reg-form-side .n11-reg-dot-circle{background:#04a7ca!important;box-shadow:0 0 0 5px #e5f8fb!important}
+.n11-reg-form-side .n11-reg-heading h1{
+  color:#09283c!important;
+  letter-spacing:-.04em;
+  line-height:1.3!important;
+  font-weight:840;
+}
+.n11-reg-form-side .n11-reg-heading h1 span{
+  background:linear-gradient(90deg,#078fb9 5%,#39abae 45%,#d98731 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+}
+.n11-reg-form-side .n11-reg-heading p{color:#718397!important}
+.n11-reg-form-side .n11-reg-form-highlights i{color:#099a82!important;background:#e4f8f0!important}
+.n11-reg-form-side .n11-reg-field .form-label{color:#263d4f!important}
+.n11-reg-form-side .n11-reg-input.form-control {
+  border-color:#dcebf1!important;
+  background:#f8fbfc!important;
+  color:#102c3f!important;
+  border-radius:13px;
+}
+.n11-reg-form-side .n11-reg-input.form-control:hover{background:#fff!important;border-color:#a9dbe6!important}
+.n11-reg-form-side .n11-reg-input.form-control:focus{
+  background:#fff!important;
+  border-color:#31afd0!important;
+  box-shadow:0 0 0 4px rgba(29,174,199,.11),0 7px 16px rgba(21,104,133,.04)!important;
+}
+.n11-reg-form-side .n11-reg-control-wrap:focus-within>svg{color:#0c9ec2!important}
+.n11-reg-form-side .n11-reg-input.form-control.is-invalid{border-color:#e98b9a!important}
+.n11-reg-form-side .n11-reg-strength[data-level="3"] i{background:#7db6ed!important}
+.n11-reg-form-side .n11-reg-strength[data-level="4"] i{background:#10bb9d!important}
+.n11-reg-form-side .n11-reg-submit.btn {
+  background:linear-gradient(107deg,#04a1c8 0%,#18b9b1 69%,#22b7ad 100%)!important;
+  border:1px solid transparent!important;
+  color:#fff!important;
+  box-shadow:0 15px 28px rgba(0,164,184,.21)!important;
+}
+.n11-reg-form-side .n11-reg-submit.btn:hover{background:linear-gradient(107deg,#028faf,#13a9a7)!important;box-shadow:0 18px 31px rgba(0,151,178,.26)!important}
+.n11-reg-form-side .n11-reg-login a{color:#079dbd!important}
+.n11-reg-form-side .n11-reg-login a:hover{color:#ea8b2d!important}
+.n11-reg-page .n11-reg-trust{color:#88a4af!important}
+.n11-reg-page .n11-reg-trust span{color:#e3a53f!important}
+@media(max-width:991.98px){
+  .n11-reg-story .n11-reg-story-copy h2{font-size:clamp(30px,5.3vw,40px);line-height:1.25}
+  .n11-reg-form-side .n11-reg-heading h1{font-size:clamp(27px,5vw,34px)}
+}
+@media(max-width:575.98px){
+  .n11-reg-page .n11-reg-shell{border-radius:18px}
+  .n11-reg-story .n11-reg-story-copy h2{font-size:30px}
+  .n11-reg-form-side .n11-reg-heading h1{font-size:28px}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-nav *, .site-nav *::before, .site-nav *::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* Keep the form typography breathable and do not show a redundant 01 / 01 step. */
+.n11-reg-form-side .n11-reg-breadcrumb-step{display:none!important}
+.n11-reg-form-side .n11-reg-field{margin-bottom:18px}
+.n11-reg-form-side .n11-reg-field .form-label{line-height:1.55;letter-spacing:0;margin-bottom:8px}
+.n11-reg-form-side .n11-reg-confirm-field{margin-top:7px}
+
+/* N11_LAYOUT_FIX_START */
+/* Navbar: show menu at ordinary desktop widths, not only at >=1400px.
+   The previous navbar-expand-xxl caused the hamburger at 100% zoom on laptops.
+   This block is intentionally after the original theme rules. */
+@media (min-width: 992px) {
+  .site-nav .navbar > .container-n11 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+  .site-nav .navbar-brand {
+    flex: 0 0 auto;
+    margin-right: 7px;
+    font-size: 19px;
+  }
+  .site-nav .navbar-toggler { display: none !important; }
+  .site-nav .navbar-collapse {
+    display: flex !important;
+    flex: 1 1 0;
+    align-items: center;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    gap: 5px;
+  }
+  .site-nav .navbar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex: 1 1 auto;
+    justify-content: space-evenly;
+    min-width: 0;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0;
+  }
+  .site-nav .navbar-nav .nav-link {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 9px 5px !important;
+    font-size: 12px !important;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  .site-nav .n11-nav-icon { width: 17px; height: 17px; }
+  .site-nav .nav-right {
+    flex: 0 0 auto;
+    display: flex !important;
+    align-items: center;
+    gap: 3px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap;
+  }
+  .site-nav .nav-right .nav-pill-signin { padding: 9px 6px; font-size: 12px; }
+  .site-nav .nav-right .btn-primary { padding: 10px 9px !important; font-size: 12px !important; }
+  .site-nav .navbar { min-height: 73px; padding: 7px 0; }
+}
+/* At 992-1199px, use two tidy rows so no menu item disappears or overflows. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .site-nav .navbar > .container-n11 { flex-wrap: wrap !important; gap: 0; }
+  .site-nav .navbar-brand { order: 1; }
+  .site-nav .navbar-collapse { display: contents !important; }
+  .site-nav .navbar-nav {
+    order: 3;
+    flex: 0 0 100%;
+    width: 100%;
+    justify-content: space-between;
+    border-top: 1px solid #dceef1;
+    padding: 9px 0 2px;
+    margin-top: 8px !important;
+  }
+  .site-nav .navbar-nav .nav-link { font-size: 12px !important; padding: 9px 6px !important; }
+  .site-nav .nav-right { order: 2; margin-left: auto !important; }
+  .site-nav .navbar { padding: 9px 0 10px; }
+}
+@media (min-width: 1200px) and (max-width: 1320px) {
+  .site-nav .navbar-brand { font-size: 18px; margin-right: 2px; }
+  .site-nav .navbar-brand .brand-mark { width: 38px; height: 38px; }
+  .site-nav .navbar-brand::after { left: 48px; }
+  .site-nav .navbar-nav .nav-link { font-size: 11.3px !important; gap: 3px !important; padding: 9px 3px !important; }
+  .site-nav .n11-nav-icon { width: 16px; height: 16px; }
+  .site-nav .nav-right .nav-pill-signin { font-size: 11.5px; padding: 8px 4px; }
+  .site-nav .nav-right .btn-primary { font-size: 11.5px !important; padding: 9px 7px !important; }
+}
+/* On mobile/tablet the familiar Bootstrap hamburger still works. */
+@media (max-width: 991.98px) {
+  .site-nav .navbar-toggler { display: inline-flex; }
+  .site-nav .navbar-collapse { width: 100%; }
+}
+/* N11_LAYOUT_FIX_END */

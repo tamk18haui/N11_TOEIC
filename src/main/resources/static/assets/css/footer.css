@@ -63,3 +63,59 @@
 @media (prefers-reduced-motion:reduce){
   #n11SiteFooter *,#n11SiteFooter *::before,#n11SiteFooter *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 }
+
+/* N11_FOOTER_COMPACT_START */
+/* Shared footer: less vertical whitespace, cleaner grid, cyan accents. */
+#n11SiteFooter.site-footer {
+  background: linear-gradient(135deg,#121c35 0%,#121e37 60%,#0c2036 100%);
+}
+#n11SiteFooter .n11-footer-main { padding: 27px 0 23px; }
+#n11SiteFooter .n11-footer-main > .row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: .75rem;
+}
+#n11SiteFooter .n11-footer-brand { padding-right: 8px; }
+#n11SiteFooter .n11-footer-logo {
+  margin: 0 0 11px;
+  gap: 9px;
+  font-size: 23px;
+  line-height: 1.25;
+}
+#n11SiteFooter .n11-footer-logo-tile { width: 42px; height: 42px; border-radius: 12px; }
+#n11SiteFooter .n11-footer-logo-tile img { width: 37px; height: 37px; }
+#n11SiteFooter .n11-footer-logo strong { color: #7bdce8; }
+#n11SiteFooter .n11-footer-brand > p {
+  max-width: 350px;
+  margin: 0 0 13px;
+  font-size: 12.5px;
+  line-height: 1.58;
+}
+#n11SiteFooter .n11-footer-tags { gap: 7px; }
+#n11SiteFooter .n11-footer-tags > span { padding: 5px 9px; font-size: 11px; border-radius: 8px; }
+#n11SiteFooter .n11-footer-tags svg { color: #78d8e6; }
+#n11SiteFooter .n11-footer-links {
+  gap: 8px;
+  align-items: flex-start;
+}
+#n11SiteFooter .n11-footer-links h3 {
+  margin: 1px 0 5px;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+#n11SiteFooter .n11-footer-title-line { background: #69cedd; width: 13px; }
+#n11SiteFooter .n11-footer-links a { font-size: 12.5px; line-height: 1.45; }
+#n11SiteFooter .n11-footer-divider { background: linear-gradient(90deg,transparent,#334662 16%,#334662 84%,transparent); }
+#n11SiteFooter .n11-footer-bottom {
+  padding: 13px 0 15px;
+  gap: 11px;
+}
+#n11SiteFooter .n11-footer-bottom-left { gap: 7px; font-size: 11px; }
+#n11SiteFooter .n11-footer-top { font-size: 11px; gap: 8px; }
+#n11SiteFooter .n11-footer-top-arrow { width: 29px; height: 29px; border-radius: 9px; }
+@media(max-width: 767.98px) {
+  #n11SiteFooter .n11-footer-main { padding: 23px 0 18px; }
+  #n11SiteFooter .n11-footer-links { gap: 7px; }
+  #n11SiteFooter .n11-footer-links h3 { margin: 6px 0 4px; }
+  #n11SiteFooter .n11-footer-bottom { padding: 12px 0 15px; }
+}
+/* N11_FOOTER_COMPACT_END */
