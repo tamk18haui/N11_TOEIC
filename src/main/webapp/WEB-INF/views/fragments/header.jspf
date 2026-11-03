@@ -1,6 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
 <%-- Shell dùng chung cho các trang học và khu vực admin. --%>
-<div class="demo-ribbon">BẢN GIAO DIỆN MẪU <strong>UI Preview</strong> · Đăng ký, dữ liệu học tập và quản trị chưa kết nối JDBC/MySQL.</div>
 <header class="site-nav">
  <nav class="navbar navbar-expand-xl navbar-light">
   <div class="container container-n11">

@@ -9,6 +9,8 @@
   <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/assets/img/logo.svg" />
   <!-- Bootstrap 5.1.1 bundling local (MIT) de khong phu thuoc CDN. -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/n11.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
 <body>
