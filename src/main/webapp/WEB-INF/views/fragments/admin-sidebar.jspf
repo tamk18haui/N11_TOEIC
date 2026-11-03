@@ -1,0 +1,10 @@
+<%@ page pageEncoding="UTF-8" %>
+<aside class="admin-sidebar mb-3 mb-lg-0" aria-label="Điều hướng quản trị">
+ <div class="small-caps text-muted-n11 px-3 mb-3">KHU VỰC QUẢN TRỊ</div>
+ <a class="admin-link ${activePage eq 'admin' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>Tổng quan</a>
+ <a class="admin-link ${activePage eq 'admin-accounts' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/accounts"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#users"></use></svg>Quản lý tài khoản</a>
+ <a class="admin-link ${activePage eq 'admin-exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/exams"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg>Quản lý đề thi</a>
+ <hr style="border-color:#e7eaf4" />
+ <a class="admin-link" href="${pageContext.request.contextPath}/"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg>Về trang học viên</a>
+ <div class="demo-hint mt-3">Demo UI: các trang quản trị chưa bảo vệ bởi đăng nhập/phân quyền. Phải bổ sung xác thực trước khi đưa lên server thật.</div>
+</aside>

@@ -1,0 +1,6 @@
+<%@ page pageEncoding="UTF-8" %>
+<div id="n11Toast" role="status" aria-live="polite" class="toast-n11"></div>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/n11-ui.js"></script>
+</body>
+</html>

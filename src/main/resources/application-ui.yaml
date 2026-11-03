@@ -1,0 +1,6 @@
+# Profile giao dien mau: khong can MySQL khi chua xay dung DAO.
+# KHONG dung profile nay khi test tinh nang that / trien khai production.
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration

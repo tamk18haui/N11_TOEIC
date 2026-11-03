@@ -1,16 +1,51 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vivobook
-  Date: 11/3/2026
-  Time: 12:26 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<%@ page pageEncoding="UTF-8" %>
+<%@ include file="fragments/head.jspf" %>
+<%@ include file="fragments/header.jspf" %>
+<main>
+ <section class="hero-section">
+  <div class="container container-n11 hero-inner"><div class="row align-items-center g-5">
+   <div class="col-lg-6">
+    <span class="hero-eyebrow"><svg class="icon icon-sm"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#sparkles"></use></svg> HỌC MỖI NGÀY · TIẾN BỘ MỖI NGÀY</span>
+    <h1 class="hero-title">Luyện TOEIC <span class="gradient-text">thông minh</span>, chạm đến mục tiêu của bạn.</h1>
+    <p class="hero-desc">Từ vựng, ngữ pháp, Listening, Reading đến đề thi thử — một không gian học tập rõ ràng, trực quan và dễ sử dụng cho mọi trình độ.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/register">Bắt đầu miễn phí <svg class="icon icon-sm ms-1"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></a><a class="btn btn-outline-primary btn-lg" href="${pageContext.request.contextPath}/exams">Khám phá đề thi</a></div>
+    <div class="hero-trust"><span class="trust-check"><svg class="icon icon-sm"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#check-circle"></use></svg> Học theo từng Part</span><span class="trust-check"><svg class="icon icon-sm"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#check-circle"></use></svg> Giao diện dễ dùng</span><span class="trust-check"><svg class="icon icon-sm"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#check-circle"></use></svg> Theo dõi tiến độ</span></div>
+   </div>
+   <div class="col-lg-6">
+    <div class="hero-graphic">
+     <div class="float-note one"><span class="float-note-icon"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#check-circle"></use></svg></span><div><strong style="font-size:12px">Bài tập hoàn thành</strong><div style="font-size:11px;color:#8995ac">Tiếp tục phát huy nhé!</div></div></div>
+     <div class="hero-panel">
+      <div class="mini-nav"><span><i class="mini-dot"></i><i class="mini-dot"></i><i class="mini-dot"></i></span><span class="pill pill-primary" style="font-size:10px">Lộ trình TOEIC 700+</span></div>
+      <div class="d-flex align-items-center justify-content-between mt-3"><div><div class="small-caps text-muted-n11 mb-1">BẢNG ĐIỀU KHIỂN HỌC TẬP</div><h4 class="mb-0" style="font-size:21px">Một ngày tốt lành! 👋</h4></div><span class="pill pill-green">Bản xem trước</span></div>
+      <div class="hero-score-row"><div class="hero-score-card"><div style="font-size:11px;opacity:.78;font-weight:700">Mục tiêu của bạn</div><div class="score-big">700<span style="font-size:15px;opacity:.85">+</span></div><div style="font-size:11px;opacity:.8;margin-top:6px">TOEIC Listening &amp; Reading</div></div><div class="hero-stat-card"><small class="text-muted-n11 fw-bold">Tiến độ tuần này</small><div class="stat-stack"><span>Ngữ pháp</span><span>78%</span></div><div class="progress n11-progress"><div class="progress-bar" style="width:78%"></div></div><div class="stat-stack"><span>Listening</span><span>52%</span></div><div class="progress n11-progress"><div class="progress-bar" style="width:52%"></div></div></div></div>
+      <div class="hero-chart"><div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold" style="font-size:12px">Biểu đồ tiến bộ</span><span style="font-size:10px;color:#8b97ac">Dữ liệu minh họa</span></div><div class="bars"><i style="height:27%"></i><i style="height:43%"></i><i style="height:38%"></i><i style="height:59%"></i><i style="height:50%"></i><i style="height:76%"></i><i style="height:90%;background:linear-gradient(#4b62e8,#8ba9ff)"></i></div><div class="d-flex justify-content-between" style="font-size:10px;color:#98a3b7;margin-top:6px"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div></div>
+     </div>
+     <div class="float-note two"><span class="float-note-icon" style="background:#edf0ff;color:#5864e0"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#target"></use></svg></span><div><strong style="font-size:12px">Học đúng trọng tâm</strong><div style="font-size:11px;color:#8995ac">Luyện đều cả 2 kỹ năng</div></div></div>
+    </div>
+   </div>
+  </div></div>
+ </section>
+ <div class="container container-n11"><div class="stats-strip"><div class="stat"><div class="stat-num">7 Part</div><div class="stat-label">Luyện nghe và đọc</div></div><div class="stat"><div class="stat-num">200 câu</div><div class="stat-label">Cấu trúc Full Test</div></div><div class="stat"><div class="stat-num">2 kỹ năng</div><div class="stat-label">Listening · Reading</div></div><div class="stat"><div class="stat-num">1 lộ trình</div><div class="stat-label">Theo sát mục tiêu</div></div></div></div>
+ <section class="section-pad" id="skills"><div class="container container-n11">
+  <div class="text-center mb-5"><div class="section-caption">KHÁM PHÁ TÍNH NĂNG</div><h2 class="section-title">Bạn muốn học gì hôm nay?</h2><p class="section-intro">Chọn đúng phần cần học, luyện tập theo lộ trình và xây dựng nền tảng TOEIC từ những bước nhỏ nhất.</p></div>
+  <div class="row g-4 features-grid">
+   <div class="col-md-6 col-lg-4"><a href="${pageContext.request.contextPath}/vocabulary" class="feature-card"><span class="feature-icon purple"><svg class="icon icon-xl"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg></span><h3>Học từ vựng</h3><p>Từ vựng theo chủ đề, phiên âm, ví dụ và ôn lại bằng flashcard tương tác.</p><span class="feature-link">Bắt đầu học <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></span></a></div>
+   <div class="col-md-6 col-lg-4"><a href="${pageContext.request.contextPath}/grammar" class="feature-card"><span class="feature-icon blue"><svg class="icon icon-xl"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book"></use></svg></span><h3>Học ngữ pháp</h3><p>Lý thuyết trọng tâm, ví dụ dễ hiểu và bài tập trắc nghiệm có giải thích.</p><span class="feature-link">Khám phá bài học <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></span></a></div>
+   <div class="col-md-6 col-lg-4"><a href="${pageContext.request.contextPath}/listening" class="feature-card"><span class="feature-icon cyan"><svg class="icon icon-xl"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg></span><h3>Luyện Listening</h3><p>Luyện 4 Part nghe với thiết kế audio, transcript và giải thích rõ ràng.</p><span class="feature-link">Luyện nghe ngay <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></span></a></div>
+   <div class="col-md-6 col-lg-4"><a href="${pageContext.request.contextPath}/reading" class="feature-card"><span class="feature-icon orange"><svg class="icon icon-xl"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg></span><h3>Luyện Reading</h3><p>Chinh phục Part 5, 6, 7 với giao diện đọc hiểu dễ tập trung.</p><span class="feature-link">Luyện đọc ngay <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></span></a></div>
+   <div class="col-md-6 col-lg-4"><a href="${pageContext.request.contextPath}/exams" class="feature-card"><span class="feature-icon green"><svg class="icon icon-xl"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#award"></use></svg></span><h3>Thi thử TOEIC</h3><p>Giao diện phòng thi, đếm giờ, chọn đáp án, xem kết quả bài làm mẫu.</p><span class="feature-link">Vào phòng thi <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></span></a></div>
+   <div class="col-md-6 col-lg-4"><a href="${pageContext.request.contextPath}/progress" class="feature-card"><span class="feature-icon pink"><svg class="icon icon-xl"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg></span><h3>Tiến độ học tập</h3><p>Quan sát kỹ năng đang tiến bộ và phần cần cải thiện qua biểu đồ trực quan.</p><span class="feature-link">Xem tiến độ <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></span></a></div>
+  </div>
+ </div></section>
+ <section class="section-pad section-soft"><div class="container container-n11">
+  <div class="text-center mb-5"><div class="section-caption">ĐƠN GIẢN VÀ HIỆU QUẢ</div><h2 class="section-title">Ba bước để tiến gần mục tiêu TOEIC</h2><p class="section-intro">Thiết kế theo quá trình học thật, không khiến bạn bị ngợp trước một kho đề quá lớn.</p></div>
+  <div class="row g-4"><div class="col-md-4"><div class="steps-card"><div class="step-index">01</div><h4>Chọn phần muốn cải thiện</h4><p>Bắt đầu từ từ vựng, ngữ pháp hoặc chọn Listening, Reading theo từng Part.</p></div></div><div class="col-md-4"><div class="steps-card"><div class="step-index">02</div><h4>Luyện tập và kiểm tra</h4><p>Trả lời câu hỏi, xem đáp án và hiểu vì sao mình sai sau mỗi lượt học.</p></div></div><div class="col-md-4"><div class="steps-card"><div class="step-index">03</div><h4>Nhìn lại tiến độ</h4><p>Quay lại những điểm yếu, luyện lại và tiếp tục tiến gần mốc điểm đặt ra.</p></div></div></div>
+ </div></section>
+ <section class="section-pad"><div class="container container-n11"><div class="row g-5 align-items-center">
+  <div class="col-lg-5"><div class="section-caption">THỬ NGAY MỘT CÂU</div><h2 class="section-title">Học ngữ pháp dễ hiểu hơn với phản hồi tức thì</h2><p class="text-muted-n11">Thử một câu Part 5. Đây là bài tập giao diện minh họa chạy trực tiếp trên trình duyệt, chưa lưu kết quả vào MySQL.</p><a href="${pageContext.request.contextPath}/grammar" class="btn btn-soft mt-2">Xem danh sách chủ đề <svg class="icon icon-sm ms-1"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></a></div>
+  <div class="col-lg-7"><div class="panel-card" data-quiz data-answer="B" data-explanation="Sau chủ ngữ số ít 'the manager', dùng động từ hiện tại đơn 'approves'."><div class="d-flex justify-content-between mb-3"><span class="pill pill-primary">TOEIC Part 5</span><span class="small-meta">Câu mẫu</span></div><h4 style="font-size:19px;line-height:1.55" class="mb-4">The manager _____ all purchase requests before the order is processed.</h4><div class="row g-2 mb-3"><div class="col-md-6"><label class="quiz-option"><input type="radio" name="homeQuiz" value="A"> A. approve</label></div><div class="col-md-6"><label class="quiz-option"><input type="radio" name="homeQuiz" value="B"> B. approves</label></div><div class="col-md-6"><label class="quiz-option"><input type="radio" name="homeQuiz" value="C"> C. approving</label></div><div class="col-md-6"><label class="quiz-option"><input type="radio" name="homeQuiz" value="D"> D. approved</label></div></div><button class="btn btn-primary" type="button" data-check-quiz>Kiểm tra đáp án</button><div class="answer-result mt-3" role="status"></div></div></div>
+ </div></div></section>
+ <section class="pb-5"><div class="container container-n11"><div class="quote-panel"><div class="row align-items-center g-4 position-relative" style="z-index:1"><div class="col-lg-8"><div class="pill pill-white mb-3">SẴN SÀNG BẮT ĐẦU?</div><h2 style="font-size:clamp(27px,3.5vw,39px)">Hãy biến mục tiêu TOEIC thành tiến bộ mỗi ngày.</h2><p class="mb-0">Tạo tài khoản và bắt đầu khám phá môi trường luyện thi dành riêng cho bạn.</p></div><div class="col-lg-4 text-lg-end"><a href="${pageContext.request.contextPath}/register" class="btn btn-white btn-lg">Tạo tài khoản miễn phí <svg class="icon icon-sm ms-1"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></a></div></div></div></div></section>
+</main>
+<%@ include file="fragments/footer.jspf" %>
+<%@ include file="fragments/scripts.jspf" %>

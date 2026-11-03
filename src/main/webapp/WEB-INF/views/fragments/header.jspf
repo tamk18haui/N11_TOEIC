@@ -1,0 +1,31 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Shell dùng chung cho các trang học và khu vực admin. --%>
+<div class="demo-ribbon">BẢN GIAO DIỆN MẪU <strong>UI Preview</strong> · Đăng ký, dữ liệu học tập và quản trị chưa kết nối JDBC/MySQL.</div>
+<header class="site-nav">
+ <nav class="navbar navbar-expand-xl navbar-light">
+  <div class="container container-n11">
+   <a class="navbar-brand" href="${pageContext.request.contextPath}/">
+    <img class="brand-mark" src="${pageContext.request.contextPath}/assets/img/logo.svg" width="40" height="40" alt="Logo N11 TOEIC" /><span>N11 <span style="color:#505ce2">TOEIC</span></span>
+   </a>
+   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#n11MainNav" aria-controls="n11MainNav" aria-expanded="false" aria-label="Mở menu">
+    <svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#menu"></use></svg>
+   </button>
+   <div class="collapse navbar-collapse" id="n11MainNav">
+    <ul class="navbar-nav me-auto mb-2 mb-xl-0 align-items-xl-center">
+     <li class="nav-item"><a class="nav-link ${activePage eq 'home' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/">Trang chủ</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'vocabulary' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/vocabulary">Từ vựng</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'grammar' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/grammar">Ngữ pháp</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/listening">Listening</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/reading">Reading</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/exams">Thi thử</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/roadmap">Lộ trình</a></li>
+     <li class="nav-item"><a class="nav-link ${activePage eq 'progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/progress">Tiến độ</a></li>
+    </ul>
+    <div class="nav-right d-flex align-items-center gap-2">
+      <a href="${pageContext.request.contextPath}/login" class="nav-pill-signin nav-action">Đăng nhập</a>
+      <a href="${pageContext.request.contextPath}/register" class="btn btn-primary nav-action px-3 py-2">Đăng ký miễn phí</a>
+    </div>
+   </div>
+  </div>
+ </nav>
+</header>
