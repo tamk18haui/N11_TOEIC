@@ -1,0 +1,31 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #EAF7FC
+skinparam usecaseBorderColor #1685A6
+left to right direction
+actor "Admin đã đăng nhập" as Admin
+rectangle "UC03 Quản lý nội dung" {
+ usecase "CRUD chủ điểm" as Topic
+ usecase "CRUD bài giảng / ví dụ" as Lesson
+ usecase "CRUD câu hỏi / phương án" as Question
+ usecase "Công bố bài" as Publish
+ usecase "Kiểm tra đủ ba phần" as CheckPublish
+ usecase "Kiểm tra đúng một đáp án" as CheckQuestion
+ usecase "Xem số liệu dashboard" as Stats
+}
+Admin --> Topic
+Admin --> Lesson
+Admin --> Question
+Admin --> Publish
+Admin --> Stats
+Publish ..> CheckPublish : <<include>>
+Question ..> CheckQuestion : <<include>>
+note bottom of Question
+Bài đã có lượt làm: khóa bộ câu hỏi và tên bài.
+Không xóa nội dung đang được FK tham chiếu.
+end note
+@enduml

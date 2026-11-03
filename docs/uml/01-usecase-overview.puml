@@ -1,0 +1,35 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #EAF7FC
+skinparam usecaseBorderColor #1685A6
+left to right direction
+actor "Khách" as Guest
+actor "Học viên" as Student
+actor "Quản trị viên" as Admin
+Guest <|-- Student
+Student <|-- Admin
+rectangle "N11 TOEIC" {
+ usecase "Đăng nhập" as Login
+ usecase "Xem / tìm bài ngữ pháp" as Browse
+ usecase "Đọc bài giảng và ví dụ" as Read
+ usecase "Làm bài tập ngữ pháp" as Practice
+ usecase "Xem kết quả và lịch sử" as History
+ usecase "Quản lý nội dung ngữ pháp" as Manage
+ usecase "Xem dashboard ngữ pháp" as Dashboard
+}
+Guest --> Login
+Guest --> Browse
+Guest --> Read
+Student --> Practice
+Student --> History
+Admin --> Manage
+Admin --> Dashboard
+note bottom of Manage
+Phạm vi hiện thực của thành viên Ngữ pháp.
+Các phân hệ còn lại do nhóm tích hợp.
+end note
+@enduml

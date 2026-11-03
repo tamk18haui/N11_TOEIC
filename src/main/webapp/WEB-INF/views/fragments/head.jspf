@@ -1,16 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="N11 TOEIC - Website học từ vựng, ngữ pháp và luyện thi TOEIC Listening & Reading." />
-  <title>${pageTitle} | N11 TOEIC</title>
+  <title><c:out value="${pageTitle}"/> | N11 TOEIC</title>
   <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/assets/img/logo.svg" />
   <!-- Bootstrap 5.1.1 bundling local (MIT) de khong phu thuoc CDN. -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grammar.css" />
 </head>
 <body>
