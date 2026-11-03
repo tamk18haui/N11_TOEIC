@@ -1,0 +1,29 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #EAF7FC
+skinparam usecaseBorderColor #1685A6
+left to right direction
+actor "Học viên đã đăng nhập" as Student
+rectangle "UC02 Làm bài tập ngữ pháp" {
+ usecase "Chọn đáp án và nộp bài" as Submit
+ usecase "Kiểm tra câu hỏi / phương án" as Validate
+ usecase "Chấm điểm" as Grade
+ usecase "Lưu lượt làm và chi tiết" as Save
+ usecase "Xem điểm và lời giải" as Result
+ usecase "Xem lịch sử cá nhân" as History
+}
+Student --> Submit
+Student --> History
+Student --> Result
+Submit ..> Validate : <<include>>
+Submit ..> Grade : <<include>>
+Submit ..> Save : <<include>>
+note bottom of Save
+Một transaction cho lượt làm và các câu trả lời.
+Câu trống tính sai; không nhận điểm từ client.
+end note
+@enduml

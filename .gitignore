@@ -38,3 +38,6 @@ target/
 .env
 .env.*
 *.log
+
+application-local.yaml
+.local/

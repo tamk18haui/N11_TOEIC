@@ -1,0 +1,60 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #EAF7FC
+skinparam usecaseBorderColor #1685A6
+actor "Học viên" as Student
+boundary "JSP / trình duyệt" as View
+control "Spring Security" as Security
+control GrammarController as Controller
+control GrammarService as Service
+entity JdbcGrammarDao as DAO
+database MySQL
+Student -> View : Chọn A/B/C/D và nộp
+View -> Security : POST /grammar/{id}/submit + CSRF
+Security -> Security : Kiểm tra đăng nhập và CSRF
+alt Không hợp lệ
+ Security --> View : Chuyển đăng nhập / 403
+else Hợp lệ
+ Security -> Controller : Principal + tham số form
+ Controller -> Service : submit(lessonId, email, selections)
+ group Transaction
+ Service -> DAO : lockLesson(id), lesson, questions
+ DAO -> MySQL : SELECT ... FOR UPDATE và truy vấn tham số
+ MySQL --> DAO : Bài, câu hỏi, phương án
+ DAO --> Service : Dữ liệu chuẩn từ CSDL
+ Service -> Service : Kiểm tra bài công bố, question/option hợp lệ
+ alt Có dữ liệu giả mạo
+  Service --> Controller : IllegalArgumentException (rollback)
+  Controller --> View : Thông báo lỗi
+ else Hợp lệ
+  Service -> Service : Chấm điểm (câu trống tính sai)
+  Service -> DAO : insertAttempt(result)
+  DAO -> MySQL : INSERT grammar_attempts
+  MySQL --> DAO : attemptId
+  loop Mỗi câu hỏi
+   Service -> DAO : insertAnswer(answer)
+   DAO -> MySQL : INSERT grammar_attempt_answers
+  end
+  note right of MySQL
+  Lỗi ghi bất kỳ câu nào: rollback toàn bộ.
+  Thành công: commit.
+  end note
+  Service --> Controller : attemptId
+ end
+ end
+ Controller --> View : Redirect /grammar/attempts/{id}
+ View -> Controller : GET kết quả (theo user hiện tại)
+ Controller -> Service : attempt(id, email), answers(id, email)
+ Service -> DAO : JOIN kết quả thuộc đúng user_id
+ DAO -> MySQL : SELECT có điều kiện sở hữu
+ MySQL --> DAO : Kết quả
+ DAO --> Service : Điểm và lời giải
+ Service --> Controller : Model
+ Controller --> View : grammar/result.jsp
+ View --> Student : Điểm, câu đúng/sai/trống, giải thích
+end
+@enduml

@@ -1,0 +1,7 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ include file="../fragments/head.jspf" %>
+<%@ include file="../fragments/header.jspf" %>
+
+<main class="grammar-page"><div class="container grammar-detail"><a class="grammar-back" href="${pageContext.request.contextPath}/grammar">← Về danh sách bài học</a><h1 class="h2">Lịch sử luyện ngữ pháp</h1><p class="text-muted mb-4">100 lượt làm bài gần nhất của bạn. Mỗi lần luyện tập là một bước tiến.</p><c:if test="${empty attempts}"><div class="grammar-empty"><h2 class="h4">Bắt đầu bài luyện đầu tiên</h2><p>Kết quả sẽ xuất hiện ở đây sau khi bạn nộp bài.</p><a class="btn grammar-btn" href="${pageContext.request.contextPath}/grammar">Khám phá bài học →</a></div></c:if>
+<c:forEach items="${attempts}" var="attempt"><article class="example-card bg-white d-flex align-items-center justify-content-between gap-3 flex-wrap"><div><h2 class="h5"><c:out value="${attempt.lessonTitle}"/></h2><span class="grammar-history-time"><c:out value="${attempt.submittedAt.toString().replace('T',' ')}"/> UTC · Đúng ${attempt.correctCount}/${attempt.totalQuestions} câu</span></div><div class="d-flex gap-3 align-items-center"><strong class="text-success">${attempt.scorePercent}%</strong><a class="btn btn-outline-primary btn-sm" href="${pageContext.request.contextPath}/grammar/attempts/${attempt.id}">Xem kết quả</a></div></article></c:forEach></div></main>
+<%@ include file="../fragments/footer.jspf" %><%@ include file="../fragments/scripts.jspf" %>

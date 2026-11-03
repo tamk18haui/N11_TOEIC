@@ -1,6 +1,15 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
 <%@ include file="../fragments/header.jspf" %>
-<main class="auth-section"><div class="container container-n11"><div class="auth-card"><div class="auth-icon"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#lock"></use></svg></div><span class="section-caption">CHÀO MỪNG QUAY LẠI</span><h1>Đăng nhập N11 TOEIC</h1><p class="mb-4">Tiếp tục lộ trình học và luyện thi của bạn.</p><form class="js-demo-form" data-demo-message="Đây là form đăng nhập mẫu. Nhóm sẽ kết nối xử lý xác thực Java/JDBC ở bước tiếp theo."><div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control" id="email" name="email" type="email" placeholder="ban@example.com" autocomplete="email" required /></div><div class="mb-3"><div class="d-flex justify-content-between"><label class="form-label" for="password">Mật khẩu</label><a href="#" class="small" data-demo-action="Tính năng quên mật khẩu sẽ được phát triển sau.">Quên mật khẩu?</a></div><input id="password" name="password" class="form-control" type="password" minlength="6" autocomplete="current-password" placeholder="Nhập mật khẩu" required /></div><div class="form-check mb-4"><input class="form-check-input" id="remember" name="remember" type="checkbox"><label for="remember" class="form-check-label text-muted-n11 small">Ghi nhớ đăng nhập (giao diện)</label></div><button class="btn btn-primary w-100" type="submit">Đăng nhập</button></form><div class="text-center small mt-4">Chưa có tài khoản? <a class="fw-bold" style="color:#4b58e6" href="${pageContext.request.contextPath}/register">Đăng ký miễn phí</a></div><div class="demo-hint mt-4">Giao diện demo chưa gửi mật khẩu lên server. Không nên nhập mật khẩu thật khi thử nghiệm.</div></div></div></main>
+<main class="auth-section"><div class="container container-n11"><div class="auth-card">
+<span class="section-caption">CHÀO MỪNG QUAY LẠI</span><h1>Đăng nhập N11 TOEIC</h1><p>Học ngữ pháp, làm bài tập và lưu kết quả của bạn.</p>
+<c:if test="${param.error != null}"><div class="alert alert-danger" role="alert">Email hoặc mật khẩu không đúng, hoặc tài khoản đã bị khóa.</div></c:if>
+<form method="post" action="${pageContext.request.contextPath}/login">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+<div class="mb-3"><label for="email" class="form-label">Email</label><input id="email" name="email" class="form-control" type="email" maxlength="191" autocomplete="username" required></div>
+<div class="mb-4"><label for="password" class="form-label">Mật khẩu</label><input id="password" name="password" class="form-control" type="password" autocomplete="current-password" required></div>
+<button class="btn btn-primary w-100" type="submit">Đăng nhập</button></form>
+<p class="small text-muted mt-4 mb-0">Bạn vẫn có thể đọc bài giảng và ví dụ khi chưa đăng nhập.</p>
+</div></div></main>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

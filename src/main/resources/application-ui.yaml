@@ -1,6 +1,2 @@
-# Profile giao dien mau: khong can MySQL khi chua xay dung DAO.
-# KHONG dung profile nay khi test tinh nang that / trien khai production.
-spring:
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+# Profile ui kept for compatibility with the team starter.
+# Grammar now requires the configured MySQL datasource in all runtime profiles.

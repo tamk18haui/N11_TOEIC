@@ -24,8 +24,6 @@ public class UiPageController {
     @GetMapping("/vocabulary")
     public String vocabulary(Model model) { return page(model, "vocabulary/index", "vocabulary", "Học từ vựng"); }
 
-    @GetMapping("/grammar")
-    public String grammar(Model model) { return page(model, "grammar/index", "grammar", "Học ngữ pháp"); }
 
     @GetMapping("/listening")
     public String listening(Model model) { return page(model, "listening/index", "listening", "Luyện Listening"); }

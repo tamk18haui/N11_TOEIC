@@ -1,6 +1,15 @@
 spring:
   application:
     name: nhom11
+  config:
+    import: optional:file:./application-local.yaml
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/n11_toeic?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+  sql:
+    init:
+      mode: never
 
   mvc:
     view:
@@ -8,4 +17,12 @@ spring:
       suffix: .jsp
 
 server:
-  port: 8080
+  port: ${PORT:8080}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+    encoding:
+      charset: UTF-8
+      force: true
