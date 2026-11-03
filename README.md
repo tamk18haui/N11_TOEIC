@@ -41,7 +41,7 @@ Mật khẩu tài khoản trong SQL đã băm BCrypt. Đây là hai tài khoản
 - Lưu bản nháp rồi thêm ví dụ/câu hỏi trước khi công bố. Bài đã có lượt làm được khóa tên và bộ câu hỏi; có thể bỏ công bố.
 - Chấm điểm trên server, transaction cho lưu lượt làm + đáp án, truy vấn có tham số, CSRF, phân quyền và lọc HTML.
 
-Các trang từ vựng, nghe, đọc, thi thử, lộ trình, đăng ký và quản lý tài khoản vẫn thuộc phần khung giao diện ban đầu của nhóm. Phần đăng nhập tối thiểu hiện dùng `users` để demo ngữ pháp; chưa triển khai đăng ký/quên mật khẩu hay quản lý tài khoản thay cho thành viên khác.
+Các trang từ vựng, nghe, đọc, thi thử, lộ trình, quản lý tài khoản vẫn thuộc phần khung giao diện ban đầu của nhóm. Phần đăng nhập tối thiểu hiện dùng `users` để demo ngữ pháp; đã tích hợp đăng ký từ main (dd43351); chưa triển khai quên mật khẩu hay quản lý tài khoản thay cho thành viên khác.
 
 ## Đồng bộ CSDL nhóm
 

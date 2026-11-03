@@ -1,16 +1,59 @@
 <%@ page pageEncoding="UTF-8" %>
-<footer class="site-footer">
- <div class="container container-n11">
-  <div class="row g-4">
-   <div class="col-lg-5 col-md-6">
-    <div class="brand-line"><img class="brand-mark" src="${pageContext.request.contextPath}/assets/img/logo.svg" alt="N11 TOEIC" /><h4 class="mb-0">N11 TOEIC</h4></div>
-    <p>Nền tảng học và luyện thi TOEIC Listening &amp; Reading cho sinh viên. Bài tập lớn Lập trình Web với Java - Nhóm 11.</p>
-    <span class="pill pill-white">Java + JSP + Bootstrap 5</span>
-   </div>
-   <div class="col-6 col-md-3 col-lg-2"><h5>Học tập</h5><a href="${pageContext.request.contextPath}/vocabulary">Từ vựng</a><a href="${pageContext.request.contextPath}/grammar">Ngữ pháp</a><a href="${pageContext.request.contextPath}/roadmap">Lộ trình học</a></div>
-   <div class="col-6 col-md-3 col-lg-2"><h5>Luyện thi</h5><a href="${pageContext.request.contextPath}/listening">Listening</a><a href="${pageContext.request.contextPath}/reading">Reading</a><a href="${pageContext.request.contextPath}/exams">Thi thử TOEIC</a></div>
-   <div class="col-sm-6 col-lg-3"><h5>Tài khoản</h5><a href="${pageContext.request.contextPath}/login">Đăng nhập</a><a href="${pageContext.request.contextPath}/register">Đăng ký</a><a href="${pageContext.request.contextPath}/progress">Tiến độ học tập</a><a href="${pageContext.request.contextPath}/admin/grammar">Quản trị ngữ pháp</a></div>
+<%-- Footer chung: chi sua file nay de thay doi footer tren tat ca cac trang JSP. --%>
+<footer class="site-footer n11-footer-v3" id="n11SiteFooter" aria-label="Chân trang N11 TOEIC">
+  <div class="n11-footer-glow n11-footer-glow-a" aria-hidden="true"></div>
+  <div class="n11-footer-glow n11-footer-glow-b" aria-hidden="true"></div>
+  <div class="container container-n11 n11-footer-content">
+<div class="n11-footer-main">
+      <div class="row g-4 g-xl-5">
+        <div class="col-lg-5 col-md-6">
+          <div class="n11-footer-brand">
+            <a class="n11-footer-logo" href="${pageContext.request.contextPath}/" aria-label="N11 TOEIC - về trang chủ">
+              <span class="n11-footer-logo-tile"><img src="${pageContext.request.contextPath}/assets/img/logo.svg" width="42" height="42" alt="" /></span>
+              <span>N11 <strong>TOEIC</strong></span>
+            </a>
+            <p>Một không gian học tập dành cho hành trình chinh phục TOEIC. Ôn từ vựng, ngữ pháp, Listening và Reading theo cách rõ ràng, dễ theo dõi.</p>
+            <div class="n11-footer-tags" aria-label="Nội dung học tập">
+              <span><svg class="icon icon-sm" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg> Listening</span>
+              <span><svg class="icon icon-sm" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg> Reading</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="col-6 col-md-3 col-lg-2 n11-footer-links" aria-label="Học tập">
+          <h3><span class="n11-footer-title-line"></span>Học tập</h3>
+          <a href="${pageContext.request.contextPath}/vocabulary">Từ vựng</a>
+          <a href="${pageContext.request.contextPath}/grammar">Ngữ pháp</a>
+          <a href="${pageContext.request.contextPath}/roadmap">Lộ trình học</a>
+        </nav>
+
+        <nav class="col-6 col-md-3 col-lg-2 n11-footer-links" aria-label="Luyện thi">
+          <h3><span class="n11-footer-title-line"></span>Luyện thi</h3>
+          <a href="${pageContext.request.contextPath}/listening">Listening</a>
+          <a href="${pageContext.request.contextPath}/reading">Reading</a>
+          <a href="${pageContext.request.contextPath}/exams">Thi thử TOEIC</a>
+        </nav>
+
+        <nav class="col-6 col-md-6 col-lg-3 n11-footer-links n11-footer-links-account" aria-label="Tài khoản">
+          <h3><span class="n11-footer-title-line"></span>Tài khoản</h3>
+          <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+          <a href="${pageContext.request.contextPath}/register">Đăng ký miễn phí</a>
+          <a href="${pageContext.request.contextPath}/progress">Tiến độ học tập</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="n11-footer-divider" role="presentation"></div>
+    <div class="n11-footer-bottom">
+      <div class="n11-footer-bottom-left">
+        <span>© 2026 <strong>N11 TOEIC.</strong> All rights reserved.</span>
+        <span class="n11-footer-bottom-sep" aria-hidden="true">·</span>
+        <span>Đồ án Lập trình Web Java — Nhóm 11</span>
+      </div>
+      <a href="#" class="n11-footer-top" aria-label="Về đầu trang">
+        Về đầu trang
+        <span class="n11-footer-top-arrow" aria-hidden="true">↑</span>
+      </a>
+    </div>
   </div>
-  <div class="copyright d-flex flex-wrap gap-2 align-items-center justify-content-between"><span>© 2026 N11 TOEIC · Đồ án nhóm 11</span><span>Học từng ngày, tiến bộ từng bước</span></div>
- </div>
 </footer>

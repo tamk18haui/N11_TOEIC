@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-    @Bean PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+
 
     @Bean UserDetailsService userDetailsService(JdbcTemplate jdbc) {
         return email -> jdbc.query("SELECT email,password_hash,role,status FROM users WHERE email=?",

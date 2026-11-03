@@ -107,6 +107,19 @@ class GrammarIntegrationTests {
     }
     @Test @WithMockUser(username="admin@n11.local",roles="ADMIN")
     void adminCanAccessDashboard() throws Exception {mvc.perform(get("/admin/grammar")).andExpect(status().isOk());}
+    @Test void newRegistrationCanLogInAndStudyGrammar() throws Exception {
+        var get=mvc.perform(get("/register")).andExpect(status().isOk()).andReturn();
+        var session=(org.springframework.mock.web.MockHttpSession)get.getRequest().getSession();
+        String token=(String)session.getAttribute(com.toeic.nhom11.controller.RegistrationCsrfAdvice.SESSION_KEY);
+        mvc.perform(post("/register").session(session).with(csrf())
+            .param("_registrationCsrf",token).param("fullName","Grammar Student")
+            .param("email","grammar.integration@example.com").param("password","Strong@123")
+            .param("confirmPassword","Strong@123"))
+            .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/register"));
+        assertEquals(1,jdbc.queryForObject("SELECT COUNT(*) FROM users u JOIN user_profiles p ON p.user_id=u.id WHERE u.email=?",Integer.class,"grammar.integration@example.com"));
+        mvc.perform(post("/login").with(csrf()).param("email","grammar.integration@example.com").param("password","Strong@123"))
+            .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/grammar"));
+    }
     private Lesson draft() {
         Lesson l=new Lesson();l.setTopicId(1);l.setTitle("Draft test");l.setSummary("Test summary");l.setContentHtml("<p>Test lesson</p>");l.setLevel("BASIC");return l;
     }

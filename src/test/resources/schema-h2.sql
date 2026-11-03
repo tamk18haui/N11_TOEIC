@@ -84,3 +84,13 @@ CREATE TABLE IF NOT EXISTS `grammar_attempt_answers` (
   CONSTRAINT `fk_grammar_attempt_answers_question_id` FOREIGN KEY (`question_id`) REFERENCES `grammar_questions` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_grammar_attempt_answers_selected_option_id` FOREIGN KEY (`selected_option_id`) REFERENCES `grammar_options` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+CREATE TABLE IF NOT EXISTS `user_profiles` (
+  `user_id` BIGINT NOT NULL,
+  `full_name` VARCHAR(120) NOT NULL,
+  `phone` VARCHAR(20) NULL DEFAULT NULL,
+  `avatar_url` VARCHAR(500) NULL DEFAULT NULL,
+  `target_toeic_score` SMALLINT NULL DEFAULT NULL,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_user_profiles_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
