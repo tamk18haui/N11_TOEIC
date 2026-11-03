@@ -67,6 +67,7 @@
           </c:if>
 
           <form id="n11RegisterForm" method="post" action="${pageContext.request.contextPath}/register" novalidate autocomplete="on">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" name="_registrationCsrf" value="<c:out value='${registerCsrfToken}'/>" />
             <div class="n11-reg-field">
               <label for="n11FullName" class="form-label">Họ và tên <span>*</span></label>

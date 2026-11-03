@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%-- Shell dùng chung cho các trang học và khu vực admin. --%>
+
 <header class="site-nav">
  <nav class="navbar navbar-expand-xl navbar-light">
   <div class="container container-n11">
@@ -21,8 +22,14 @@
      <li class="nav-item"><a class="nav-link ${activePage eq 'progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/progress">Tiến độ</a></li>
     </ul>
     <div class="nav-right d-flex align-items-center gap-2">
-      <a href="${pageContext.request.contextPath}/login" class="nav-pill-signin nav-action">Đăng nhập</a>
-      <a href="${pageContext.request.contextPath}/register" class="btn btn-primary nav-action px-3 py-2">Đăng ký miễn phí</a>
+      <c:choose><c:when test="${not empty pageContext.request.userPrincipal}">
+        <a class="nav-pill-signin" href="${pageContext.request.contextPath}/grammar/history">Lịch sử học</a>
+        <c:if test="${pageContext.request.isUserInRole('ADMIN')}"><a class="btn btn-soft" href="${pageContext.request.contextPath}/admin/grammar">Quản trị</a></c:if>
+        <form method="post" action="${pageContext.request.contextPath}/logout"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><button class="btn btn-light btn-sm" type="submit">Đăng xuất</button></form>
+      </c:when><c:otherwise>
+        <a href="${pageContext.request.contextPath}/login" class="nav-pill-signin nav-action">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/register" class="btn btn-primary nav-action px-3 py-2">Đăng ký miễn phí</a>
+      </c:otherwise></c:choose>
     </div>
    </div>
   </div>
