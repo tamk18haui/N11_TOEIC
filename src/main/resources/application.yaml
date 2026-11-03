@@ -7,5 +7,11 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
 
+  datasource:
+    url: jdbc:mysql://localhost:3306/toeic_nhom11
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 server:
   port: 8080
