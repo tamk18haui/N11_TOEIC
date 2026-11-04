@@ -34,8 +34,8 @@ Mật khẩu tài khoản trong SQL đã băm BCrypt. Đây là hai tài khoản
 
 ## Các luồng đã triển khai
 
-- Xem 8 bài học thuộc 4 chủ điểm; tìm theo từ khóa, lọc chủ điểm và mức độ.
-- Ba tab Bài giảng, Ví dụ và Bài tập; 24 ví dụ song ngữ, 40 câu hỏi, 160 lựa chọn.
+- Xem 16 bài học thuộc 4 chủ điểm, gồm đủ 12 thì; tìm theo từ khóa, lọc chủ điểm và mức độ.
+- Ba tab Bài giảng, Ví dụ và Bài tập; 64 ví dụ song ngữ. Mỗi bài có bộ 20 câu với phân tích A–D, tổng 320 câu mới. Giữ 80 câu cũ để xem lịch sử.
 - Đọc bài giảng/ví dụ không cần đăng nhập. Học viên đăng nhập để chọn đáp án, nộp bài, nhận điểm phần trăm và giải thích; xem 100 lượt làm gần nhất của chính mình.
 - Admin có dashboard số liệu thật, CRUD chủ điểm, bài học, ví dụ và câu hỏi A/B/C/D; kiểm tra dữ liệu ở service và form.
 - Lưu bản nháp rồi thêm ví dụ/câu hỏi trước khi công bố. Bài đã có lượt làm được khóa tên và bộ câu hỏi; có thể bỏ công bố.
@@ -80,3 +80,36 @@ docs/                                 Đặc tả TX1, UML, kịch bản demo/te
 ```
 
 Tài liệu [thiết kế TX1 cho phần Ngữ pháp](docs/TX1_GRAMMAR.md) gồm use case tổng quát, 3 use case chi tiết và 2 sequence diagram. Đây là tài liệu phần việc Ngữ pháp để ghép vào báo cáo/slide chung, không thay thế báo cáo Word và slide của toàn nhóm.
+
+## Cập nhật học liệu cho database đang dùng
+
+Chọn đúng database của dự án trong MySQL (máy hiện tại dùng `n11_toeic_team`), rồi chạy lần lượt `database/updates/001_complete_tenses.sql` và `database/updates/002_quiz_modes.sql`. Script tìm chủ điểm **Các thì** và chỉ thêm bài chưa có, nên có thể chạy lại tuần tự. Database mới dùng file `database/n11_toeic.sql`.
+
+## Chỉnh giao diện Ngữ pháp
+
+| Muốn sửa | Mở file và tìm |
+| --- | --- |
+| Banner, thanh tìm kiếm, số cột | `views/grammar/index.jsp` trong `src/main/webapp/WEB-INF`. Tìm các chú thích về banner, bộ lọc và lưới bài học. |
+| Nhãn tab, cách trình bày ví dụ, nút nộp | `views/grammar/detail.jsp` trong `src/main/webapp/WEB-INF`. |
+| Màu nền, khoảng cách, kích cỡ thẻ, bố cục điện thoại | `src/main/resources/static/assets/css/grammar.css`. Tìm `.grammar-hero`, `.grammar-card`, `.lesson-tabs` và các khối `@media`. |
+| Điều hướng câu, phản hồi luyện tập và xác nhận nộp bài | `src/main/resources/static/assets/js/grammar-exercise.js`. |
+| Nội dung bài giảng, ví dụ và câu hỏi | Mở trang Quản trị Ngữ pháp. Nội dung đọc từ MySQL, còn JSP quyết định cách hiển thị. |
+
+Khi sửa JSP, giữ nguyên tên trường gửi đến server và biểu thức JSTL như `<c:out>`. Cách chấm điểm nằm trong `GrammarService`, truy vấn nằm trong `JdbcGrammarDao`.
+
+## Nguồn tham khảo cho 12 thì
+
+Phần lý thuyết được diễn giải bằng tiếng Việt. Ví dụ công sở, phương án và lời giải được biên soạn riêng cho dự án.
+
+- British Council LearnEnglish: [các dạng quá khứ](https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/past-tense), [cách diễn đạt tương lai](https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/talking-about-future), [tương lai tiếp diễn và hoàn thành](https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/future-continuous-future-perfect).
+- Cambridge English Grammar Today: [tương lai hoàn thành tiếp diễn](https://dictionary.cambridge.org/uk/grammar/british-grammar/future-perfect-continuous-i-will-have-beenworking-here-ten-years).
+
+## Hai chế độ bài tập
+
+- **Luyện tập** chọn từng câu để server kiểm tra ngay. Đáp án đúng màu xanh, lựa chọn sai màu đỏ, bên dưới là phân tích A–D. Một câu chỉ chọn một lần trong lượt luyện, dùng Làm lại để bắt đầu lượt mới. Luyện tập chưa lưu điểm vào lịch sử.
+- **Thi** cho phép đổi lựa chọn, nhảy qua bảng 20 câu. Chỉ sau Nộp bài mới xem điểm và lời giải. Câu bỏ trống tính sai. Điểm và từng câu được lưu trong lịch sử của người đăng nhập.
+- Màn chọn chế độ và form ở `src/main/webapp/WEB-INF/views/grammar/quiz.jspf`, được nhúng vào `detail.jsp`. Trang kết quả ở `result.jsp`. Chỉnh màu/khoảng cách ở nhóm `.quiz-*` cuối `grammar.css`.
+- Bộ 20 câu ưu tiên các câu có đủ phân tích A–D. Không xóa câu cũ đã có lượt làm. Với bài tự tạo chưa đủ 20 câu có phân tích, hệ thống dùng tối đa 20 câu hiện có và hiển thị đúng số lượng thực tế.
+- Cột `grammar_questions.explanation` giữ nguyên schema, quy ước lời giải mới gồm dòng `[PHÂN TÍCH]` rồi bốn dòng `[A] ...`, `[B] ...`, `[C] ...`, `[D] ...`. Mỗi dòng giải thích tại sao phương án tương ứng phù hợp hoặc không phù hợp. Câu cũ vẫn đọc được lời giải chung. Không có dịch vụ AI.
+
+Nguồn bổ sung là PDF **Ngữ pháp tiếng anh cơ bản toàn tập**, nội dung *English Grammar Review*, HP Group, do người dùng cung cấp. Tham khảo phần thì ở trang PDF 16–24 và các phần từ loại, điều kiện, bị động, mệnh đề quan hệ. Các lưu ý và ví dụ công sở được diễn giải/biên soạn cho dự án, không chép nguyên tài liệu. PDF nằm ngoài repo.

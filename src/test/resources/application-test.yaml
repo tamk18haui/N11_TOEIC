@@ -8,5 +8,5 @@ spring:
     init:
       mode: always
       schema-locations: classpath:schema-h2.sql
-      data-locations: file:database/seed.sql
+      data-locations: file:database/seed.sql,file:database/updates/002_quiz_modes.sql
       encoding: UTF-8
