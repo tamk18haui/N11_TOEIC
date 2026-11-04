@@ -1,0 +1,532 @@
+/*
+ * File: admin-shell.css
+ * Mục đích: Giao diện chung của khu vực Admin: màu sắc, banner, menu, thẻ, bảng, nút.
+ * Bảng màu lấy cảm hứng từ ảnh Anhngu24h người dùng cung cấp:
+ * xanh trời - cyan - xanh ngọc - vàng cam, nền trắng pha kem.
+ * Phạm vi: .admin-shell, không đổi trang học viên hay xử lý backend.
+ */
+
+/* Bảng màu và phông nền. */
+.admin-shell {
+  --adm-ink: #071b37;
+  --adm-muted: #617487;
+  --adm-border: #e0edf2;
+  --adm-white: #fff;
+  --adm-sky: #a8e3fa;
+  --adm-cyan: #00a8d2;
+  --adm-teal: #009b91;
+  --adm-orange: #ff7300;
+  --adm-apricot: #ffdfb5;
+  --adm-shadow: 0 13px 30px rgba(37, 107, 142, .095);
+  color: var(--adm-ink);
+  background:
+    radial-gradient(ellipse 730px 540px at 0% 3%, rgba(155, 223, 255, .38), transparent 80%),
+    radial-gradient(ellipse 710px 490px at 100% 3%, rgba(255, 203, 145, .30), transparent 78%),
+    linear-gradient(180deg, #f7fcff 0%, #fcfdfd 54%, #f6fbfd 100%);
+  min-height: calc(100vh - 83px);
+  padding: 30px 0 70px;
+}
+.admin-shell .container-n11 { max-width: 1380px; }
+.admin-shell h1, .admin-shell h2, .admin-shell h3,
+.admin-shell h4, .admin-shell h5, .admin-shell h6 { color: var(--adm-ink); }
+.admin-shell .section-caption { color: #048faa; font-size: 11px; font-weight: 850; letter-spacing: .13em; }
+.admin-shell .small-meta, .admin-shell .text-muted-n11 { color: var(--adm-muted) !important; }
+.admin-shell .account-title { color: var(--adm-ink); font-weight: 850; letter-spacing: -.045em; font-size: clamp(26px, 2.8vw, 36px); margin: 7px 0 9px; }
+.admin-shell .account-section-title { color: var(--adm-ink); font-size: 19px; font-weight: 820; }
+.admin-shell .account-back, .admin-toolbar-link { color: #008eb3; font-weight: 800; }
+.admin-shell .account-back:hover, .admin-toolbar-link:hover { color: #006f92; }
+
+/* Banner Dashboard: xanh mát bên trái, nắng cam bên phải như ảnh tham chiếu. */
+.admin-welcome {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #d8eaf1;
+  border-radius: 25px;
+  padding: 31px 35px;
+  background:
+    radial-gradient(circle at 7% 65%, rgba(86, 193, 236, .29), transparent 33%),
+    radial-gradient(circle at 94% 31%, rgba(255, 184, 94, .32), transparent 37%),
+    linear-gradient(110deg, #e7f8ff 0%, #f5fdff 40%, #fffefa 61%, #fff1e2 100%);
+  box-shadow: 0 15px 40px rgba(51, 127, 151, .085);
+}
+.admin-welcome::before, .admin-welcome::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(255,255,255,.75);
+  border-radius: 50%;
+  box-shadow: 0 0 0 23px rgba(255,255,255,.10), 0 0 0 50px rgba(255,255,255,.08);
+  pointer-events: none;
+}
+.admin-welcome::before { top: -128px; left: -114px; }
+.admin-welcome::after { bottom: -165px; right: -105px; }
+.admin-welcome .account-title { font-size: clamp(26px, 3vw, 40px); margin-bottom: 11px; }
+.admin-gradient-text {
+  background: linear-gradient(100deg, #00a4d4 0%, #009f9c 35%, #87a37a 53%, #d49540 77%, #fa7500 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.admin-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: #bff3ff;
+  color: #05647d;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+/* Thanh công cụ chung phía trên các trang quản trị. */
+.admin-shell .admin-toolbar {
+  display: flex;
+  border: 1px solid #e0edf2;
+  background: rgba(255,255,255,.92);
+  border-radius: 15px;
+  padding: 14px 18px;
+  box-shadow: 0 5px 19px rgba(48, 125, 144, .045);
+}
+.admin-toolbar-label { display: flex; gap: 9px; align-items: center; color: #5b7288; font-size: 12px; font-weight: 750; }
+.admin-toolbar-dot { width: 8px; height: 8px; border-radius: 50%; background: #11ba8d; box-shadow: 0 0 0 3px #e1f9f1; }
+.admin-toolbar-sep { color: #b8cbd3; }
+
+/* Menu Admin dùng chung, không ảnh hưởng menu học viên. */
+.admin-shell .admin-nav {
+  position: sticky;
+  top: 103px;
+  background: #fff;
+  padding: 17px 12px 18px;
+  border: 1px solid var(--adm-border);
+  border-radius: 23px;
+  box-shadow: var(--adm-shadow);
+}
+.admin-nav-brand { display: flex; align-items: center; gap: 11px; margin: 0 5px 11px; padding: 5px 5px 17px; border-bottom: 1px solid #edf3f6; }
+.admin-nav-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #00b1d2 0%, #06a3a3 45%, #f18a27 100%);
+  box-shadow: 0 9px 18px rgba(5, 159, 176, .19);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 850;
+}
+.admin-nav-brand strong { display: block; color: #09253c; font-size: 14px; font-weight: 850; }
+.admin-nav-brand span { display: block; margin-top: 2px; color: #8395a0; font-size: 11px; }
+.admin-nav-intro { display: flex; align-items: center; gap: 7px; margin: 0 9px 17px; padding: 8px 10px; border-radius: 10px; background: #e9faff; color: #27768a; font-size: 11px; font-weight: 750; }
+.admin-online-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #13b68b; }
+.admin-nav-group { margin: 16px 12px 7px; color: #879ca9; font-size: 10px; letter-spacing: .12em; font-weight: 850; }
+.admin-shell .admin-nav .admin-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 2px 0;
+  padding: 11px 12px;
+  border-radius: 12px;
+  background: transparent;
+  color: #516c7a;
+  font-size: 12.8px;
+  font-weight: 740;
+  line-height: 1.4;
+  border: 1px solid transparent;
+  transition: background .16s, color .16s, box-shadow .16s;
+}
+.admin-shell .admin-nav .admin-link .icon { width: 18px; height: 18px; color: #21a7be; }
+.admin-shell .admin-nav .admin-link:hover { background: #edfaff; color: #0089a9; }
+.admin-shell .admin-nav .admin-link.is-active {
+  background: linear-gradient(100deg, #dcf7ff 0%, #f0fffc 75%, #fff8ed 100%);
+  color: #007e96;
+  border-color: #c3edf4;
+  box-shadow: inset 3px 0 0 #00a6c7;
+}
+.admin-shell .admin-nav .admin-link.is-active .icon { color: #008fa7; }
+.admin-nav-divider { height: 1px; margin: 17px 9px 12px; background: #e8f0f3; }
+.admin-logout-form { margin: 11px 9px 4px; }
+.admin-logout-form .btn { font-size: 12px; }
+
+/* Card và thẻ thống kê: số chuyển xanh ngọc -> vàng cam. */
+.admin-shell .panel-card,
+.admin-shell .admin-stat,
+.admin-shell .account-panel,
+.admin-shell .account-form-card {
+  background: #fff;
+  border: 1px solid var(--adm-border);
+  border-radius: 22px;
+  box-shadow: var(--adm-shadow);
+}
+.admin-shell .panel-card,
+.admin-shell .account-panel,
+.admin-shell .account-form-card { padding: 23px; }
+.admin-shell .admin-stat { position: relative; overflow: hidden; padding: 22px; height: 100%; }
+.admin-shell .admin-stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 21px;
+  right: 21px;
+  height: 3px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(90deg, #12b9d6, #00a99d, #e9a64c, #ff8a28);
+}
+.admin-shell .admin-stat .num,
+.admin-shell .admin-stat strong.num {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 8px 0 3px;
+  color: #009c9e;
+  font-size: clamp(25px, 2.3vw, 31px);
+  font-weight: 850;
+  letter-spacing: -.045em;
+  background: linear-gradient(105deg, #00a3bc 0%, #00a18e 32%, #b19f64 70%, #ee902e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.admin-shell .admin-stat-note { color: #8499a5; font-size: 11px; }
+.admin-shell .stat-icon { background: #d0f5fd; color: #009db6; }
+.admin-stat-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  margin-bottom: 6px;
+  background: #c8f4fc;
+  color: #00a6c7;
+}
+.admin-stat-icon .icon { width: 21px; height: 21px; }
+.admin-stat-warm .admin-stat-icon { background: #ffe8c9; color: #ff8012; }
+.admin-stat-mint .admin-stat-icon { background: #d6f8ec; color: #0d9d81; }
+.admin-stat-sky .admin-stat-icon { background: #d9f4ff; color: #009ed3; }
+.admin-stat-warm::before { background: linear-gradient(90deg, #f8c27c, #ff821b); }
+.admin-stat-mint::before { background: linear-gradient(90deg, #30cdbd, #97d49b); }
+
+/* Các ô chức năng Dashboard. */
+.admin-shell .admin-module-card {
+  min-height: 179px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 22px;
+  border: 1px solid var(--adm-border);
+  border-radius: 21px;
+  color: var(--adm-ink);
+  background: #fff;
+  box-shadow: 0 9px 27px rgba(43, 123, 153, .07);
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+}
+.admin-shell .admin-module-card:hover { transform: translateY(-3px); color: var(--adm-ink); border-color: #9cdce9; box-shadow: 0 16px 36px rgba(45, 137, 163, .13); }
+.admin-module-icon { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 16px; background: #ccf5fc; color: #009ebc; }
+.admin-module-icon .icon { width: 22px; height: 22px; }
+.admin-module-grid > div:nth-child(4n + 2) .admin-module-icon { background: #ffe8c9; color: #f57b0b; }
+.admin-module-grid > div:nth-child(4n + 3) .admin-module-icon { background: #d7f8eb; color: #0b9f85; }
+.admin-module-grid > div:nth-child(4n + 4) .admin-module-icon { background: #e8efff; color: #6472c7; }
+.admin-module-card strong { color: #112b46; font-size: 15px; font-weight: 800; }
+.admin-module-card small { color: #738b97; font-size: 12px; }
+.admin-chip { display: inline-flex; align-items: center; width: fit-content; padding: 6px 11px; border-radius: 999px; font-size: 10.5px; font-weight: 800; background: #e2f7fc; color: #117e94; }
+.admin-chip-green { background: #e1f8ed; color: #147f59; }
+.admin-chip-outline { border: 1px solid #d7e9ee; background: rgba(255,255,255,.8); color: #3d7183; }
+.admin-info-strip { padding: 15px 17px; border-radius: 14px; background: linear-gradient(105deg, #e8faff, #fff9ef); border: 1px solid #d4eaf0; color: #557789; font-size: 12.5px; }
+.admin-info-strip code { color: #048da9; overflow-wrap: anywhere; }
+
+/* Chỉ các nút và form của trang Admin. */
+.admin-shell .btn { border-radius: 12px; font-weight: 750; transition: filter .18s, transform .18s, box-shadow .18s; }
+.admin-shell .btn-primary {
+  border: 1px solid #009ec8;
+  color: #fff;
+  background: linear-gradient(100deg, #02abd5, #008fc6);
+  box-shadow: 0 8px 18px rgba(5, 165, 202, .18);
+}
+.admin-shell .btn-primary:hover, .admin-shell .btn-primary:focus { background: linear-gradient(100deg, #009dc2, #007faa); border-color: #0089b5; color: #fff; }
+.admin-shell .btn-soft { background: #e5f8fc; color: #027e9b; border: 1px solid #c8edf3; }
+.admin-shell .btn-soft:hover { color: #006884; background: #d5f2f8; }
+.admin-shell .btn-outline-primary { border-color: #9ed8e9; color: #008eae; }
+.admin-shell .btn-outline-primary:hover { border-color: #008bab; background: #008eae; color: #fff; }
+.admin-shell .form-control, .admin-shell .form-select, .admin-shell .input-search {
+  border: 1px solid #d8e8ef;
+  color: #28445a;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.admin-shell .form-control:focus, .admin-shell .form-select:focus, .admin-shell .input-search:focus { border-color: #5dc9de; box-shadow: 0 0 0 3px rgba(0, 168, 207, .12); }
+.admin-shell .form-control:disabled, .admin-shell .form-select:disabled { background: #f7fafb; color: #9babb5; }
+.admin-shell .form-label { color: #3b6073; font-size: 12.5px; font-weight: 800; }
+.admin-shell .form-text { color: #768c9b; }
+
+/* Bảng tài khoản, nhãn trạng thái và thông báo. */
+.admin-shell .admin-table-wrap { overflow-x: auto; border-radius: 14px; }
+.admin-shell .table { margin-bottom: 0; color: #27465b; }
+.admin-shell .table thead th { background: #edf8fb; border-bottom: 1px solid #d7eaf0; color: #597f8d; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; padding: 15px 13px; }
+.admin-shell .table td { background: #fff; border-color: #eaf2f5; padding: 15px 13px; vertical-align: middle; font-size: 13px; }
+.admin-shell .table tbody tr:hover td { background: #f4fcfe; }
+.admin-shell .table tbody tr:last-child td { border-bottom: 0; }
+.admin-shell .badge-status { border-radius: 99px; font-weight: 800; padding: 6px 10px; }
+.admin-shell .badge-status.good { color: #118462; background: #e1f8ed; }
+.admin-shell .badge-status.warn { color: #b46a15; background: #fff1df; }
+.admin-shell .badge-status.muted { color: #617b89; background: #eef5f7; }
+.admin-shell .alert { border: 1px solid transparent; border-radius: 13px; }
+.admin-shell .alert-success { background: #e4f9ee; color: #116b51; border-color: #cbeddf; }
+.admin-shell .alert-danger { background: #fff0ea; color: #9d4825; border-color: #ffddc9; }
+.admin-shell .demo-hint { color: #527b8e; background: #eafaff; border: 1px solid #d6edf4; }
+.admin-shell .chart-bars > div { background: linear-gradient(180deg, #00b4ce, #f2a44c); }
+
+/* Màn hình nhỏ và khả năng truy cập. */
+.admin-shell a:focus-visible, .admin-shell button:focus-visible { outline: 3px solid rgba(0, 156, 189, .42); outline-offset: 3px; }
+@media (max-width: 991.98px) {
+  .admin-shell .admin-nav { position: static; }
+  .admin-shell { padding: 24px 0 56px; }
+}
+@media (max-width: 575.98px) {
+  .admin-welcome { padding: 23px 18px; }
+  .admin-shell .panel-card, .admin-shell .account-panel, .admin-shell .account-form-card { padding: 17px; }
+  .admin-shell .admin-stat { padding: 17px; }
+  .admin-shell .admin-module-card { min-height: 150px; }
+  .admin-shell .admin-toolbar { padding: 11px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell .btn, .admin-shell .admin-link, .admin-shell .admin-module-card { transition: none; }
+}
+
+
+/* ============================================================
+   ADMIN V3 - SUA DUNG 3 VAN DE TREN ANH CHUP
+   1) CSS luon duoc nap tu admin-head.jspf
+   2) Phong cach cyan - teal - orange, KHONG dung xanh tim
+   3) Header hoc vien da bo o admin-layout-start.jspf
+   ============================================================ */
+.n11-admin-body {
+  margin: 0;
+  background: #f1faff;
+  color: #08233e;
+  font-family: "Segoe UI", Inter, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.admin-shell {
+  --n11-primary: #00a9ce;
+  --n11-primary-2: #079cbd;
+  --n11-cyan: #00b5d7;
+  --n11-border: #dbeef3;
+  --adm-border: #d5edf2;
+  --adm-ink: #071e36;
+  min-height: 100vh;
+  padding: 28px 0 70px;
+  color: #102a43;
+  background:
+    radial-gradient(ellipse 62% 36% at 3% 0%, rgba(113, 212, 247, .40), transparent 82%),
+    radial-gradient(ellipse 54% 38% at 100% 1%, rgba(255, 202, 136, .36), transparent 85%),
+    linear-gradient(180deg, #f6fcff 0%, #f7fbfc 51%, #fffdf9 100%);
+}
+.admin-shell .container-n11 { max-width: 1420px; }
+.admin-shell, .admin-shell input, .admin-shell select, .admin-shell button {
+  font-family: "Segoe UI", Inter, Arial, sans-serif;
+}
+.admin-shell a { text-decoration: none; }
+.admin-shell h1, .admin-shell h2, .admin-shell h3,
+.admin-shell h4, .admin-shell h5, .admin-shell h6 {
+  color: #092744;
+  letter-spacing: -.035em;
+}
+.admin-shell .section-caption {
+  color: #008fae !important;
+  letter-spacing: .11em;
+}
+.admin-shell .account-title {
+  font-size: clamp(28px, 2.65vw, 39px);
+  color: #061d37;
+  font-weight: 850;
+  letter-spacing: -.045em;
+}
+.admin-shell .small-meta,
+.admin-shell .text-muted-n11 { color: #688396 !important; }
+.admin-shell .account-section-title { color: #092b47; font-size: clamp(21px, 2vw, 25px); }
+
+/* Sidebar - trang admin co menu rieng, khong co navigation cua hoc vien. */
+.admin-shell .admin-sidebar.admin-nav {
+  position: sticky;
+  top: 22px;
+  padding: 20px 14px;
+  border-radius: 23px;
+  border: 1px solid rgba(180, 225, 235, .85);
+  box-shadow: 0 16px 38px rgba(35, 121, 145, .10);
+  background: #ffffff;
+}
+.admin-shell .admin-nav-brand {
+  border-bottom-color: #e4f1f3;
+  padding-bottom: 16px;
+}
+.admin-shell .admin-nav-avatar {
+  border-radius: 15px;
+  background: linear-gradient(138deg, #03b8d4 0%, #02a69f 54%, #ffa641 100%);
+}
+.admin-shell .admin-nav-brand strong { color: #092940; font-weight: 850; font-size: 14px; }
+.admin-shell .admin-nav-brand span { color: #6c8899; font-size: 11px; }
+.admin-shell .admin-nav-intro { color: #007d9c; background: #e4faff; border-color: #c7eff7; }
+.admin-shell .admin-nav-group { color: #648293; font-weight: 850; letter-spacing: .10em; }
+.admin-shell .admin-nav .admin-link {
+  font-size: 13.5px;
+  font-weight: 720;
+  line-height: 1.48;
+  color: #466477;
+  padding: 11px 12px;
+  transition: background .15s, color .15s;
+}
+.admin-shell .admin-nav .admin-link .icon { color: #00a7c6; }
+.admin-shell .admin-nav .admin-link:hover {
+  color: #007d9c;
+  background: #e7faff;
+}
+.admin-shell .admin-nav .admin-link.is-active {
+  color: #007f98 !important;
+  background: linear-gradient(104deg, #cef5fe 0%, #e9fff9 62%, #fff5e8 100%) !important;
+  border: 1px solid #aee6ef;
+  box-shadow: inset 3px 0 0 #00afca;
+}
+.admin-shell .admin-nav .admin-link.is-active .icon { color: #008bac; }
+.admin-shell .admin-logout-form .btn {
+  background: #fff0dd;
+  border: 1px solid #ffd7ab;
+  color: #b55a00;
+  font-weight: 800;
+  box-shadow: none;
+}
+.admin-shell .admin-logout-form .btn:hover { background: #ffe1ba; color: #9e4800; }
+
+/* The thong ke: so lieu gradient xanh ngoc -> vang cam. */
+.admin-shell .admin-stat {
+  padding: 23px;
+  min-height: 136px;
+  border: 1px solid #d7edf1;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 15px 32px rgba(42, 125, 147, .105);
+}
+.admin-shell .admin-stat::before {
+  left: 18px;
+  right: 18px;
+  height: 4px;
+  background: linear-gradient(90deg, #00b6dc, #00ada0, #ffa64a);
+}
+.admin-shell .row > div:nth-child(2) > .admin-stat::before,
+.admin-shell .admin-stat-warm::before { background: linear-gradient(90deg, #ffc15d, #ff7b13); }
+.admin-shell .row > div:nth-child(3) > .admin-stat::before,
+.admin-shell .admin-stat-mint::before { background: linear-gradient(90deg, #00b9ba, #37c7a0); }
+.admin-shell .admin-stat .num,
+.admin-shell .admin-stat strong.num,
+.admin-shell .admin-stat-modern .num {
+  display: block;
+  margin: 7px 0 0;
+  width: fit-content;
+  color: #008f9b !important;
+  font-size: clamp(30px, 2.6vw, 36px);
+  font-weight: 850;
+  line-height: 1.12;
+  background: linear-gradient(100deg, #00a7cb, #009e94 36%, #e3a454 80%, #ff7a10) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.admin-shell .panel-card,
+.admin-shell .account-form-card,
+.admin-shell .account-panel {
+  border-color: #dceef2;
+  box-shadow: 0 12px 35px rgba(36, 125, 154, .085);
+  border-radius: 22px;
+}
+
+/* Nut hanh dong: cyan dam tuoi; phu cam tuoi, khong xanh tim. */
+.admin-shell .btn-primary,
+.admin-shell .btn.btn-primary {
+  background: linear-gradient(110deg, #00b9e2, #009bc7) !important;
+  border: 1px solid #009fc8 !important;
+  color: white !important;
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(0, 163, 204, .25) !important;
+}
+.admin-shell .btn-primary:hover,
+.admin-shell .btn-primary:focus {
+  background: linear-gradient(110deg, #00a8cc, #008eb5) !important;
+  border-color: #008eb5 !important;
+  box-shadow: 0 13px 27px rgba(0, 142, 185, .32) !important;
+  color: #fff !important;
+}
+.admin-shell .btn-soft,
+.admin-shell .btn.btn-soft {
+  color: #007fa0 !important;
+  background: #dff8fe !important;
+  border: 1px solid #bceaf6 !important;
+  box-shadow: none !important;
+}
+.admin-shell .btn-soft:hover { color: #006783 !important; background: #cbf2fc !important; }
+.admin-shell .btn-outline-primary {
+  border-color: #f5bc7b !important;
+  color: #dc6a00 !important;
+  background: #fff7ec !important;
+}
+.admin-shell .btn-outline-primary:hover {
+  background: #fa7e16 !important;
+  color: #fff !important;
+  border-color: #fa7e16 !important;
+}
+.admin-shell .form-control:focus,
+.admin-shell .form-select:focus {
+  border-color: #00b0cc;
+  box-shadow: 0 0 0 .2rem rgba(0, 177, 210, .15);
+}
+.admin-shell .account-role-admin { color: #aa5200; background: #fff0d5; }
+.admin-shell .account-role:not(.account-role-admin) { color: #00859f; background: #e0f8fd; }
+.admin-shell .table thead th { background: #ebfaff; color: #477282; }
+.admin-shell .table tbody tr:hover td { background: #f5fdff; }
+.admin-shell .admin-chip { background: #e3faff; color: #007e9a; }
+.admin-shell .admin-chip-green { background: #dff9eb; color: #137e56; }
+.admin-shell .admin-module-grid > div:nth-child(4n + 4) .admin-module-icon {
+  color: #dc700a; background: #fff0d7;
+}
+.admin-shell .admin-welcome {
+  background:
+    radial-gradient(circle at 9% 34%, rgba(82, 198, 247, .29), transparent 35%),
+    radial-gradient(circle at 93% 39%, rgba(255, 169, 80, .30), transparent 38%),
+    linear-gradient(105deg, #def6ff 0%, #f0fcff 40%, #fffbf5 66%, #fff0dc 100%);
+  border-color: #d6eef3;
+  box-shadow: 0 16px 40px rgba(39, 142, 167, .11);
+}
+.admin-shell .admin-gradient-text {
+  background: linear-gradient(92deg, #00a9da 0%, #009d99 38%, #b5a16e 64%, #ff7905 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.admin-shell .admin-hero-tag { background: #b9f3ff; color: #05657a; }
+.admin-shell .admin-module-card { border-color: #dceef2; }
+.admin-shell .admin-module-card:hover { border-color: #9bdce8; }
+.admin-shell .admin-module-card strong { color: #0b3048; }
+.admin-shell .admin-info-strip { background: linear-gradient(110deg, #e3f9ff, #fff4e4); }
+@media (max-width: 991.98px) {
+  .admin-shell .admin-sidebar.admin-nav { position: static; }
+  .admin-shell { padding: 18px 0 54px; }
+}
+
+/* V3.2: An thanh dieu huong hoc vien chi tren cac trang co khung Admin.
+   Trinh duyet Coc Coc/Chrome hien tai ho tro :has(). Khong sua header JSP. */
+body:has(.admin-shell) .site-nav,
+body:has(.admin-shell) .site-footer,
+body:has(.admin-shell) .n11-footer-v3 {
+  display: none !important;
+}
+body:has(.admin-shell) {
+  background: #f6fbfd;
+}
+.admin-shell {
+  font-family: 'Segoe UI', Inter, Arial, sans-serif;
+  min-height: 100vh;
+}

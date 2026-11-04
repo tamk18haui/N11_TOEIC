@@ -1,0 +1,29 @@
+/*
+ * File: admin-accounts.css
+ * Mục đích: Định dạng riêng cho danh sách tài khoản, vai trò, thao tác và form thêm/sửa.
+ * Chỉ sửa hiển thị trong Admin, không chứa dữ liệu mẫu hay nghiệp vụ Java.
+ */
+
+/* Tiêu đề và điều hướng tài khoản. */
+.admin-shell .account-title { font-size: clamp(26px, 2.8vw, 36px); margin: 6px 0 9px; }
+.admin-shell .account-section-title { font-size: 19px; }
+.admin-shell .account-back { color: #008fa8; font-weight: 800; }
+
+/* Bảng, vai trò và thao tác. */
+.admin-shell .account-table { min-width: 760px; }
+.admin-shell .account-table th { white-space: nowrap; }
+.admin-shell .account-table td { vertical-align: middle; }
+.admin-shell .account-role { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; background: #e2f8ff; color: #047b9c; }
+.admin-shell .account-role-admin { background: #fff0db; color: #b65b03; }
+.admin-shell .account-actions { white-space: nowrap; }
+.admin-shell .account-actions form { margin: 0; }
+
+/* Phân trang. */
+.admin-shell .account-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; }
+.admin-shell .account-pagination .btn { border-radius: 11px; }
+
+/* Hiển thị trên điện thoại. */
+@media (max-width: 767.98px) {
+  .admin-shell .account-actions { gap: 6px !important; }
+  .admin-shell .account-table td, .admin-shell .account-table th { padding: 11px 10px; }
+}

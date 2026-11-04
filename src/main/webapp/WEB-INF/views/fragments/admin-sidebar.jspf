@@ -1,10 +1,57 @@
+<%--
+ File: admin-sidebar.jspf
+ M&#7909;c &#273;&#237;ch: Thanh menu d&#249;ng chung c&#7911;a to&#224;n b&#7897; giao di&#7879;n Admin.
+ S&#7917;a t&#234;n m&#7909;c v&#224; &#273;&#432;&#7901;ng d&#7851;n t&#7841;i &#273;&#226;y; m&#224;u s&#7855;c n&#7857;m trong admin-shell.css.
+--%>
 <%@ page pageEncoding="UTF-8" %>
-<aside class="admin-sidebar mb-3 mb-lg-0" aria-label="Điều hướng quản trị">
- <div class="small-caps text-muted-n11 px-3 mb-3">KHU VỰC QUẢN TRỊ</div>
- <a class="admin-link ${activePage eq 'admin' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>Tổng quan</a>
- <a class="admin-link ${activePage eq 'admin-accounts' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/accounts"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#users"></use></svg>Quản lý tài khoản</a>
- <a class="admin-link ${activePage eq 'admin-exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/exams"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg>Quản lý đề thi</a>
- <hr style="border-color:#e7eaf4" />
- <a class="admin-link" href="${pageContext.request.contextPath}/"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg>Về trang học viên</a>
- <div class="demo-hint mt-3">Demo UI: các trang quản trị chưa bảo vệ bởi đăng nhập/phân quyền. Phải bổ sung xác thực trước khi đưa lên server thật.</div>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<aside class="admin-sidebar admin-nav mb-3 mb-lg-0" aria-label="&#272;i&#7873;u h&#432;&#7899;ng qu&#7843;n tr&#7883;">
+ <%-- Logo v&#224; t&#234;n h&#7879; th&#7889;ng qu&#7843;n tr&#7883;. --%>
+ <div class="admin-nav-brand">
+  <div class="admin-nav-avatar">N11</div>
+  <div><strong>N11 TOEIC Admin</strong><span>H&#7879; th&#7889;ng qu&#7843;n tr&#7883;</span></div>
+ </div>
+ <div class="admin-nav-intro"><span class="admin-online-dot" aria-hidden="true"></span>Qu&#7843;n l&#253; h&#7885;c vi&#234;n v&#224; n&#7897;i dung TOEIC</div>
+
+ <%-- T&#7893;ng quan. --%>
+ <div class="admin-nav-group">T&#7892;NG QUAN</div>
+ <a class="admin-link ${activePage eq 'admin' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>Dashboard</a>
+
+ <%-- Qu&#7843;n l&#253; t&#224;i kho&#7843;n. --%>
+ <div class="admin-nav-group">NG&#431;&#7900;I D&#217;NG</div>
+ <a class="admin-link ${activePage eq 'admin-accounts' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/accounts">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#users"></use></svg>Qu&#7843;n l&#253; t&#224;i kho&#7843;n</a>
+
+ <%-- Qu&#7843;n l&#253; n&#7897;i dung h&#7885;c TOEIC. --%>
+ <div class="admin-nav-group">N&#7896;I DUNG H&#7884;C</div>
+ <a class="admin-link ${activePage eq 'admin-vocabulary' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/vocabulary">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg>T&#7915; v&#7921;ng</a>
+ <a class="admin-link ${activePage eq 'admin-grammar' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/grammar">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book"></use></svg>Ng&#7919; ph&#225;p</a>
+
+ <%-- Luy&#7879;n t&#7853;p v&#224; thi th&#7917;. --%>
+ <div class="admin-nav-group">LUY&#7878;N T&#7852;P &amp; THI TH&#7916;</div>
+ <a class="admin-link ${activePage eq 'admin-listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/listening">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg>Listening (Part 1&#8211;4)</a>
+ <a class="admin-link ${activePage eq 'admin-reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/reading">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg>Reading (Part 5&#8211;7)</a>
+ <a class="admin-link ${activePage eq 'admin-exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/exams">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg>&#272;&#7873; thi th&#7917; TOEIC</a>
+
+ <%-- Theo d&#245;i l&#7897; tr&#236;nh v&#224; ti&#7871;n &#273;&#7897; h&#7885;c t&#7853;p. --%>
+ <div class="admin-nav-group">THEO D&#213;I H&#7884;C T&#7852;P</div>
+ <a class="admin-link ${activePage eq 'admin-roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/roadmap">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>L&#7897; tr&#236;nh h&#7885;c</a>
+ <a class="admin-link ${activePage eq 'admin-progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/progress">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>Ti&#7871;n &#273;&#7897; &amp; th&#7889;ng k&#234;</a>
+
+ <%-- Quay v&#7873; giao di&#7879;n h&#7885;c vi&#234;n v&#224; &#273;&#259;ng xu&#7845;t an to&#224;n. --%>
+ <div class="admin-nav-divider"></div>
+ <a class="admin-link" href="${pageContext.request.contextPath}/">
+  <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg>V&#7873; trang h&#7885;c vi&#234;n</a>
+ <form method="post" action="${pageContext.request.contextPath}/admin/logout" class="admin-logout-form">
+  <input type="hidden" name="_adminCsrf" value="<c:out value='${adminCsrfToken}' />" />
+  <button type="submit" class="btn btn-soft w-100">&#272;&#259;ng xu&#7845;t</button>
+ </form>
 </aside>

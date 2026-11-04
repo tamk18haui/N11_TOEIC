@@ -1,3 +1,4 @@
+<%-- File: head.jspf. Khai bao HTML, title va stylesheet dung chung cua website. --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="vi">
@@ -12,5 +13,13 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:if test="${activePage eq 'admin' or activePage eq 'admin-accounts' or activePage eq 'admin-exams' or activePage eq 'admin-vocabulary' or activePage eq 'admin-grammar' or activePage eq 'admin-listening' or activePage eq 'admin-reading' or activePage eq 'admin-roadmap' or activePage eq 'admin-progress'}">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css" />
+</c:if>
+  <%-- Admin V3.3: Tone cyan/teal/cam, chi ap dung cho .admin-shell. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css?v=n11-v33" data-n11-admin-v33="shell" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css?v=n11-v33" data-n11-admin-v33="accounts" />
 </head>
 <body>

@@ -57,8 +57,6 @@ public class UiPageController {
     @GetMapping("/admin")
     public String adminDashboard(Model model) { return page(model, "admin/index", "admin", "Dashboard quản trị"); }
 
-    @GetMapping("/admin/accounts")
-    public String adminAccounts(Model model) { return page(model, "admin/accounts", "admin-accounts", "Quản lý tài khoản"); }
 
     @GetMapping("/admin/exams")
     public String adminExams(Model model) { return page(model, "admin/exams", "admin-exams", "Quản lý đề thi"); }
