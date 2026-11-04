@@ -50,8 +50,8 @@
  <div class="admin-nav-divider"></div>
  <a class="admin-link" href="${pageContext.request.contextPath}/">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg>V&#7873; trang h&#7885;c vi&#234;n</a>
- <form method="post" action="${pageContext.request.contextPath}/admin/logout" class="admin-logout-form">
-  <input type="hidden" name="_adminCsrf" value="<c:out value='${adminCsrfToken}' />" />
+ <form method="post" action="${pageContext.request.contextPath}/logout" class="admin-logout-form">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   <button type="submit" class="btn btn-soft w-100">&#272;&#259;ng xu&#7845;t</button>
  </form>
 </aside>

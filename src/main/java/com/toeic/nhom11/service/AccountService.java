@@ -120,6 +120,14 @@ public class AccountService {
                 .orElse(null);
     }
 
+    /** Resolve the current Admin using the principal authenticated by Spring Security. */
+    public long currentAdminId(String email) {
+        if (email == null) throw new AccountException("Báº¡n cáº§n Ä‘Äƒng nháº­p báº±ng tÃ i khoáº£n Admin.");
+        return dao.credentials(email.trim().toLowerCase(Locale.ROOT))
+                .filter(item -> "ADMIN".equals(item.role()) && "ACTIVE".equals(item.status()))
+                .map(item -> item.id())
+                .orElseThrow(() -> new AccountException("TÃ i khoáº£n Admin khÃ´ng há»£p lá»‡."));
+    }
     public record LoginIdentity(long id, String role) { }
 
     private String filter(String value, String a, String b) {

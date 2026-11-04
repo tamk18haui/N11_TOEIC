@@ -1,0 +1,36 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #EAF7FC
+skinparam usecaseBorderColor #1685A6
+actor "Người học" as User
+boundary "JSP / trình duyệt" as View
+control GrammarController as Controller
+control GrammarService as Service
+entity JdbcGrammarDao as DAO
+database MySQL
+User -> View : Mở /grammar/{id}?tab=examples
+View -> Controller : GET bài học
+Controller -> Service : lesson(id, false)
+Service -> DAO : lesson(id), topic(topicId)
+DAO -> MySQL : SELECT bài + chủ điểm
+MySQL --> DAO : Dữ liệu
+DAO --> Service : Lesson
+alt Bài hoặc chủ điểm chưa công bố
+ Service --> Controller : 404
+ Controller --> View : Không tìm thấy
+else Được công bố
+ Service --> Controller : Bài giảng đã lọc HTML
+ Controller -> Service : examples(id), questions(id)
+ Service -> DAO : Đọc content_html và câu hỏi
+ DAO -> MySQL : SELECT có tham số
+ MySQL --> DAO : Dữ liệu
+ DAO --> Service : Giải mã vùng ví dụ trong content_html
+ Service --> Controller : Ví dụ và câu hỏi
+ Controller --> View : Model + grammar/detail.jsp
+ View --> User : Tab Ví dụ (câu, bản dịch, giải thích)
+end
+@enduml

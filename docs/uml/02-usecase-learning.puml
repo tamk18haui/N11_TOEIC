@@ -1,0 +1,28 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #EAF7FC
+skinparam usecaseBorderColor #1685A6
+left to right direction
+actor "Khách / Học viên" as User
+rectangle "UC01 Tìm và học ngữ pháp" {
+ usecase "Xem danh sách bài học" as List
+ usecase "Tìm kiếm bài học" as Search
+ usecase "Lọc theo chủ điểm / mức độ" as Filter
+ usecase "Xem chi tiết bài học" as Detail
+ usecase "Đọc bài giảng" as Lecture
+ usecase "Xem ví dụ và bản dịch" as Example
+}
+User --> List
+User --> Detail
+Search ..> List : <<extend>>
+Filter ..> List : <<extend>>
+Lecture ..> Detail : <<extend>>
+Example ..> Detail : <<extend>>
+note bottom of List
+Chỉ hiển thị bài và chủ điểm đã công bố.
+end note
+@enduml

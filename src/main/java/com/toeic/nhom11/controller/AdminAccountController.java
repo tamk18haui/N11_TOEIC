@@ -1,10 +1,10 @@
 package com.toeic.nhom11.controller;
 
-import com.toeic.nhom11.config.AdminAccessInterceptor;
+
 import com.toeic.nhom11.model.AccountForm;
 import com.toeic.nhom11.service.AccountException;
 import com.toeic.nhom11.service.AccountService;
-import jakarta.servlet.http.HttpSession;
+import java.security.Principal;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,9 +84,9 @@ public class AdminAccountController {
 
     @PostMapping("/{id}")
     public String save(@PathVariable long id, @ModelAttribute AccountForm accountForm,
-                       HttpSession session, Model model, RedirectAttributes redirect) {
+                       Principal principal, Model model, RedirectAttributes redirect) {
         try {
-            accounts.update(id, accountForm, (Long) session.getAttribute(AdminAccessInterceptor.SESSION_USER_ID));
+            accounts.update(id, accountForm, accounts.currentAdminId(principal.getName()));
             redirect.addFlashAttribute("successMessage", "Đã cập nhật tài khoản.");
             return "redirect:/admin/accounts";
         } catch (AccountException ex) {
@@ -101,10 +101,10 @@ public class AdminAccountController {
 
     @PostMapping("/{id}/status")
     public String status(@PathVariable long id, @RequestParam String status,
-                         HttpSession session, RedirectAttributes redirect) {
+                         Principal principal, RedirectAttributes redirect) {
         try {
             accounts.changeStatus(id, status,
-                    (Long) session.getAttribute(AdminAccessInterceptor.SESSION_USER_ID));
+                    accounts.currentAdminId(principal.getName()));
             redirect.addFlashAttribute("successMessage", "Đã cập nhật trạng thái tài khoản.");
         } catch (AccountException ex) {
             redirect.addFlashAttribute("errorMessage", ex.getMessage());

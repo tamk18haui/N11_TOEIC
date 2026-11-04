@@ -1,25 +1,25 @@
-<%-- File: head.jspf. Khai bao HTML, title va stylesheet dung chung cua website. --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="N11 TOEIC - Website học từ vựng, ngữ pháp và luyện thi TOEIC Listening & Reading." />
-  <title>${pageTitle} | N11 TOEIC</title>
+  <title><c:out value="${pageTitle}"/> | N11 TOEIC</title>
   <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/assets/img/logo.svg" />
   <!-- Bootstrap 5.1.1 bundling local (MIT) de khong phu thuoc CDN. -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<c:if test="${activePage eq 'admin' or activePage eq 'admin-accounts' or activePage eq 'admin-exams' or activePage eq 'admin-vocabulary' or activePage eq 'admin-grammar' or activePage eq 'admin-listening' or activePage eq 'admin-reading' or activePage eq 'admin-roadmap' or activePage eq 'admin-progress'}">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css" />
-</c:if>
-  <%-- Admin V3.3: Tone cyan/teal/cam, chi ap dung cho .admin-shell. --%>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css?v=n11-v33" data-n11-admin-v33="shell" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css?v=n11-v33" data-n11-admin-v33="accounts" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grammar.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/theme.css" />
+  <%-- Admin stylesheet: only loaded for /admin routes. --%>
+  <c:if test="${fn:startsWith(pageContext.request.servletPath, '/admin')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css?v=pr6-merge" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css?v=pr6-merge" />
+  </c:if>
 </head>
 <body>

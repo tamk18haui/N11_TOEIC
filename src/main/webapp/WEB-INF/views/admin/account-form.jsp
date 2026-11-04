@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../fragments/head.jspf" %>
-<%@ include file="../fragments/header.jspf" %>
+
 <%-- Form dùng chung cho thêm/sửa; thay nhãn và layout tại đây. --%>
 <main class="admin-shell">
  <div class="container container-n11">
@@ -17,7 +17,7 @@
       <c:otherwise><c:url var="formAction" value="/admin/accounts/${accountId}" /></c:otherwise>
      </c:choose>
      <form method="post" action="<c:out value='${formAction}' />">
-      <input type="hidden" name="_adminCsrf" value="<c:out value='${adminCsrfToken}' />" />
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       <%-- NHÓM TRƯỜNG 1: Thông tin cơ bản lấy từ user_profiles và users. --%>
       <div class="row g-3">
        <div class="col-md-6"><label for="accountName" class="form-label">Họ và tên *</label>
@@ -48,5 +48,5 @@
   </div>
  </div>
 </main>
-<%@ include file="../fragments/footer.jspf" %>
+
 <%@ include file="../fragments/scripts.jspf" %>

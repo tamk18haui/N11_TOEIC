@@ -1,6 +1,9 @@
 <%-- File: index.jsp. Trang tổng quan Admin và các liên kết tới phân hệ quản trị TOEIC. --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../fragments/admin-layout-start.jspf" %>
+<%@ include file="../fragments/head.jspf" %>
+<main class="admin-shell"><div class="container container-n11"><div class="row g-4">
+  <div class="col-lg-3"><%@ include file="../fragments/admin-sidebar.jspf" %></div>
+  <div class="col-lg-9">
 
 <%-- Banner Dashboard: phối màu xanh trời và cam theo ảnh Anhngu24h. --%>
 <section class="admin-welcome mb-4" aria-labelledby="adminDashboardTitle">
@@ -40,4 +43,6 @@
 
 <%-- Thông báo phạm vi: không ghi giả số liệu học tập. --%>
 <div class="admin-info-strip">Dữ liệu quản lý tài khoản lấy từ MySQL. Các phân hệ khác đã có khung giao diện, sẽ kết nối nghiệp vụ khi nhóm triển khai.</div>
-<%@ include file="../fragments/admin-layout-end.jspf" %>
+  </div>
+</div></div></main>
+<%@ include file="../fragments/scripts.jspf" %>

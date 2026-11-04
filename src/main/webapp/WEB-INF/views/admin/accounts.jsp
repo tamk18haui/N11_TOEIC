@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../fragments/head.jspf" %>
-<%@ include file="../fragments/header.jspf" %>
+
 <%-- Trang tổng: sửa bố cục tại đây; màu, kích thước ở admin-accounts.css. --%>
 <main class="admin-shell">
  <div class="container container-n11">
@@ -69,7 +69,7 @@
           <td><div class="d-flex gap-2 account-actions">
            <a class="btn btn-soft btn-sm" href="${pageContext.request.contextPath}/admin/accounts/${account.id}/edit">Sửa</a>
            <form method="post" action="${pageContext.request.contextPath}/admin/accounts/${account.id}/status" data-confirm="${account.status eq 'ACTIVE' ? 'Khóa tài khoản này?' : 'Mở khóa tài khoản này?'}">
-            <input type="hidden" name="_adminCsrf" value="<c:out value='${adminCsrfToken}' />" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" name="status" value="${account.status eq 'ACTIVE' ? 'LOCKED' : 'ACTIVE'}" />
             <button class="btn btn-outline-primary btn-sm" type="submit">${account.status eq 'ACTIVE' ? 'Khóa' : 'Mở khóa'}</button>
            </form>
@@ -97,5 +97,5 @@
  </div>
 </main>
 <script defer src="${pageContext.request.contextPath}/assets/js/admin-accounts.js"></script>
-<%@ include file="../fragments/footer.jspf" %>
+
 <%@ include file="../fragments/scripts.jspf" %>

@@ -46,7 +46,7 @@
 
       <section class="n11-reg-form-side" aria-labelledby="registerTitle">
         <div class="n11-reg-form-wrap">
-          <div class="n11-reg-breadcrumb n11-reg-enter"><span class="n11-reg-dot-circle"></span> TẠO TÀI KHOẢN <span class="ms-auto n11-reg-breadcrumb-step">BƯỚC 01 / 01</span></div>
+          <div class="n11-reg-breadcrumb n11-reg-enter"><span class="n11-reg-dot-circle"></span> TẠO TÀI KHOẢN </div>
           <div class="n11-reg-heading">
             <h1 id="registerTitle">Khởi đầu hành trình<br><span>TOEIC của bạn.</span></h1>
             <p>Đăng ký miễn phí, lưu tiến độ học và chinh phục mục tiêu từng ngày.</p>
@@ -67,6 +67,7 @@
           </c:if>
 
           <form id="n11RegisterForm" method="post" action="${pageContext.request.contextPath}/register" novalidate autocomplete="on">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" name="_registrationCsrf" value="<c:out value='${registerCsrfToken}'/>" />
             <div class="n11-reg-field">
               <label for="n11FullName" class="form-label">Họ và tên <span>*</span></label>
