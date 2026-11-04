@@ -2,21 +2,105 @@
 <%@ include file="../fragments/head.jspf" %>
 <%@ include file="../fragments/header.jspf" %>
 
-<main class="grammar-page"><div class="container grammar-wrap">
-<nav class="grammar-subnav" aria-label="Học ngữ pháp"><a class="selected" href="${pageContext.request.contextPath}/grammar">◎ Học ngữ pháp</a><a href="${pageContext.request.contextPath}/grammar/history">↗ Kết quả của tôi</a></nav>
-<section class="grammar-hero"><span class="grammar-eyebrow">✧ Vững ngữ pháp · Tự tin chinh phục Part 5</span>
-<h1>Ôn luyện <span class="grammar-gradient">Ngữ pháp TOEIC</span></h1><p>Học từng chủ điểm, hiểu qua ví dụ và luyện tập ngay.<br><strong>Bài giảng — Ví dụ — Bài tập trắc nghiệm</strong></p><div class="grammar-motivation">Một chủ điểm mỗi ngày. Vững nền tảng, tự tin hơn.</div>
-<div class="grammar-stats"><div class="grammar-stat"><strong>${totalLessons}</strong><span>Bài học sẵn sàng</span></div><div class="grammar-stat"><strong>Part 5</strong><span>Kiến thức trọng tâm</span></div><div class="grammar-stat"><strong>A → D</strong><span>Luyện tập có giải thích</span></div></div></section>
-<form class="grammar-toolbar row g-2" method="get" action="${pageContext.request.contextPath}/grammar">
-<div class="col-md-7"><label for="grammar-search" class="visually-hidden">Tìm bài học</label><input class="form-control grammar-search" type="search" id="grammar-search" name="q" maxlength="200" value="<c:out value='${q}'/>" placeholder="Tìm kiếm bài học hoặc chủ điểm..."></div>
-<input type="hidden" name="topic" value="${selectedTopic}">
-<div class="col-8 col-md-3"><label for="level" class="visually-hidden">Mức độ</label><select id="level" class="form-select grammar-search" name="level"><option value="">Tất cả mức độ</option><option value="BASIC" ${level eq 'BASIC' ? 'selected' : ''}>Cơ bản</option><option value="INTERMEDIATE" ${level eq 'INTERMEDIATE' ? 'selected' : ''}>Trung cấp</option><option value="ADVANCED" ${level eq 'ADVANCED' ? 'selected' : ''}>Nâng cao</option></select></div><div class="col-4 col-md-2"><button class="btn grammar-btn w-100 h-100" type="submit">Tìm kiếm</button></div></form>
-<nav class="grammar-filters" aria-label="Chủ điểm ngữ pháp">
-<c:url var="allUrl" value="/grammar"><c:param name="q" value="${q}"/><c:param name="level" value="${level}"/></c:url><a class="grammar-filter ${empty selectedTopic ? 'active' : ''}" href="<c:out value='${allUrl}'/>">Tất cả (${totalLessons})</a>
-<c:forEach items="${topics}" var="topic"><c:url var="topicUrl" value="/grammar"><c:param name="topic" value="${topic.id}"/><c:param name="q" value="${q}"/><c:param name="level" value="${level}"/></c:url><a class="grammar-filter ${selectedTopic eq topic.id ? 'active' : ''}" href="<c:out value='${topicUrl}'/>"><c:out value="${topic.title}"/> (${empty topicCounts[topic.id] ? 0 : topicCounts[topic.id]})</a></c:forEach></nav>
-<c:if test="${not empty pageContext.request.userPrincipal}"><div class="grammar-personal"><span class="personal-symbol">↗</span><div><strong>Tiếp tục hành trình của bạn</strong><p>Bạn đã luyện tập ${practicedCount} / ${totalLessons} bài học. Chọn một chủ điểm để bắt đầu hoặc ôn lại.</p></div><a href="${pageContext.request.contextPath}/grammar/history">Xem kết quả →</a></div></c:if>
-<div class="d-flex align-items-center justify-content-between mb-3"><h2 class="h5 mb-0">Bắt đầu từ một bài học</h2><span class="small text-muted">${lessons.size()} bài phù hợp</span></div>
-<div class="row g-4"><c:forEach items="${lessons}" var="lesson" varStatus="s"><div class="col-md-6 col-lg-4"><article class="grammar-card"><div class="d-flex align-items-start gap-3"><span class="grammar-number">${s.index+1}</span><h2><c:out value="${lesson.title}"/></h2></div><p><c:out value="${lesson.summary}"/></p><div class="grammar-meta"><span><c:out value="${lesson.topicTitle}"/></span><span class="grammar-badge ${lesson.level eq 'INTERMEDIATE' ? 'intermediate' : lesson.level eq 'ADVANCED' ? 'advanced' : ''}">${lesson.level eq 'BASIC' ? 'Cơ bản' : lesson.level eq 'INTERMEDIATE' ? 'Trung cấp' : 'Nâng cao'}</span></div><c:set var="best" value="${bestScores[lesson.id]}"/><div class="card-learning"><div class="d-flex justify-content-between"><span class="learning-state ${not empty best ? 'practiced' : ''}"><i></i>${empty best ? 'Chưa làm bài tập' : 'Đã luyện tập'}</span><strong>${empty best ? '0' : best}%</strong></div><div class="score-track" role="progressbar" aria-label="Điểm bài tập cao nhất" aria-valuenow="${empty best ? 0 : best}" aria-valuemin="0" aria-valuemax="100"><span style="width:${empty best ? 0 : best}%"></span></div><span class="score-caption">${empty best ? 'Bắt đầu với bài giảng và ví dụ' : 'Điểm cao nhất của bạn'} · ${lesson.questionCount} câu</span></div><a class="btn grammar-btn w-100" href="${pageContext.request.contextPath}/grammar/${lesson.id}">${empty best ? 'Vào học' : 'Ôn tập lại'} <span aria-hidden="true">→</span></a></article></div></c:forEach></div>
-<c:if test="${empty lessons}"><div class="grammar-empty"><h2 class="h4">Chưa tìm thấy bài học phù hợp</h2><p>Thử từ khóa khác hoặc chọn tất cả chủ điểm.</p><a class="btn grammar-btn" href="${pageContext.request.contextPath}/grammar">Xem tất cả bài học</a></div></c:if>
-</div></main>
-<%@ include file="../fragments/footer.jspf" %><%@ include file="../fragments/scripts.jspf" %>
+<%-- Trang danh sách. Màu sắc và khoảng cách nằm trong assets/css/grammar.css. --%>
+<main class="grammar-page">
+    <div class="container grammar-wrap">
+        <nav class="grammar-subnav" aria-label="Học ngữ pháp">
+            <a class="selected" href="${pageContext.request.contextPath}/grammar">◎ Học ngữ pháp</a>
+            <a href="${pageContext.request.contextPath}/grammar/history">↗ Kết quả của tôi</a>
+        </nav>
+        <%-- Banner đầu trang. totalLessons được tính từ database trong GrammarController. --%>
+        <section class="grammar-hero"><span class="grammar-eyebrow">✧ Vững ngữ pháp · Tự tin chinh phục Part 5</span>
+            <h1>Ôn luyện <span class="grammar-gradient">Ngữ pháp TOEIC</span></h1>
+            <p>Học từng chủ điểm, hiểu qua ví dụ và luyện tập ngay.<br><strong>Bài giảng — Ví dụ — Bài tập trắc nghiệm</strong></p>
+            <div class="grammar-motivation">Một chủ điểm mỗi ngày. Vững nền tảng, tự tin hơn.</div>
+            <div class="grammar-stats">
+                <div class="grammar-stat"><strong>${totalLessons}</strong><span>Bài học sẵn sàng</span>
+                </div>
+                <div class="grammar-stat"><strong>Part 5</strong><span>Kiến thức trọng tâm</span>
+                </div>
+                <div class="grammar-stat"><strong>A → D</strong><span>Luyện tập có giải thích</span>
+                </div>
+            </div>
+        </section>
+        <%-- Form GET giữ từ khóa và bộ lọc trên URL, nên có thể tải lại hoặc chia sẻ. --%>
+        <form class="grammar-toolbar row g-2" method="get" action="${pageContext.request.contextPath}/grammar">
+            <div class="col-md-7">
+                <label for="grammar-search" class="visually-hidden">Tìm bài học</label>
+                <input class="form-control grammar-search" type="search" id="grammar-search" name="q" maxlength="200" value="<c:out value='${q}'/>" placeholder="Tìm kiếm bài học hoặc chủ điểm...">
+            </div>
+            <input type="hidden" name="topic" value="${selectedTopic}">
+            <div class="col-8 col-md-3">
+                <label for="level" class="visually-hidden">Mức độ</label>
+                <select id="level" class="form-select grammar-search" name="level">
+                    <option value="">Tất cả mức độ</option>
+                    <option value="BASIC" ${level eq 'BASIC' ? 'selected' : ''}>Cơ bản</option>
+                    <option value="INTERMEDIATE" ${level eq 'INTERMEDIATE' ? 'selected' : ''}>Trung cấp</option>
+                    <option value="ADVANCED" ${level eq 'ADVANCED' ? 'selected' : ''}>Nâng cao</option>
+                </select>
+            </div>
+            <div class="col-4 col-md-2">
+                <button class="btn grammar-btn w-100 h-100" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+        <%-- Tabs chủ điểm. Danh sách và số lượng bài lấy từ model, không nhập cứng. --%>
+        <nav class="grammar-filters" aria-label="Chủ điểm ngữ pháp">
+            <c:url var="allUrl" value="/grammar">
+                <c:param name="q" value="${q}"/>
+                <c:param name="level" value="${level}"/>
+            </c:url>
+            <a class="grammar-filter ${empty selectedTopic ? 'active' : ''}" href="<c:out value='${allUrl}'/>">Tất cả (${totalLessons})</a>
+            <c:forEach items="${topics}" var="topic">
+                <c:url var="topicUrl" value="/grammar">
+                    <c:param name="topic" value="${topic.id}"/>
+                    <c:param name="q" value="${q}"/>
+                    <c:param name="level" value="${level}"/>
+                </c:url>
+                <a class="grammar-filter ${selectedTopic eq topic.id ? 'active' : ''}" href="<c:out value='${topicUrl}'/>"><c:out value="${topic.title}"/> (${empty topicCounts[topic.id] ? 0 : topicCounts[topic.id]})</a>
+            </c:forEach>
+        </nav>
+        <c:if test="${not empty pageContext.request.userPrincipal}">
+            <div class="grammar-personal"><span class="personal-symbol">↗</span>
+                <div><strong>Tiếp tục hành trình của bạn</strong>
+                    <p>Bạn đã luyện tập ${practicedCount} / ${totalLessons} bài học. Chọn một chủ điểm để bắt đầu hoặc ôn lại.</p>
+                </div>
+                <a href="${pageContext.request.contextPath}/grammar/history">Xem kết quả →</a>
+            </div>
+        </c:if>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2 class="h5 mb-0">Bắt đầu từ một bài học</h2><span class="small text-muted">${lessons.size()} bài phù hợp</span>
+        </div>
+        <%-- Lưới bài học. col-md-6 cho 2 cột tablet, col-lg-4 cho 3 cột desktop. --%>
+        <div class="row g-4">
+            <c:forEach items="${lessons}" var="lesson" varStatus="s">
+                <div class="col-md-6 col-lg-4">
+                    <article class="grammar-card">
+                        <div class="d-flex align-items-start gap-3"><span class="grammar-number">${s.index+1}</span>
+                            <h2><c:out value="${lesson.title}"/></h2>
+                        </div>
+                        <p><c:out value="${lesson.summary}"/></p>
+                        <div class="grammar-meta"><span><c:out value="${lesson.topicTitle}"/></span><span class="grammar-badge ${lesson.level eq 'INTERMEDIATE' ? 'intermediate' : lesson.level eq 'ADVANCED' ? 'advanced' : ''}">${lesson.level eq 'BASIC' ? 'Cơ bản' : lesson.level eq 'INTERMEDIATE' ? 'Trung cấp' : 'Nâng cao'}</span>
+                        </div>
+                        <c:set var="best" value="${bestScores[lesson.id]}"/>
+                        <div class="card-learning">
+                            <div class="d-flex justify-content-between"><span class="learning-state ${not empty best ? 'practiced' : ''}"><i></i>${empty best ? 'Chưa làm bài tập' : 'Đã luyện tập'}</span><strong>${empty best ? '0' : best}%</strong>
+                            </div>
+                            <div class="score-track" role="progressbar" aria-label="Điểm bài tập cao nhất" aria-valuenow="${empty best ? 0 : best}" aria-valuemin="0" aria-valuemax="100"><span style="width:${empty best ? 0 : best}%"></span>
+                            </div><span class="score-caption">${empty best ? 'Bắt đầu với bài giảng và ví dụ' : 'Điểm cao nhất của bạn'} · ${lesson.questionCount > 20 ? 20 : lesson.questionCount} câu</span>
+                        </div>
+                        <a class="btn grammar-btn w-100" href="${pageContext.request.contextPath}/grammar/${lesson.id}">${empty best ? 'Vào học' : 'Ôn tập lại'} <span aria-hidden="true">→</span></a>
+                    </article>
+                </div>
+            </c:forEach>
+        </div>
+        <c:if test="${empty lessons}">
+            <div class="grammar-empty">
+                <h2 class="h4">Chưa tìm thấy bài học phù hợp</h2>
+                <p>Thử từ khóa khác hoặc chọn tất cả chủ điểm.</p>
+                <a class="btn grammar-btn" href="${pageContext.request.contextPath}/grammar">Xem tất cả bài học</a>
+            </div>
+        </c:if>
+    </div>
+</main>
+<%@ include file="../fragments/footer.jspf" %>
+<%@ include file="../fragments/scripts.jspf" %>

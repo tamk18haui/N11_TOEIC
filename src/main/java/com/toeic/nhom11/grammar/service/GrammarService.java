@@ -9,6 +9,9 @@ public interface GrammarService {
     Lesson lesson(long id,boolean admin);
     List<Example> examples(long lessonId);
     List<Question> questions(long lessonId);
+    List<Question> quizQuestions(long lessonId);
+    QuestionReview checkPractice(long lessonId, long questionId, long optionId);
+    Map<Long, QuestionReview> reviews(long attemptId, String email);
     long saveTopic(Topic topic);
     void deleteTopic(long id);
     long saveLesson(Lesson lesson);
