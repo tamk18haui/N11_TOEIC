@@ -15,6 +15,8 @@ import java.util.*;
 @Service
 @Transactional(readOnly=true)
 public class DefaultGrammarService implements GrammarService {
+    private static final int QUIZ_LENGTH = 20;
+    private static final String OPTION_NOTES = "[PHÂN TÍCH]";
     private final GrammarDao dao;
     public DefaultGrammarService(GrammarDao dao) { this.dao=dao; }
     private static ResponseStatusException missing() { return new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy nội dung"); }
@@ -34,6 +36,68 @@ public class DefaultGrammarService implements GrammarService {
     }
     public List<Example> examples(long id) { return dao.examples(id); }
     public List<Question> questions(long id) { return dao.questions(id); }
+    public List<Question> quizQuestions(long lessonId) {
+        List<Question> bank = dao.questions(lessonId);
+        // Ưu tiên bộ có giải thích A–D; câu cũ vẫn giữ nguyên để xem lịch sử.
+        List<Question> explained = bank.stream()
+            .filter(question -> optionNotes(question.getExplanation()).size() == 4)
+            .limit(QUIZ_LENGTH)
+            .toList();
+        return explained.size() == QUIZ_LENGTH ? explained : bank.stream().limit(QUIZ_LENGTH).toList();
+    }
+
+    public QuestionReview checkPractice(long lessonId, long questionId, long optionId) {
+        lesson(lessonId, false);
+        Question question = quizQuestions(lessonId).stream()
+            .filter(item -> item.getId() == questionId)
+            .findFirst().orElseThrow(DefaultGrammarService::missing);
+        require(question.getOptions().stream().anyMatch(option -> option.getId() == optionId),
+            "Phương án không thuộc câu hỏi.");
+        return review(question, optionId);
+    }
+
+    public Map<Long, QuestionReview> reviews(long attemptId, String email) {
+        Attempt attempt = attempt(attemptId, email);
+        Map<Long, Question> bank = new HashMap<>();
+        dao.questions(attempt.getLessonId()).forEach(question -> bank.put(question.getId(), question));
+        Map<Long, QuestionReview> results = new HashMap<>();
+        for (Answer answer : dao.answers(attemptId)) {
+            Question question = bank.get(answer.getQuestionId());
+            if (question != null) {
+                results.put(question.getId(), review(question, answer.getSelectedOptionId()));
+            }
+        }
+        return results;
+    }
+
+    private QuestionReview review(Question question, Long selectedId) {
+        String explanation = Objects.toString(question.getExplanation(), "");
+        Map<String, String> notes = optionNotes(explanation);
+        boolean correct = question.getOptions().stream()
+            .anyMatch(option -> option.getCorrect() && option.getId().equals(selectedId));
+        var options = question.getOptions().stream()
+            .map(option -> new QuestionReview.OptionReview(
+                option.getOptionLabel(), option.getOptionText(), option.getCorrect(),
+                option.getId().equals(selectedId),
+                notes.getOrDefault(option.getOptionLabel(), option.getCorrect() ? explanation : "")))
+            .toList();
+        return new QuestionReview(correct, options);
+    }
+
+    // Dùng cột explanation hiện có để không làm thay đổi schema nhóm.
+    private Map<String, String> optionNotes(String explanation) {
+        if (explanation == null || !explanation.startsWith(OPTION_NOTES)) {
+            return Map.of();
+        }
+        Map<String, String> notes = new HashMap<>();
+        for (String line : explanation.lines().skip(1).toList()) {
+            if (line.matches("^\\[[A-D]\\] .+")) {
+                notes.put(line.substring(1, 2), line.substring(4));
+            }
+        }
+        return notes;
+    }
+
     @Transactional public long saveTopic(Topic t) {
         text(t.getTitle(),180,"Tên chủ đề"); optionalText(t.getDescription(),2000,"Mô tả");require(t.getSortOrder()>=0,"Thứ tự phải không âm.");
         if(t.getId()!=null) dao.topic(t.getId()).orElseThrow(DefaultGrammarService::missing);
@@ -95,7 +159,7 @@ public class DefaultGrammarService implements GrammarService {
     public boolean hasAttempts(long lessonId) { return dao.hasAttempts(lessonId); }
     @Transactional public long submit(long lessonId,String email,Map<Long,Long> selections) {
         lesson(lessonId,false);dao.lockLesson(lessonId);Lesson l=lesson(lessonId,false);
-        List<Question> questions=dao.questions(lessonId);require(!questions.isEmpty(),"Bài học chưa có bài tập.");
+        List<Question> questions=quizQuestions(lessonId);require(!questions.isEmpty(),"Bài học chưa có bài tập.");
         Set<Long> ids=new HashSet<>();questions.forEach(q->ids.add(q.getId()));
         require(ids.containsAll(selections.keySet()),"Có câu hỏi không thuộc bài học này.");
         List<Answer> answers=new ArrayList<>();int correct=0;

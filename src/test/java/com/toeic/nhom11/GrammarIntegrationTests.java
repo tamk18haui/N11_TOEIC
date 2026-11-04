@@ -31,11 +31,11 @@ class GrammarIntegrationTests {
 
     @Test void gradesAndPersistsAllAnswers() {
         Map<Long,Long> answers=new HashMap<>();
-        service.questions(1).forEach(q->answers.put(q.getId(),q.getOptions().stream().filter(Option::getCorrect).findFirst().orElseThrow().getId()));
+        service.quizQuestions(1).forEach(q->answers.put(q.getId(),q.getOptions().stream().filter(Option::getCorrect).findFirst().orElseThrow().getId()));
         long id=service.submit(1,"student@n11.local",answers);
         var result=service.attempt(id,"student@n11.local");
-        assertEquals(5,result.getCorrectCount());assertEquals("100.00",result.getScorePercent().toPlainString());
-        assertEquals(5,service.answers(id,"student@n11.local").size());
+        assertEquals(20,result.getCorrectCount());assertEquals("100.00",result.getScorePercent().toPlainString());
+        assertEquals(20,service.answers(id,"student@n11.local").size());
     }
     @Test void blankAnswersReceiveZeroAndAreSaved() {
         long id=service.submit(1,"student@n11.local",Map.of());
@@ -43,13 +43,13 @@ class GrammarIntegrationTests {
         assertTrue(service.answers(id,"student@n11.local").stream().allMatch(a->a.getSelectedOptionId()==null));
     }
     @Test void mixedAnswersAreGradedOnTheServer() {
-        var q=service.questions(1).get(0);var right=q.getOptions().stream().filter(Option::getCorrect).findFirst().orElseThrow();
+        var q=service.quizQuestions(1).get(0);var right=q.getOptions().stream().filter(Option::getCorrect).findFirst().orElseThrow();
         long id=service.submit(1,"student@n11.local",Map.of(q.getId(),right.getId()));
-        assertEquals("20.00",service.attempt(id,"student@n11.local").getScorePercent().toPlainString());
+        assertEquals("5.00",service.attempt(id,"student@n11.local").getScorePercent().toPlainString());
     }
     @Test void rejectsAnOptionBelongingToAnotherQuestionWithoutSaving() {
         long before=jdbc.queryForObject("SELECT COUNT(*) FROM grammar_attempts",Long.class);
-        var qs=service.questions(1);
+        var qs=service.quizQuestions(1);
         assertThrows(IllegalArgumentException.class,()->service.submit(1,"student@n11.local",Map.of(qs.get(0).getId(),qs.get(1).getOptions().get(0).getId())));
         assertEquals(before,jdbc.queryForObject("SELECT COUNT(*) FROM grammar_attempts",Long.class));
     }
@@ -119,6 +119,50 @@ class GrammarIntegrationTests {
         assertEquals(1,jdbc.queryForObject("SELECT COUNT(*) FROM users u JOIN user_profiles p ON p.user_id=u.id WHERE u.email=?",Integer.class,"grammar.integration@example.com"));
         mvc.perform(post("/login").with(csrf()).param("email","grammar.integration@example.com").param("password","Strong@123"))
             .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/grammar"));
+    }
+    @Test void everyLessonHasTwentyDistinctQuestionsWithFourExplanations() {
+        for (Lesson lesson : service.lessons(null, null, null, false)) {
+            var questions = service.quizQuestions(lesson.getId());
+            assertEquals(20, questions.size(), lesson.getTitle());
+            assertEquals(20, questions.stream().map(Question::getQuestionText).distinct().count());
+            for (Question question : questions) {
+                assertEquals(4, question.getOptions().stream().map(Option::getOptionText).distinct().count());
+                assertEquals(1, question.getOptions().stream().filter(Option::getCorrect).count());
+                var review = service.checkPractice(lesson.getId(), question.getId(), question.getOptions().get(0).getId());
+                assertTrue(review.options().stream().allMatch(option -> !option.explanation().isBlank()));
+            }
+        }
+    }
+    @Test @WithMockUser(username="student@n11.local",roles="STUDENT")
+    void practiceChecksSelectionWithoutRecordingAnExam() throws Exception {
+        long before = jdbc.queryForObject("SELECT COUNT(*) FROM grammar_attempts", Long.class);
+        var questions = service.quizQuestions(1);
+        var question = questions.get(0);
+        var wrong = question.getOptions().stream().filter(option -> !option.getCorrect()).findFirst().orElseThrow();
+        mvc.perform(post("/grammar/1/practice/check").with(csrf())
+            .param("questionId",question.getId().toString()).param("optionId",wrong.getId().toString()))
+            .andExpect(status().isOk()).andExpect(jsonPath("$.correct").value(false))
+            .andExpect(jsonPath("$.options.length()").value(4));
+        mvc.perform(post("/grammar/1/practice/check").with(csrf())
+            .param("questionId",question.getId().toString()).param("optionId",questions.get(1).getOptions().get(0).getId().toString()))
+            .andExpect(status().isBadRequest());
+        mvc.perform(post("/grammar/1/practice/check")
+            .param("questionId",question.getId().toString()).param("optionId",wrong.getId().toString()))
+            .andExpect(status().isForbidden());
+        assertEquals(before,jdbc.queryForObject("SELECT COUNT(*) FROM grammar_attempts", Long.class));
+    }
+    @Test void examReviewContainsSelectedAndCorrectOptionsAndSkipsBlanks() {
+        var question = service.quizQuestions(1).get(0);
+        var wrong = question.getOptions().stream().filter(option -> !option.getCorrect()).findFirst().orElseThrow();
+        long id = service.submit(1,"student@n11.local",Map.of(question.getId(),wrong.getId()));
+        var reviews = service.reviews(id,"student@n11.local");
+        assertEquals(20,reviews.size());
+        var review = reviews.get(question.getId());
+        assertFalse(review.correct());
+        assertEquals(1,review.options().stream().filter(QuestionReview.OptionReview::selected).count());
+        assertEquals(1,review.options().stream().filter(QuestionReview.OptionReview::correct).count());
+        assertTrue(reviews.entrySet().stream().filter(entry -> !entry.getKey().equals(question.getId()))
+            .allMatch(entry -> entry.getValue().options().stream().noneMatch(QuestionReview.OptionReview::selected)));
     }
     private Lesson draft() {
         Lesson l=new Lesson();l.setTopicId(1);l.setTitle("Draft test");l.setSummary("Test summary");l.setContentHtml("<p>Test lesson</p>");l.setLevel("BASIC");return l;

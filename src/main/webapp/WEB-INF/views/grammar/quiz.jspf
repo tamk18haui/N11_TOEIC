@@ -1,0 +1,91 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Bài tập: màu thẻ và trạng thái đáp án nằm ở nhóm .quiz-* trong grammar.css. --%>
+<c:choose>
+    <c:when test="${empty questions}">
+        <p class="grammar-notice mb-0">Bài học này chưa có bài tập.</p>
+    </c:when>
+    <c:when test="${empty mode}">
+        <header class="quiz-intro">
+            <span class="grammar-eyebrow">Kiểm tra kiến thức</span>
+            <h3>Chọn chế độ làm bài (${questions.size()} câu)</h3>
+            <p class="mb-0">Xem phản hồi ngay khi luyện tập hoặc làm trọn đề để tự đánh giá.</p>
+        </header>
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <a class="quiz-mode quiz-mode-practice" href="?tab=exercises&amp;mode=practice">
+                    <span class="quiz-mode-icon" aria-hidden="true">✦</span>
+                    <h4>Chế độ Luyện tập</h4>
+                    <p>Chọn một đáp án để xem đúng, sai và đọc phân tích A–D ngay.</p>
+                    <strong>Bắt đầu luyện tập →</strong>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="quiz-mode quiz-mode-exam" href="?tab=exercises&amp;mode=exam">
+                    <span class="quiz-mode-icon" aria-hidden="true">◎</span>
+                    <h4>Chế độ Thi</h4>
+                    <p>Trả lời từng câu, rồi nộp bài để xem điểm và lời giải toàn bộ đề.</p>
+                    <strong>Vào phòng thi →</strong>
+                </a>
+            </div>
+        </div>
+    </c:when>
+    <c:when test="${empty pageContext.request.userPrincipal}">
+        <div class="grammar-empty">
+            <h3 class="h5">Đăng nhập để làm bài và lưu kết quả</h3>
+            <a class="btn grammar-btn mt-3" href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <%-- Giữ token CSRF và tên answer_<id>. Đề thi không gửi đáp án đúng xuống trình duyệt. --%>
+        <c:url var="quizSubmitUrl" value="/grammar/${lesson.id}/submit"/>
+        <c:url var="practiceCheckUrl" value="/grammar/${lesson.id}/practice/check"/>
+        <form id="grammar-quiz" class="quiz-player quiz-player-${mode}" method="post"
+              action="${quizSubmitUrl}" data-mode="${mode}" data-check-url="${practiceCheckUrl}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" data-quiz-csrf>
+            <div class="quiz-toolbar">
+                <strong>${mode eq 'practice' ? 'Luyện tập' : 'Thi'}</strong>
+                <span id="quiz-progress" aria-live="polite">Đã trả lời 0/${questions.size()}</span>
+                <a class="ms-auto" href="?tab=exercises">← Đổi chế độ</a>
+                <button class="btn btn-outline-secondary btn-sm" type="button" data-quiz-reset>Làm lại</button>
+            </div>
+            <nav class="quiz-palette" aria-label="Bảng câu hỏi">
+                <c:forEach items="${questions}" var="question" varStatus="s">
+                    <button type="button" data-quiz-jump="${s.index}" aria-label="Câu ${s.count}">${s.count}</button>
+                </c:forEach>
+            </nav>
+
+            <c:forEach items="${questions}" var="question" varStatus="s">
+                <section class="quiz-question" data-quiz-question="${question.id}" ${s.first ? '' : 'hidden'}>
+                    <div class="quiz-question-head">
+                        <span>Câu <strong>${s.count}</strong> / ${questions.size()}</span>
+                        <span class="small text-muted">${mode eq 'exam' ? 'Đáp án sẽ hiện khi nộp bài' : 'Chọn một phương án'}</span>
+                    </div>
+                    <fieldset class="quiz-question-body">
+                        <legend><c:out value="${question.questionText}"/></legend>
+                        <div class="quiz-options">
+                            <c:forEach items="${question.options}" var="option">
+                                <label class="quiz-option" data-label="${option.optionLabel}">
+                                    <input type="radio" name="answer_${question.id}" value="${option.id}">
+                                    <strong class="quiz-letter">${option.optionLabel}</strong>
+                                    <span><c:out value="${option.optionText}"/></span>
+                                </label>
+                            </c:forEach>
+                        </div>
+                    </fieldset>
+                    <p class="quiz-feedback" aria-live="polite" hidden></p>
+                    <div class="quiz-analysis" hidden></div>
+                </section>
+            </c:forEach>
+
+            <div class="quiz-actions">
+                <button class="btn btn-outline-secondary" type="button" data-quiz-prev>← Câu trước</button>
+                <button class="btn grammar-btn" type="button" data-quiz-next>Câu tiếp theo →</button>
+                <c:if test="${mode eq 'exam'}">
+                    <button class="btn grammar-btn" type="submit">Nộp bài thi</button>
+                </c:if>
+            </div>
+            <noscript><p class="grammar-notice mt-3">Bật JavaScript để chuyển câu và làm bài.</p></noscript>
+        </form>
+        <script src="${pageContext.request.contextPath}/assets/js/grammar-exercise.js" defer></script>
+    </c:otherwise>
+</c:choose>
