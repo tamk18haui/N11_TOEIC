@@ -5,13 +5,16 @@ spring:
     import:
       - "optional:file:./.env[.properties]"
       - "optional:file:./application-local.yaml"
+      - "optional:file:./application-local.properties"
   datasource:
     url: ${DB_URL:jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:n11_toeic}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC}
     username: ${DB_USERNAME:${DB_USER:root}}
     password: ${DB_PASSWORD:}
   sql:
     init:
-      mode: never
+      mode: always
+      schema-locations: file:database/schema.sql
+      data-locations: classpath:vocab_data.sql
 
   mvc:
     view:

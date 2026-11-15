@@ -1,6 +1,6 @@
 # N11 TOEIC — Chức năng Ngữ pháp
 
-Spring Boot 4.1.2, Java 17+, MySQL 8+, JSP/JSTL, Bootstrap 5 và JDBC (`JdbcTemplate`). Giữ trang chủ và các trang giao diện của nhóm từ nhánh `main`; phần Ngữ pháp có nghiệp vụ thật.
+Spring Boot 4.1.2, Java 25+, MySQL 8+, JSP/JSTL, Bootstrap 5 và JDBC (`JdbcTemplate`). Giữ trang chủ và các trang giao diện của nhóm từ nhánh `main`; phần Ngữ pháp có nghiệp vụ thật.
 
 ## Chạy ứng dụng
 
@@ -8,18 +8,26 @@ Spring Boot 4.1.2, Java 17+, MySQL 8+, JSP/JSTL, Bootstrap 5 và JDBC (`JdbcTemp
 2. Với MySQL trống, import `database/n11_toeic.sql` bằng MySQL Workbench/DBeaver hoặc chạy trong MySQL CLI:
 
    ```sql
-   SOURCE C:/duong-dan/N11_TOEIC/database/n11_toeic.sql;
+   SOURCE database/n11_toeic.sql;
    ```
 
    File gồm đúng 31 bảng của `CSDL.docx` và dữ liệu demo. **Chỉ import seed vào database trống** vì ID mẫu cố định. Nếu nhóm đã có CSDL và tài khoản, dùng schema của nhóm và nhập học liệu qua trang quản trị; không import đè seed. `CREATE TABLE IF NOT EXISTS` không cập nhật cấu trúc bảng cũ.
-3. Sao chép `application-local.example.yaml` thành `application-local.yaml` và điền thông tin MySQL. File này đã được Git bỏ qua. Hoặc dùng biến môi trường `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
+3. Sao chép `application-local.properties.example` thành `application-local.properties` và điền thông tin MySQL. File này đã được Git bỏ qua. Hoặc dùng biến môi trường `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
 4. Chạy:
 
    ```powershell
    mvn spring-boot:run
    ```
 
-5. Mở [Ngữ pháp](http://localhost:8080/grammar) hoặc [Quản trị ngữ pháp](http://localhost:8080/admin/grammar).
+5. Mở [Từ vựng](http://localhost:8080/vocabulary), [Ngữ pháp](http://localhost:8080/grammar) hoặc [Quản trị ngữ pháp](http://localhost:8080/admin/grammar).
+
+## Học Từ Vựng cho nhóm
+
+- Pull nhánh nhóm đang làm việc bằng `git pull` sau khi checkout đúng nhánh.
+- Tạo database MySQL rỗng tên `n11_toeic` (hoặc đặt `DB_NAME`), rồi sao chép file mẫu cấu hình cục bộ như bước trên và điền tài khoản MySQL của máy mình.
+- Khi khởi động, `spring.sql.init.mode=always` tạo schema từ `database/schema.sql` và tự nạp `src/main/resources/vocab_data.sql`. File seed dùng kiểm tra tồn tại trước khi thêm dữ liệu, nên khởi động lại không tạo bản ghi trùng; **không cần chạy script Python hay import riêng dữ liệu từ vựng**.
+- Chạy `mvn spring-boot:run`, sau đó mở [http://localhost:8080/vocabulary](http://localhost:8080/vocabulary). Có 10 chủ đề, mỗi chủ đề 30 từ mẫu.
+- Tài khoản demo `student@n11.local` / `admin@n11.local`, mật khẩu `N11@Demo2026`, chỉ có sau khi nạp seed demo (`database/seed.sql` hoặc `database/n11_toeic.sql`) trên database trống. Trang danh sách từ vựng vẫn xem được khi chưa đăng nhập.
 
 Trên máy đang triển khai, `application-local.yaml` trỏ đến **`n11_toeic_team`**, bản thử riêng theo đúng CSDL mới. Database `n11_toeic` tạo ở lần thử trước được giữ nguyên và không còn được ứng dụng sử dụng. Khi tích hợp, cấu hình kết nối tới database chung đã có schema của nhóm.
 
@@ -41,7 +49,7 @@ Mật khẩu tài khoản trong SQL đã băm BCrypt. Đây là hai tài khoản
 - Lưu bản nháp rồi thêm ví dụ/câu hỏi trước khi công bố. Bài đã có lượt làm được khóa tên và bộ câu hỏi; có thể bỏ công bố.
 - Chấm điểm trên server, transaction cho lưu lượt làm + đáp án, truy vấn có tham số, CSRF, phân quyền và lọc HTML.
 
-Các trang từ vựng, nghe, đọc, thi thử, lộ trình, quản lý tài khoản vẫn thuộc phần khung giao diện ban đầu của nhóm. Phần đăng nhập tối thiểu hiện dùng `users` để demo ngữ pháp; đã tích hợp đăng ký từ main (dd43351); chưa triển khai quên mật khẩu hay quản lý tài khoản thay cho thành viên khác.
+Module Từ Vựng (`/vocabulary`) đã dùng dữ liệu SQL tự nạp, hỗ trợ tìm chủ đề/từ và xem chi tiết từ. Các trang nghe, đọc, thi thử, lộ trình, quản lý tài khoản vẫn thuộc phần khung giao diện ban đầu của nhóm. Phần đăng nhập tối thiểu hiện dùng `users` để demo ngữ pháp; đã tích hợp đăng ký từ main (dd43351); chưa triển khai quên mật khẩu hay quản lý tài khoản thay cho thành viên khác.
 
 ## Đồng bộ CSDL nhóm
 

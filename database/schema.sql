@@ -127,6 +127,92 @@ CREATE TABLE IF NOT EXISTS `vocabulary_quiz_answers` (
   CONSTRAINT `fk_vocabulary_quiz_answers_selected_term_id` FOREIGN KEY (`selected_term_id`) REFERENCES `vocabulary_terms` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `vocab_topics` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(180) NOT NULL,
+  `description` TEXT NULL DEFAULT NULL,
+  `level` VARCHAR(16) NOT NULL DEFAULT 'BASIC',
+  `display_order` INT NOT NULL DEFAULT 0,
+  `is_published` BOOLEAN NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_vocab_topics_title` (`title`),
+  KEY `idx_vocab_topics_level_published_order` (`level`, `is_published`, `display_order`),
+  CONSTRAINT `chk_vocab_topics_level` CHECK (`level` IN ('BASIC','INTERMEDIATE','ADVANCED')),
+  CONSTRAINT `chk_vocab_topics_display_order` CHECK (`display_order` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `vocab_words` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `topic_id` BIGINT NOT NULL,
+  `word` VARCHAR(160) NOT NULL,
+  `phonetic` VARCHAR(160) NULL DEFAULT NULL,
+  `part_of_speech` VARCHAR(32) NULL DEFAULT NULL,
+  `meaning_vi` VARCHAR(500) NOT NULL,
+  `definition_en` TEXT NULL DEFAULT NULL,
+  `example_sentence` TEXT NULL DEFAULT NULL,
+  `example_meaning` TEXT NULL DEFAULT NULL,
+  `audio_url` VARCHAR(700) NULL DEFAULT NULL,
+  `image_url` VARCHAR(700) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_vocab_words_topic_word` (`topic_id`, `word`),
+  KEY `idx_vocab_words_word` (`word`),
+  CONSTRAINT `fk_vocab_words_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `vocab_topics` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `user_vocab_progress` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `word_id` BIGINT NOT NULL,
+  `status` VARCHAR(16) NOT NULL DEFAULT 'NEW',
+  `is_bookmarked` BOOLEAN NOT NULL DEFAULT 0,
+  `review_count` INT NOT NULL DEFAULT 0,
+  `last_reviewed_at` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_user_vocab_progress_user_word` (`user_id`, `word_id`),
+  KEY `idx_user_vocab_progress_user_status` (`user_id`, `status`),
+  KEY `idx_user_vocab_progress_user_bookmarked` (`user_id`, `is_bookmarked`),
+  CONSTRAINT `fk_user_vocab_progress_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_vocab_progress_word_id` FOREIGN KEY (`word_id`) REFERENCES `vocab_words` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_user_vocab_progress_status` CHECK (`status` IN ('NEW','LEARNING','MASTERED')),
+  CONSTRAINT `chk_user_vocab_progress_review_count` CHECK (`review_count` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `vocab_quiz_attempts` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `topic_id` BIGINT NOT NULL,
+  `question_count` SMALLINT NOT NULL DEFAULT 0,
+  `correct_count` SMALLINT NOT NULL DEFAULT 0,
+  `score_percent` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+  `submitted_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_vocab_quiz_attempts_user_submitted` (`user_id`, `submitted_at`),
+  KEY `idx_vocab_quiz_attempts_topic_id` (`topic_id`),
+  CONSTRAINT `fk_vocab_quiz_attempts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_vocab_quiz_attempts_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `vocab_topics` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_vocab_quiz_attempts_counts` CHECK (`question_count` >= 0 AND `correct_count` >= 0 AND `correct_count` <= `question_count`),
+  CONSTRAINT `chk_vocab_quiz_attempts_score` CHECK (`score_percent` BETWEEN 0 AND 100)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `vocab_quiz_attempt_answers` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `attempt_id` BIGINT NOT NULL,
+  `question_no` SMALLINT NOT NULL,
+  `question_type` VARCHAR(24) NOT NULL,
+  `word_id` BIGINT NOT NULL,
+  `selected_word_id` BIGINT NULL DEFAULT NULL,
+  `is_correct` BOOLEAN NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_vocab_quiz_answers_attempt_question` (`attempt_id`, `question_no`),
+  KEY `idx_vocab_quiz_answers_word_id` (`word_id`),
+  CONSTRAINT `fk_vocab_quiz_answers_attempt_id` FOREIGN KEY (`attempt_id`) REFERENCES `vocab_quiz_attempts` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_vocab_quiz_answers_word_id` FOREIGN KEY (`word_id`) REFERENCES `vocab_words` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_vocab_quiz_answers_selected_word_id` FOREIGN KEY (`selected_word_id`) REFERENCES `vocab_words` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_vocab_quiz_answers_question_no` CHECK (`question_no` > 0),
+  CONSTRAINT `chk_vocab_quiz_answers_question_type` CHECK (`question_type` IN ('WORD_TO_MEANING','MEANING_TO_WORD','FILL_IN_BLANK'))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `grammar_topics` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(180) NOT NULL,

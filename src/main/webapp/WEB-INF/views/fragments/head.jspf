@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grammar.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/theme.css" />
   <%-- Admin stylesheet: only loaded for /admin routes. --%>
   <c:if test="${fn:startsWith(pageContext.request.servletPath, '/admin')}">

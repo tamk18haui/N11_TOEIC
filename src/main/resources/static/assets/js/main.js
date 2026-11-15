@@ -36,24 +36,6 @@
       result.textContent = (correct ? 'Chính xác! ' : 'Chưa đúng. ') + explanation;
     });
   });
-  const flashcard = document.getElementById('vocabFlashcard');
-  if (flashcard) {
-    let flipped = false;
-    flashcard.addEventListener('click', function () {
-      flipped = !flipped;
-      const word = flashcard.querySelector('.word');
-      const hint = flashcard.querySelector('.hint');
-      if (word) word.textContent = flipped ? flashcard.dataset.meaning : flashcard.dataset.word;
-      if (hint) hint.textContent = flipped ? 'Nhấp để xem từ tiếng Anh' : 'Nhấp để lật thẻ xem nghĩa';
-    });
-  }
-  const filter = document.getElementById('vocabFilter');
-  if (filter) filter.addEventListener('input', function () {
-    const q = this.value.toLocaleLowerCase('vi');
-    document.querySelectorAll('[data-vocab-item]').forEach(item => {
-      item.style.display = item.textContent.toLocaleLowerCase('vi').includes(q) ? '' : 'none';
-    });
-  });
   const timer = document.getElementById('sampleTimer');
   if (timer) {
     let remaining = 600;

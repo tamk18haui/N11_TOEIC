@@ -21,10 +21,6 @@ public class UiPageController {
     @GetMapping("/")
     public String home(Model model) { return page(model, "index", "home", "Trang chủ"); }
 
-    @GetMapping("/vocabulary")
-    public String vocabulary(Model model) { return page(model, "vocabulary/index", "vocabulary", "Học từ vựng"); }
-
-
     @GetMapping("/listening")
     public String listening(Model model) { return page(model, "listening/index", "listening", "Luyện Listening"); }
 

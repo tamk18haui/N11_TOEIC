@@ -40,6 +40,7 @@ target/
 *.log
 
 application-local.yaml
+application-local.properties
 .local/
 
 HELP.md

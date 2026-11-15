@@ -84,6 +84,85 @@ CREATE TABLE IF NOT EXISTS `grammar_attempt_answers` (
   CONSTRAINT `fk_grammar_attempt_answers_question_id` FOREIGN KEY (`question_id`) REFERENCES `grammar_questions` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_grammar_attempt_answers_selected_option_id` FOREIGN KEY (`selected_option_id`) REFERENCES `grammar_options` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS `vocab_topics` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(180) NOT NULL,
+  `description` TEXT NULL DEFAULT NULL,
+  `level` VARCHAR(16) NOT NULL DEFAULT 'BASIC',
+  `display_order` INT NOT NULL DEFAULT 0,
+  `is_published` BOOLEAN NOT NULL DEFAULT FALSE,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `uq_vocab_topics_title` UNIQUE (`title`),
+  CONSTRAINT `chk_vocab_topics_level` CHECK (`level` IN ('BASIC','INTERMEDIATE','ADVANCED')),
+  CONSTRAINT `chk_vocab_topics_display_order` CHECK (`display_order` >= 0)
+);
+
+CREATE TABLE IF NOT EXISTS `vocab_words` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `topic_id` BIGINT NOT NULL,
+  `word` VARCHAR(160) NOT NULL,
+  `phonetic` VARCHAR(160) NULL DEFAULT NULL,
+  `part_of_speech` VARCHAR(32) NULL DEFAULT NULL,
+  `meaning_vi` VARCHAR(500) NOT NULL,
+  `definition_en` TEXT NULL DEFAULT NULL,
+  `example_sentence` TEXT NULL DEFAULT NULL,
+  `example_meaning` TEXT NULL DEFAULT NULL,
+  `audio_url` VARCHAR(700) NULL DEFAULT NULL,
+  `image_url` VARCHAR(700) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `uq_vocab_words_topic_word` UNIQUE (`topic_id`, `word`),
+  CONSTRAINT `fk_vocab_words_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `vocab_topics` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `user_vocab_progress` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `word_id` BIGINT NOT NULL,
+  `status` VARCHAR(16) NOT NULL DEFAULT 'NEW',
+  `is_bookmarked` BOOLEAN NOT NULL DEFAULT FALSE,
+  `review_count` INT NOT NULL DEFAULT 0,
+  `last_reviewed_at` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `uq_user_vocab_progress_user_word` UNIQUE (`user_id`, `word_id`),
+  CONSTRAINT `fk_user_vocab_progress_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_vocab_progress_word_id` FOREIGN KEY (`word_id`) REFERENCES `vocab_words` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_user_vocab_progress_status` CHECK (`status` IN ('NEW','LEARNING','MASTERED')),
+  CONSTRAINT `chk_user_vocab_progress_review_count` CHECK (`review_count` >= 0)
+);
+
+CREATE TABLE IF NOT EXISTS `vocab_quiz_attempts` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `topic_id` BIGINT NOT NULL,
+  `question_count` SMALLINT NOT NULL DEFAULT 0,
+  `correct_count` SMALLINT NOT NULL DEFAULT 0,
+  `score_percent` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+  `submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_vocab_quiz_attempts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_vocab_quiz_attempts_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `vocab_topics` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_vocab_quiz_attempts_counts` CHECK (`question_count` >= 0 AND `correct_count` >= 0 AND `correct_count` <= `question_count`),
+  CONSTRAINT `chk_vocab_quiz_attempts_score` CHECK (`score_percent` BETWEEN 0 AND 100)
+);
+
+CREATE TABLE IF NOT EXISTS `vocab_quiz_attempt_answers` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `attempt_id` BIGINT NOT NULL,
+  `question_no` SMALLINT NOT NULL,
+  `question_type` VARCHAR(24) NOT NULL,
+  `word_id` BIGINT NOT NULL,
+  `selected_word_id` BIGINT NULL DEFAULT NULL,
+  `is_correct` BOOLEAN NOT NULL DEFAULT FALSE,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `uq_vocab_quiz_answers_attempt_question` UNIQUE (`attempt_id`, `question_no`),
+  CONSTRAINT `fk_vocab_quiz_answers_attempt_id` FOREIGN KEY (`attempt_id`) REFERENCES `vocab_quiz_attempts` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_vocab_quiz_answers_word_id` FOREIGN KEY (`word_id`) REFERENCES `vocab_words` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_vocab_quiz_answers_selected_word_id` FOREIGN KEY (`selected_word_id`) REFERENCES `vocab_words` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_vocab_quiz_answers_question_no` CHECK (`question_no` > 0),
+  CONSTRAINT `chk_vocab_quiz_answers_question_type` CHECK (`question_type` IN ('WORD_TO_MEANING','MEANING_TO_WORD','FILL_IN_BLANK'))
+);
 CREATE TABLE IF NOT EXISTS `user_profiles` (
   `user_id` BIGINT NOT NULL,
   `full_name` VARCHAR(120) NOT NULL,
