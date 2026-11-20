@@ -29,4 +29,14 @@ public interface VocabularyService {
     void updatePreferences(String email, VocabularyUserPreferences preferences);
     void updateProgress(long termId, String email, String learningStatus);
     void markFavorite(long termId, String email, boolean favorite);
+    List<VocabularyLesson> lessons(long topicId);
+    List<VocabularyTerm> terms(long topicId);
+    VocabularyTerm term(long id);
+    long saveTopic(VocabularyTopic topic);
+    void deleteTopic(long id);
+    long saveLesson(VocabularyLesson lesson);
+    void deleteLesson(long id);
+    long saveTerm(VocabularyTerm term);
+    void deleteTerm(long id);
+    Map<String, Object> statistics();
 }

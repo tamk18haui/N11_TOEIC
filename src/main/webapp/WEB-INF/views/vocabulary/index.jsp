@@ -103,6 +103,7 @@
                   </div>
                   <span class="vocab-topic-caption"><c:out value="${topic.progressPercent}"/>% <span data-i18n="complete">complete</span> · <span data-i18n="${topic.placementPassed ? 'placementPassedShort' : 'placementAvailable'}">${topic.placementPassed ? 'Placement test passed' : 'Placement test available'}</span></span>
                 </div>
+                <span class="vocab-word-count mb-3"><c:out value="${topic.totalWords}"/> từ vựng · tối thiểu 30 từ</span>
 
                 <a class="btn grammar-btn w-100" href="${pageContext.request.contextPath}/vocabulary/${topic.id}">
                   <span data-i18n="openRoadmap">Open roadmap →</span>

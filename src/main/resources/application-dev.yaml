@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:n11_toeic;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  sql:
+    init:
+      mode: always
+      schema-locations: file:src/test/resources/schema-h2.sql
+      data-locations: file:database/seed.sql
+      encoding: UTF-8
+
+server:
+  servlet:
+    session:
+      cookie:
+        name: N11_H2_SESSION

@@ -4,8 +4,46 @@ Spring Boot 4.1.2, Java 25+, MySQL 8+, JSP/JSTL, Bootstrap 5 và JDBC (`JdbcTemp
 
 ## Chạy ứng dụng
 
-1. Mở **thư mục chứa `pom.xml` này** trong IntelliJ hoặc terminal.
-2. Với MySQL trống, chọn **một** trong hai cách nạp:
+Yêu cầu chung: **JDK 25**. Maven Wrapper đã có trong repository, không cần cài Maven.
+
+### Chạy nhanh trên IntelliJ IDEA bằng H2
+
+1. Clone repository và mở thư mục chứa `pom.xml` bằng IntelliJ IDEA.
+2. Chờ IntelliJ hoàn tất **Load Maven Project**.
+3. Mở **Run → Edit Configurations**.
+4. Thêm cấu hình **Spring Boot**:
+   - Main class: `com.toeic.nhom11.Nhom11Application`
+   - Working directory: thư mục gốc repository
+   - Active profiles: `dev`
+5. Chạy cấu hình và truy cập [http://localhost:8080/vocabulary](http://localhost:8080/vocabulary).
+
+### Chạy nhanh trên Visual Studio Code bằng H2
+
+1. Cài extension **Debugger for Java**, **Extension Pack for Java** và một trình duyệt như Chrome.
+2. Mở thư mục gốc chứa `pom.xml`.
+3. Mở **Run and Debug**, chọn `Chạy N11 TOEIC với H2`, rồi nhấn **F5**.
+4. VS Code tự chạy Maven Wrapper với profile `dev` và mở
+   [http://localhost:8080/vocabulary](http://localhost:8080/vocabulary).
+
+Profile `dev` dùng H2 trong bộ nhớ và tự nạp `database/seed.sql`.
+Các thành viên không cần cài MySQL để chạy và demo;
+profile này không thay đổi CSDL MySQL của nhóm.
+
+Có thể chạy trực tiếp bằng terminal:
+
+```powershell
+# Windows PowerShell
+.\mvnw.cmd "-Dspring-boot.run.profiles=dev" spring-boot:run
+```
+
+```bash
+# macOS/Linux
+sh ./mvnw -Dspring-boot.run.profiles=dev spring-boot:run
+```
+
+### Chạy với MySQL của nhóm
+
+1. Với MySQL trống, chọn **một** trong hai cách nạp:
 
    ```sql
    -- Cách A: schema và dữ liệu demo gộp
@@ -17,21 +55,23 @@ Spring Boot 4.1.2, Java 25+, MySQL 8+, JSP/JSTL, Bootstrap 5 và JDBC (`JdbcTemp
    ```
 
    `n11_toeic.sql` đã gồm dữ liệu demo. Với cách B, `seed.sql` dùng ID cố định nên chỉ chạy trên database trống. Không chạy cả hai cách trên cùng database. Nếu nhóm đã có CSDL và tài khoản, không import đè seed. `CREATE TABLE IF NOT EXISTS` không cập nhật cấu trúc bảng cũ.
-3. Sao chép `application-local.properties.example` thành `application-local.properties` và điền thông tin MySQL. File này đã được Git bỏ qua. Hoặc dùng biến môi trường `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
-4. Chạy:
+2. Sao chép `application-local.properties.example` thành `application-local.properties` và điền thông tin MySQL. File này đã được Git bỏ qua. Hoặc dùng biến môi trường `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
+3. Chạy:
 
    ```powershell
-   mvn spring-boot:run
+   .\mvnw.cmd spring-boot:run
    ```
 
-5. Mở [Từ vựng](http://localhost:8080/vocabulary), [Ngữ pháp](http://localhost:8080/grammar) hoặc [Quản trị ngữ pháp](http://localhost:8080/admin/grammar).
+   Trên macOS/Linux dùng `sh ./mvnw spring-boot:run`.
+4. Mở [Từ vựng](http://localhost:8080/vocabulary), [Ngữ pháp](http://localhost:8080/grammar) hoặc [Quản trị ngữ pháp](http://localhost:8080/admin/grammar).
 
 ## Học Từ Vựng
 
 - Pull nhánh nhóm đang làm việc bằng `git pull` sau khi checkout đúng nhánh.
 - Với database trống, chạy `database/schema.sql` rồi chạy một lần `database/seed.sql`. `spring.sql.init.mode=always` chỉ tạo schema; ứng dụng không tự nạp seed khi khởi động.
 - Với database đã có dữ liệu từ schema cũ, chạy lần lượt các script trong `database/updates/` theo thứ tự trước khi chạy phiên bản mới. Không chạy migration trên database vừa tạo bằng `database/schema.sql`.
-- Bộ seed hiện có 25 chủ đề và ba bài học cho mỗi chủ đề. Chủ đề Travel and Transport có 20 từ ở cả ba cấp độ; các chủ đề còn lại vẫn đang chờ nhập bộ từ đầy đủ.
+- Bộ seed hiện có 25 chủ đề, ba bài học cho mỗi chủ đề và ít nhất 30 từ ở từng chủ đề. Ba bài được phân bố 10/20/30 từ theo chặng nền tảng, mở rộng và nâng cao.
+- `database/updates/006_vocabulary_minimum_thirty_words.sql` là migration idempotent cho database nhóm đã tồn tại; chạy sau các migration 003–005, không cần nhập tay từng từ.
 - Tài khoản demo `student@n11.local` / `admin@n11.local`, mật khẩu `N11@Demo2026`, chỉ có sau khi nạp seed trên database trống. Danh sách chủ đề có thể xem khi chưa đăng nhập; làm bài kiểm tra và đồng bộ tiến độ yêu cầu đăng nhập.
 
 Trên máy đang triển khai, `application-local.yaml` trỏ đến **`n11_toeic_team`**, bản thử riêng theo đúng CSDL mới. Database `n11_toeic` tạo ở lần thử trước được giữ nguyên và không còn được ứng dụng sử dụng. Khi tích hợp, cấu hình kết nối tới database chung đã có schema của nhóm.
@@ -62,17 +102,19 @@ Module Từ Vựng (`/vocabulary`) hỗ trợ lộ trình theo chủ đề, tr�
 - `database/schema.sql`: cùng các định nghĩa bảng, không gắn tên database.
 - `database/seed.sql`: học liệu mẫu và hai tài khoản demo, chỉ dùng bảng/cột đã có.
 - `database/n11_toeic.sql`: bản schema MySQL đầy đủ kèm dữ liệu demo.
-- `database/updates/003_vocabulary_learning_path.sql` đến `005_travel_topic_twenty_words.sql`: migration tuần tự cho database cũ; chỉ chạy mỗi migration một lần.
+- `database/updates/003_vocabulary_learning_path.sql` đến `006_vocabulary_minimum_thirty_words.sql`: migration tuần tự cho database cũ; chạy 006 sau 003–005 để bảo đảm mỗi chủ đề ít nhất 30 từ.
 - Không thêm `grammar_examples`, `summary`, `lesson_title` hay cột lưu bản sao câu trả lời.
 - Ví dụ và mô tả ngắn nằm trong `grammar_lessons.content_html`; xem [quy ước lưu nội dung](docs/CSDL_INTEGRATION.md).
 
 ## Kiểm thử và đóng gói
 
 ```powershell
-mvn test
-mvn package
+.\mvnw.cmd test
+.\mvnw.cmd package
 java -jar target/nhom11-0.0.1-SNAPSHOT.war
 ```
+
+Trên macOS/Linux, thay `.\mvnw.cmd` bằng `sh ./mvnw`.
 
 Chạy lệnh tại thư mục repo để đọc được file cấu hình cục bộ. Bản WAR chạy nhúng Tomcat hỗ trợ JSP. Test mặc định dùng H2 độc lập, không ghi vào MySQL. Bộ test cũng đã được chạy với MySQL 8.4 theo schema nhóm; xem [hướng dẫn kiểm thử](docs/TESTING.md).
 
