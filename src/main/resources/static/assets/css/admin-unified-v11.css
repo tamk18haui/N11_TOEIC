@@ -1,0 +1,312 @@
+/* ========================================================================
+ * N11 TOEIC - ADMIN FORUMFLASH V11 / MOT BANG MAU CHO TOAN BO KHU VUC ADMIN
+ * ========================================================================
+ * CHINH SUA DE:
+ *  1. Muon doi MAU: sua 7 bien o muc 1.
+ *  2. Muon doi bo goc: sua --n11a-radius.
+ *  3. Muon doi rong sidebar: sua --n11a-sidebar-width.
+ *  4. Muon doi kich thuoc anh Listening: sua muc 8.
+ * Khong sua HTML, Java, MySQL hay Cloudinary. CSS chi ap dung cho Admin.
+ * Dung !important CO CHON LOC de ghi de mau xanh duong/cam cua V7-V10.
+ * ======================================================================== */
+
+/* 1. BANG MAU - MOI MAU CHINH DUOC LAY TU DAY. */
+.admin-shell, .grammar-page.grammar-admin {
+  --n11a-primary: #064d49;       /* Xanh ngoc dam: header, nut chinh */
+  --n11a-primary-hover: #003c39; /* Hover nut */
+  --n11a-mint: #24bda8;          /* Diem nhan: icon, focus, vien active */
+  --n11a-background: #f8f6ef;    /* Nen kem */
+  --n11a-soft: #eaf7f1;          /* Nut phu, nen phu */
+  --n11a-card: #ffffff;          /* Nen the */
+  --n11a-border: #dbe8df;        /* Vien */
+  --n11a-text: #143e39;          /* Mau chu */
+  --n11a-muted: #668078;         /* Mau chu phu */
+  --n11a-radius: 18px;           /* Do bo goc */
+  --n11a-sidebar-width: 240px;   /* Chieu rong sidebar */
+  --n11a-shadow: 0 12px 34px rgba(4, 63, 54, .045);
+
+  /* Dong bo ten bien da dung trong CSS V9, V10, va CSS cu. */
+  --ff-green: var(--n11a-primary) !important;
+  --ff-green-dark: var(--n11a-primary-hover) !important;
+  --ff-mint: var(--n11a-mint) !important;
+  --ff-cream: var(--n11a-background) !important;
+  --ff-line: var(--n11a-border) !important;
+  --ff-text: var(--n11a-text) !important;
+  --ff-muted: var(--n11a-muted) !important;
+  --ff-radius: var(--n11a-radius) !important;
+  --ff-sidebar: var(--n11a-sidebar-width) !important;
+  --af-green: var(--n11a-primary) !important;
+  --af-deep: var(--n11a-primary-hover) !important;
+  --af-mint: var(--n11a-mint) !important;
+  --af-cream: var(--n11a-background) !important;
+  --af-paper: var(--n11a-card) !important;
+  --af-line: var(--n11a-border) !important;
+  --af-ink: var(--n11a-text) !important;
+  --af-muted: var(--n11a-muted) !important;
+  --af-radius: var(--n11a-radius) !important;
+  --af-sidebar: var(--n11a-sidebar-width) !important;
+  --adm-ink: var(--n11a-text) !important;
+  --adm-muted: var(--n11a-muted) !important;
+  --adm-border: var(--n11a-border) !important;
+  --adm-cyan: var(--n11a-primary) !important;
+  --adm-teal: var(--n11a-mint) !important;
+  --n11-primary: var(--n11a-primary) !important;
+  --n11-primary-2: var(--n11a-primary-hover) !important;
+
+  color: var(--n11a-text);
+  background: var(--n11a-background) !important;
+  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+}
+
+/* 2. TYPOGRAPHY: bat chap CSS cu, chu phai co cung mau. */
+.admin-shell :is(h1,h2,h3,h4,h5,h6),
+.grammar-page.grammar-admin :is(h1,h2,h3,h4,h5,h6) {
+  color: var(--n11a-primary);
+  letter-spacing: -.025em;
+}
+.admin-shell :is(.section-caption,.listening-eyebrow,.ff-kicker),
+.grammar-page.grammar-admin .section-caption { color: #167b70 !important; }
+.admin-shell :is(.small-meta,.text-muted-n11,.listening-help-text,.listening-set-subtitle),
+.grammar-page.grammar-admin :is(.text-muted,.small) { color: var(--n11a-muted) !important; }
+.admin-shell a:not(.btn):hover,
+.grammar-page.grammar-admin a:not(.btn):hover { color: var(--n11a-primary); }
+
+/* 3. BO CUC / SIDEBAR: dung cung 240px tren cac trang JSP Admin. */
+.admin-shell > .container.container-n11,
+.admin-shell .container.container-n11.listening-container { width:100%; max-width:1540px; padding:0 24px; margin-inline:auto; }
+.admin-shell > .container.container-n11 > .row.g-4,
+.admin-shell .row.g-4.listening-layout {
+  display:grid !important;
+  grid-template-columns: var(--n11a-sidebar-width) minmax(0,1fr) !important;
+  gap:24px !important; margin:0 !important; align-items:start;
+}
+.admin-shell > .container.container-n11 > .row.g-4 > .col-lg-3,
+.admin-shell > .container.container-n11 > .row.g-4 > .col-lg-9,
+.admin-shell .listening-layout > .listening-sidebar-col,
+.admin-shell .listening-layout > .listening-content-col {
+  padding:0 !important; min-width:0 !important; width:auto !important;
+  max-width:none !important; margin:0 !important;
+}
+.admin-shell .admin-sidebar.admin-nav {
+  position:sticky; top:96px; overflow:hidden;
+  background:var(--n11a-card) !important;
+  border:1px solid var(--n11a-border) !important;
+  border-radius:var(--n11a-radius) !important;
+  box-shadow:var(--n11a-shadow) !important;
+  padding:12px !important;
+}
+.admin-shell .admin-nav-brand {
+  display:flex; align-items:center; gap:11px;
+  margin:-12px -12px 12px !important; padding:17px 15px !important;
+  border:0 !important; background:var(--n11a-primary) !important;
+}
+.admin-shell .admin-nav-avatar {
+  flex:0 0 40px; width:40px; height:40px; border-radius:11px;
+  background:var(--n11a-mint) !important; color:var(--n11a-primary) !important;
+  box-shadow:none !important;
+}
+.admin-shell .admin-nav-brand > div:last-child { min-width:0; }
+.admin-shell .admin-nav-brand strong { color:#fff !important; font-size:13px; line-height:1.4; overflow-wrap:anywhere; }
+.admin-shell .admin-nav-brand span { color:#cce9e3 !important; font-size:11px; }
+.admin-shell .admin-nav-intro {
+  margin:9px 2px 13px !important; padding:10px 12px !important;
+  border-radius:10px; background:var(--n11a-soft) !important;
+  color:#245f53 !important; font-size:11px; line-height:1.5;
+}
+.admin-shell .admin-online-dot { background:var(--n11a-mint) !important; }
+.admin-shell .admin-nav-group { color:#798e85 !important; margin:17px 11px 7px; font-size:10px; letter-spacing:.07em; }
+.admin-shell .admin-sidebar .admin-link {
+  display:flex; align-items:center; gap:10px; min-height:39px;
+  border:0 !important; border-radius:11px !important;
+  padding:10px 11px !important; margin:2px 0 !important;
+  color:#32564e !important; background:transparent !important;
+  font-size:12.5px; font-weight:700; line-height:1.45;
+  box-shadow:none !important;
+}
+.admin-shell .admin-sidebar .admin-link .icon { color:#498c7e !important; }
+.admin-shell .admin-sidebar .admin-link:hover,
+.admin-shell .admin-sidebar .admin-link.is-active {
+  background:var(--n11a-soft) !important; color:var(--n11a-primary) !important;
+  box-shadow:inset 3px 0 0 var(--n11a-mint) !important;
+}
+.admin-shell .admin-nav-divider { background:var(--n11a-border) !important; }
+
+/* 4. BANNER: Dashboard va Listening cung xanh ngoc dam, khong gradient xanh-cam. */
+.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) {
+  position:relative; overflow:hidden;
+  background:var(--n11a-primary) !important;
+  color:#fff !important;
+  border:0 !important; border-radius:21px !important;
+  box-shadow:0 12px 34px rgba(0,70,62,.085) !important;
+}
+.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(h1,h2,h3,strong) { color:#fff !important; }
+.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(p,.small-meta,.ff-hero-note) { color:#d8ece5 !important; }
+.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(.af-hero-kicker,.ff-kicker) { color:#8be8ca !important; }
+.admin-shell .af-home-hero .af-hero-actions .btn-primary {
+  background:#fff !important; color:var(--n11a-primary) !important;
+  border-color:#fff !important;
+}
+.admin-shell .af-home-hero .af-hero-actions .btn.af-hero-secondary {
+  color:#fff !important; background:rgba(255,255,255,.13) !important;
+  border-color:rgba(255,255,255,.25) !important;
+}
+.admin-shell .ff-hero .ff-stat { background:rgba(255,255,255,.1) !important; border:1px solid rgba(255,255,255,.18) !important; }
+.admin-shell .ff-hero .ff-stat strong { color:#fff !important; }
+
+/* 5. NUT: xanh DUY NHAT la xanh ngoc dam, KHONG con xanh nuoc bien. */
+.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn),
+.grammar-page.grammar-admin :is(.btn-primary,.btn-info,.btn-success,.grammar-btn) {
+  color:#fff !important;
+  background:var(--n11a-primary) !important;
+  background-image:none !important;
+  border-color:var(--n11a-primary) !important;
+  box-shadow:0 7px 16px rgba(0,73,64,.11) !important;
+}
+.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn):hover,
+.grammar-page.grammar-admin :is(.btn-primary,.btn-info,.btn-success,.grammar-btn):hover {
+  color:#fff !important; background:var(--n11a-primary-hover) !important;
+  border-color:var(--n11a-primary-hover) !important; transform:none !important;
+}
+.admin-shell :is(.btn-soft,.btn-outline-primary,.btn-outline-info,.btn-outline-success,.btn-light),
+.grammar-page.grammar-admin :is(.btn-soft,.btn-outline-primary,.btn-outline-info,.btn-outline-success,.btn-light) {
+  color:var(--n11a-primary) !important;
+  background:var(--n11a-soft) !important;
+  border:1px solid #cae9dc !important;
+  box-shadow:none !important;
+}
+.admin-shell :is(.btn-soft,.btn-outline-primary,.btn-outline-info,.btn-outline-success,.btn-light):hover,
+.grammar-page.grammar-admin :is(.btn-soft,.btn-outline-primary,.btn-outline-info,.btn-outline-success,.btn-light):hover {
+  background:#d9eee5 !important; color:var(--n11a-primary-hover) !important;
+  border-color:#a7d7c7 !important;
+}
+.admin-shell .btn:not(.btn-sm), .grammar-page.grammar-admin .btn:not(.btn-sm) { border-radius:11px; font-size:13px; font-weight:750; }
+.admin-shell .btn-sm, .grammar-page.grammar-admin .btn-sm { border-radius:9px; font-size:12px; }
+.admin-shell .btn:focus-visible, .grammar-page.grammar-admin .btn:focus-visible { outline:2px solid var(--n11a-mint) !important; outline-offset:2px; }
+/* Xoa la thao tac nguy hiem -> giu DO am de phan biet, khong dung xanh/cam trang tri. */
+.admin-shell .btn-outline-danger, .grammar-page.grammar-admin .btn-outline-danger {
+  border-color:#e9c8c2 !important; background:#fff !important; color:#a7473e !important;
+}
+.admin-shell .btn-outline-danger:hover, .grammar-page.grammar-admin .btn-outline-danger:hover {
+  background:#a7473e !important; color:#fff !important;
+}
+.admin-shell .btn-warning, .grammar-page.grammar-admin .btn-warning { background:#fff2da !important; color:#77500b !important; border-color:#ebd6ad !important; }
+
+/* 6. THE / THONG KE: tat ca the trang, vien xanh nhat, KHONG soc CAM. */
+.admin-shell :is(.panel-card,.admin-stat,.admin-module-card,.account-panel,.account-form-card,.listening-filter-panel,.stat-card),
+.grammar-page.grammar-admin :is(.panel-card,.stat-card,.example-card,.grammar-notice) {
+  background:var(--n11a-card) !important;
+  border:1px solid var(--n11a-border) !important;
+  border-radius:var(--n11a-radius) !important;
+  box-shadow:var(--n11a-shadow) !important;
+}
+.admin-shell :is(.admin-stat-sky,.admin-stat-warm,.admin-stat-mint)::before,
+.admin-shell .admin-stat::before {
+  background:var(--n11a-mint) !important;
+  background-image:none !important;
+}
+.admin-shell .admin-stat :is(.num,.num strong),
+.grammar-page.grammar-admin .stat-card h2 { color:var(--n11a-primary) !important; -webkit-text-fill-color:var(--n11a-primary) !important; }
+.admin-shell :is(.admin-stat-icon,.admin-module-icon),
+.grammar-page.grammar-admin .stat-card > span:first-child {
+  background:var(--n11a-soft) !important; color:var(--n11a-primary) !important;
+  box-shadow:none !important;
+}
+.admin-shell .admin-module-grid > div:nth-child(n) .admin-module-icon { background:var(--n11a-soft) !important; color:var(--n11a-primary) !important; }
+.admin-shell .admin-module-card:hover { border-color:#b5dbc9 !important; box-shadow:0 14px 28px rgba(0,65,54,.075) !important; }
+.admin-shell .admin-module-card strong { color:var(--n11a-primary) !important; }
+.admin-shell :is(.admin-chip,.admin-chip-green,.pill-primary,.pill-cyan,.pill-orange,.pill-green,.pill-dark,.listening-part-pill,.listening-set-total),
+.grammar-page.grammar-admin :is(.badge.bg-success,.badge.bg-secondary) {
+  background:var(--n11a-soft) !important; color:var(--n11a-primary) !important; border-color:transparent !important;
+}
+.admin-shell :is(.admin-hero-tag,.section-caption,.listening-eyebrow) { color:#0d7568 !important; }
+.admin-shell .admin-hero-tag { background:var(--n11a-soft) !important; }
+.admin-shell .admin-gradient-text { color:#94ebd3 !important; background:none !important; -webkit-text-fill-color:currentColor !important; }
+.admin-shell :is(.admin-info-strip,.demo-hint) { border:1px solid var(--n11a-border) !important; background:var(--n11a-soft) !important; color:#376e5b !important; }
+
+/* 7. BANG / BO LOC / FORM: thong nhat mau nhan va do bo goc. */
+.admin-shell :is(.admin-table-wrap,.listening-table-scroll,.table-responsive) { overflow-x:auto; border-radius:12px; }
+.admin-shell :is(.table,.listening-sets-table,.listening-q-table),
+.grammar-page.grammar-admin .table { color:var(--n11a-text); }
+.admin-shell :is(.table,.listening-sets-table,.listening-q-table) thead th,
+.grammar-page.grammar-admin .table thead th {
+  background:#f0f7f2 !important; color:#42675d !important;
+  border-bottom:1px solid var(--n11a-border) !important;
+  font-size:11px; font-weight:800; white-space:nowrap;
+}
+.admin-shell :is(.table,.listening-sets-table,.listening-q-table) tbody td,
+.grammar-page.grammar-admin .table tbody td { border-color:#edf3ee !important; color:var(--n11a-text); }
+.admin-shell :is(.table,.listening-sets-table,.listening-q-table) tbody tr:hover td,
+.grammar-page.grammar-admin .table tbody tr:hover td { background:#f8fcf9 !important; }
+.admin-shell :is(.form-control,.form-select,.input-group-text),
+.grammar-page.grammar-admin :is(.form-control,.form-select,.input-group-text) {
+  min-height:42px; color:var(--n11a-text) !important;
+  border:1px solid #d5e5da !important; border-radius:10px;
+  background:#fff !important;
+}
+.admin-shell :is(.form-control,.form-select):focus,
+.grammar-page.grammar-admin :is(.form-control,.form-select):focus {
+  border-color:var(--n11a-mint) !important;
+  box-shadow:0 0 0 3px rgba(36,189,168,.12) !important;
+}
+.admin-shell :is(.form-label,label), .grammar-page.grammar-admin .form-label { color:var(--n11a-primary); }
+.admin-shell .form-check-input:checked, .grammar-page.grammar-admin .form-check-input:checked {
+  background-color:var(--n11a-primary) !important; border-color:var(--n11a-primary) !important;
+}
+.admin-shell .form-text, .grammar-page.grammar-admin .form-text { color:var(--n11a-muted); }
+.admin-shell :is(.badge-status.good,.account-role,.badge.bg-success),
+.grammar-page.grammar-admin .badge.bg-success { background:#e0f4e8 !important; color:#126d4d !important; }
+.admin-shell :is(.badge-status.warn,.badge-status.muted,.account-role-admin,.badge.bg-secondary) { background:#f1f3ed !important; color:#60766a !important; }
+.admin-shell .alert-success, .grammar-page.grammar-admin .alert-success { background:#eaf7ef !important; border-color:#bedfcf !important; color:#196447 !important; }
+.admin-shell .alert-danger, .grammar-page.grammar-admin .alert-danger { background:#fff2ef !important; border-color:#e8cbc6 !important; color:#934c42 !important; }
+
+/* 8. LISTENING: giu bo cuc da co, anh nho va dap an de doc. */
+.admin-shell.listening-admin-page .listening-question-thumb {
+  width:96px; height:74px; max-width:100%; object-fit:contain;
+  background:#f7faf6; border:1px solid var(--n11a-border) !important; border-radius:10px;
+}
+.admin-shell.listening-admin-page .listening-option-row.is-correct {
+  background:#e4f6eb !important; color:var(--n11a-primary) !important;
+  border-color:#a8dfc5 !important;
+}
+.admin-shell.listening-admin-page .listening-option-row.is-correct strong,
+.admin-shell.listening-admin-page .listening-option-row.is-correct b { color:var(--n11a-primary) !important; }
+.admin-shell.listening-admin-page :is(.listening-set-action .btn,.listening-row-actions .btn.btn-soft) {
+  background:var(--n11a-soft) !important; color:var(--n11a-primary) !important; border-color:#c7e6d8 !important;
+}
+.admin-shell.listening-admin-page .ff-hero :is(.badge-status.warn,.badge-status.muted) { background:#f4eddb !important; color:#7b643e !important; }
+.admin-shell.listening-admin-page .listening-q-player audio { max-width:100%; }
+.admin-shell.listening-admin-page .listening-filter-field { max-width:320px; }
+
+/* 9. NGU PHAP ADMIN: trang nay khong dung .admin-shell nen style rieng. */
+.grammar-page.grammar-admin { padding-block:32px 70px; }
+.grammar-page.grammar-admin .grammar-wrap { max-width:1300px; }
+.grammar-page.grammar-admin .panel-card { padding:24px; margin-bottom:22px; }
+.grammar-page.grammar-admin .example-card { padding:18px; margin-bottom:12px; }
+.grammar-page.grammar-admin .grammar-notice { background:var(--n11a-soft) !important; color:#366759 !important; }
+.grammar-page.grammar-admin .grammar-back { color:var(--n11a-primary) !important; }
+.grammar-page.grammar-admin .form-check-input { accent-color:var(--n11a-primary); }
+
+/* 10. RESPONSIVE: man hinh nho khong bi ep bang, sidebar khong bi dut. */
+@media (max-width: 1080px) {
+  .admin-shell > .container.container-n11 > .row.g-4,
+  .admin-shell .row.g-4.listening-layout { grid-template-columns:215px minmax(0,1fr) !important; gap:18px !important; }
+  .admin-shell .admin-module-card { min-height:160px; }
+}
+@media (max-width: 850px) {
+  .admin-shell > .container.container-n11 > .row.g-4,
+  .admin-shell .row.g-4.listening-layout { display:block !important; }
+  .admin-shell > .container.container-n11 > .row.g-4 > .col-lg-3,
+  .admin-shell .listening-layout > .listening-sidebar-col { margin-bottom:16px !important; }
+  .admin-shell .admin-sidebar.admin-nav { position:static !important; }
+  .admin-shell :is(.ff-hero,.af-home-hero,.af-home-hero-grid) { flex-wrap:wrap; }
+  .admin-shell .ff-hero-stats { width:100%; }
+}
+@media (max-width: 576px) {
+  .admin-shell > .container.container-n11,
+  .admin-shell .container.container-n11.listening-container { padding:0 12px !important; }
+  .admin-shell :is(.panel-card,.account-panel,.account-form-card) { padding:16px !important; }
+  .admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) { padding:22px 18px !important; }
+  .admin-shell .ff-action-bar .btn { width:100%; text-align:center; }
+  .admin-shell .listening-sets-table { min-width:780px; }
+  .admin-shell .listening-q-table { min-width:1020px; }
+}

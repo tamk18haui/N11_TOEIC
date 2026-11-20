@@ -85,3 +85,10 @@ target/
 !.env.example
 *.bak
 *.bak.*
+
+# Listening Cloudinary - local secrets and generated media
+/.env.cloudinary
+/cloudinary-sync/
+/listening-uploads/
+/backup_before_cloudinary_v4_*/
+/cloudinary-sync-report.json

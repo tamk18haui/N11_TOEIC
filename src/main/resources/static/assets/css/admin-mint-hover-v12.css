@@ -1,0 +1,318 @@
+/* ======================================================================
+   N11 TOEIC - ADMIN V12: BẢNG MÀU CHUNG, KHÔNG CÒN XANH NƯỚC BIỂN
+   ----------------------------------------------------------------------
+   Dành riêng cho các trang Admin: Dashboard, tài khoản, Listening,
+   Reading, đề thi, và ngữ pháp Admin. KHÔNG đổi màu trang học viên.
+
+   CÁCH SỬA NHANH:
+   - Đổi màu nút chính: --mint-dark
+   - Đổi màu khi rê chuột: --mint-hover
+   - Đổi viền / màu điểm nhấn: --mint-accent
+   - Đổi nền trang: --mint-page
+   - Đổi độ bo góc: --mint-radius
+
+   File này được tải CUỐI thẻ <head> để ghi đè CSS V7/V8/V9/V10/V11.
+   Chỉ sửa file này nếu muốn thay đổi màu. Không cần đụng đến Java.
+   ====================================================================== */
+
+/* 1. MÀU GỐC: đổi ở đây, những khu vực bên dưới dùng lại các biến này. */
+.admin-shell,
+.grammar-page.grammar-admin {
+  --mint-dark: #004b47;          /* Xanh ngọc đậm: nút chính, tiêu đề */
+  --mint-strong: #003d39;        /* Xanh đậm khi cần nhấn mạnh */
+  --mint-accent: #20bca9;        /* Mint: viền và trạng thái chọn */
+  --mint-hover: #e5f7f2;         /* NỀN XANH NHẠT khi trỏ chuột */
+  --mint-active: #d9f3ec;        /* Nền mục menu đang được chọn */
+  --mint-page: #f8f6f0;          /* Nền kem giống trang tham khảo */
+  --mint-white: #ffffff;
+  --mint-border: #dbe9e1;
+  --mint-text: #153f3b;
+  --mint-muted: #667d75;
+  --mint-radius: 14px;
+  --mint-shadow: 0 9px 25px rgba(0, 67, 57, .045);
+
+  /* Ghi đè biến màu do V7-V11 đã khai báo. */
+  --n11-primary: var(--mint-dark) !important;
+  --n11-primary-2: var(--mint-strong) !important;
+  --n11-cyan: var(--mint-accent) !important;
+  --adm-cyan: var(--mint-dark) !important;
+  --adm-teal: var(--mint-accent) !important;
+  --adm-sky: var(--mint-hover) !important;
+  --af-green: var(--mint-dark) !important;
+  --af-deep: var(--mint-strong) !important;
+  --af-mint: var(--mint-accent) !important;
+  --ff-green: var(--mint-dark) !important;
+  --ff-green-dark: var(--mint-strong) !important;
+  --ff-mint: var(--mint-accent) !important;
+  --n11a-primary: var(--mint-dark) !important;
+  --n11a-primary-hover: var(--mint-strong) !important;
+  --n11a-mint: var(--mint-accent) !important;
+  --n11a-soft: var(--mint-hover) !important;
+  color: var(--mint-text) !important;
+  background: var(--mint-page) !important;
+}
+
+/* 2. MỌI NÚT CHÍNH: màu xanh NGỌC ĐẬM, không dùng cyan / xanh dương. */
+.admin-shell.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn),
+.grammar-page.grammar-admin :is(.btn-primary,.btn-info,.btn-success,.grammar-btn) {
+  background: var(--mint-dark) !important;
+  background-image: none !important;
+  border: 1px solid var(--mint-dark) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  transition: background-color .17s ease, color .17s ease,
+              border-color .17s ease, box-shadow .17s ease !important;
+}
+/* Rê chuột / focus giống tab ForumFlash: NỀN XANH NHẠT, chữ đậm. */
+.admin-shell.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn):is(:hover,:focus-visible),
+.grammar-page.grammar-admin :is(.btn-primary,.btn-info,.btn-success,.grammar-btn):is(:hover,:focus-visible) {
+  background: var(--mint-hover) !important;
+  background-image: none !important;
+  border-color: var(--mint-accent) !important;
+  color: var(--mint-dark) !important;
+  box-shadow: inset 0 -3px 0 var(--mint-accent) !important;
+  transform: none !important;
+}
+
+/* 3. NÚT PHỤ / NÚT QUẢN LÝ / NÚT LỌC: trắng hoặc xanh mint nhạt. */
+.admin-shell.admin-shell :is(.btn-soft,.btn-light,.btn-white,.btn-secondary,
+   .btn-outline-primary,.btn-outline-info,.btn-outline-success),
+.grammar-page.grammar-admin :is(.btn-soft,.btn-light,.btn-white,.btn-secondary,
+   .btn-outline-primary,.btn-outline-info,.btn-outline-success) {
+  background: #eff9f5 !important;
+  background-image: none !important;
+  color: var(--mint-dark) !important;
+  border: 1px solid #cbe8dc !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+.admin-shell.admin-shell :is(.btn-soft,.btn-light,.btn-white,.btn-secondary,
+   .btn-outline-primary,.btn-outline-info,.btn-outline-success):is(:hover,:focus-visible),
+.grammar-page.grammar-admin :is(.btn-soft,.btn-light,.btn-white,.btn-secondary,
+   .btn-outline-primary,.btn-outline-info,.btn-outline-success):is(:hover,:focus-visible) {
+  background: var(--mint-active) !important;
+  color: var(--mint-strong) !important;
+  border-color: var(--mint-accent) !important;
+  box-shadow: inset 0 -3px 0 var(--mint-accent) !important;
+  transform: none !important;
+}
+
+/* 4. NÚT nguy hiểm: XÓA giữ đỏ để tránh thao tác nhầm. */
+.admin-shell.admin-shell :is(.btn-danger,.btn-outline-danger),
+.grammar-page.grammar-admin :is(.btn-danger,.btn-outline-danger) {
+  background: #fff9f8 !important;
+  color: #aa4640 !important;
+  border: 1px solid #eccac6 !important;
+  box-shadow: none !important;
+}
+.admin-shell.admin-shell :is(.btn-danger,.btn-outline-danger):hover,
+.grammar-page.grammar-admin :is(.btn-danger,.btn-outline-danger):hover {
+  background: #fdece9 !important;
+  color: #93332e !important;
+  border-color: #d49d97 !important;
+  box-shadow: none !important;
+}
+/* Trạng thái cảnh báo có màu trung tính, không phải cam trang trí. */
+.admin-shell.admin-shell .btn-warning,
+.grammar-page.grammar-admin .btn-warning {
+  background: #f2f5ed !important;
+  color: #5a6252 !important;
+  border-color: #dce3d3 !important;
+}
+
+/* 5. THANH MENU TRÁI: hover màu xanh nhạt, ACTIVE mint và chỉ báo. */
+.admin-shell.admin-shell .admin-sidebar .admin-link,
+.admin-shell.admin-shell .admin-sidebar .admin-link .icon {
+  color: var(--mint-text) !important;
+  transition: background-color .16s ease, color .16s ease !important;
+}
+.admin-shell.admin-shell .admin-sidebar .admin-link:hover,
+.admin-shell.admin-shell .admin-sidebar .admin-link:focus-visible,
+.admin-shell.admin-shell .admin-sidebar .admin-link.is-active {
+  background: var(--mint-hover) !important;
+  color: var(--mint-dark) !important;
+  border-color: transparent !important;
+  box-shadow: inset 3px 0 0 var(--mint-accent) !important;
+}
+.admin-shell.admin-shell .admin-sidebar .admin-link:hover .icon,
+.admin-shell.admin-shell .admin-sidebar .admin-link.is-active .icon {
+  color: var(--mint-dark) !important;
+}
+/* Link trong trang: thêm nền nhạt khi rê, nhưng KHÔNG tác động link bảng thường. */
+.admin-shell.admin-shell :is(.admin-toolbar-link,.account-back,.ff-back):hover {
+  color: var(--mint-dark) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--mint-accent);
+  text-underline-offset: 4px;
+}
+
+/* 6. THẺ THỐNG KÊ: loại thanh viền cam / cyan lẫn lộn. */
+.admin-shell.admin-shell :is(.admin-stat,.admin-stat-modern,.admin-module-card,.panel-card,
+  .account-panel,.account-form-card,.listening-filter-panel) {
+  border-color: var(--mint-border) !important;
+  box-shadow: var(--mint-shadow) !important;
+}
+.admin-shell.admin-shell :is(.admin-stat,.admin-stat-modern) {
+  border-top: 3px solid var(--mint-accent) !important;
+  background: var(--mint-white) !important;
+}
+.admin-shell.admin-shell :is(.admin-stat,.admin-stat-modern)::before,
+.admin-shell.admin-shell :is(.admin-stat,.admin-stat-modern)::after {
+  background: var(--mint-accent) !important;
+  background-image: none !important;
+}
+.admin-shell.admin-shell :is(.admin-stat-icon,.admin-module-icon),
+.admin-shell.admin-shell .admin-module-grid > div:nth-child(n) .admin-module-icon {
+  background: var(--mint-hover) !important;
+  color: var(--mint-dark) !important;
+  box-shadow: none !important;
+}
+.admin-shell.admin-shell :is(.admin-module-card,.listening-set-action a):hover {
+  background: #fafffc !important;
+  border-color: var(--mint-accent) !important;
+  box-shadow: 0 9px 24px rgba(0,75,61,.08) !important;
+}
+.admin-shell.admin-shell :is(.admin-chip,.admin-chip-green,.pill-primary,.pill-cyan,.pill-orange,
+  .listening-part-pill,.listening-set-total,.badge-status.warn,.badge-status.muted,.account-role-admin) {
+  background: #ecf7f1 !important;
+  color: var(--mint-dark) !important;
+  border-color: #d3e9dd !important;
+}
+/* Trạng thái hợp lệ xanh lá nhạt; không dùng xanh da trời. */
+.admin-shell.admin-shell :is(.badge-status.good,.account-role,.pill-green) {
+  background: #dff4e8 !important;
+  color: #135d42 !important;
+}
+
+/* 7. BẢNG: đầu bảng xanh rất nhạt, hover nhẹ giống ForumFlash. */
+.admin-shell.admin-shell :is(.table,.listening-sets-table,.listening-q-table) thead th,
+.grammar-page.grammar-admin .table thead th {
+  background: #eff7f2 !important;
+  color: var(--mint-text) !important;
+  border-bottom: 1px solid var(--mint-border) !important;
+}
+.admin-shell.admin-shell :is(.table,.listening-sets-table,.listening-q-table) tbody tr:hover td,
+.grammar-page.grammar-admin .table tbody tr:hover td {
+  background: var(--mint-hover) !important;
+}
+.admin-shell.admin-shell :is(.table,.listening-sets-table,.listening-q-table) tbody td,
+.grammar-page.grammar-admin .table tbody td {
+  border-color: #e8f0ea !important;
+}
+/* Khoá/mở khóa giữ màu do trạng thái quyết định, không dùng xanh dương. */
+.admin-shell.admin-shell :is(.account-actions,.listening-row-actions) .btn-soft {
+  color: var(--mint-dark) !important;
+}
+
+/* 8. FORM / BỘ LỌC: viền xanh xám nhạt, focus màu mint. */
+.admin-shell.admin-shell :is(.form-control,.form-select,.input-group-text),
+.grammar-page.grammar-admin :is(.form-control,.form-select,.input-group-text) {
+  background-color: #fff !important;
+  border-color: var(--mint-border) !important;
+  color: var(--mint-text) !important;
+}
+.admin-shell.admin-shell :is(.form-control,.form-select):is(:hover,:focus),
+.grammar-page.grammar-admin :is(.form-control,.form-select):is(:hover,:focus) {
+  border-color: var(--mint-accent) !important;
+  box-shadow: 0 0 0 3px rgba(32,188,169,.12) !important;
+}
+.admin-shell.admin-shell :is(.form-check-input:checked,.page-link.active),
+.grammar-page.grammar-admin .form-check-input:checked {
+  background-color: var(--mint-dark) !important;
+  border-color: var(--mint-dark) !important;
+}
+.admin-shell.admin-shell :is(.form-label,label),
+.grammar-page.grammar-admin .form-label { color: var(--mint-dark) !important; }
+
+/* 9. CÁC TRANG ADMIN NGỮ PHÁP: trước đây có CSS riêng màu xanh khác. */
+.grammar-page.grammar-admin :is(.stat-card,.panel-card,.example-card,.grammar-notice) {
+  background: #fff !important;
+  border-color: var(--mint-border) !important;
+  box-shadow: var(--mint-shadow) !important;
+}
+.grammar-page.grammar-admin :is(.stat-card h2,.grammar-back,.section-caption) {
+  color: var(--mint-dark) !important;
+}
+.grammar-page.grammar-admin .grammar-notice { background: var(--mint-hover) !important; }
+.grammar-page.grammar-admin .example-card:hover {
+  border-color: var(--mint-accent) !important;
+  background: #fafffc !important;
+}
+
+/* 10. HỖ TRỢ TRẠNG THÁI TÀI KHOẢN: hover keyboard giống chuột. */
+.admin-shell.admin-shell :is(.btn,.admin-link):focus-visible,
+.grammar-page.grammar-admin .btn:focus-visible {
+  outline: 2px solid var(--mint-accent) !important;
+  outline-offset: 2px !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell.admin-shell .btn,
+  .admin-shell.admin-shell .admin-sidebar .admin-link,
+  .grammar-page.grammar-admin .btn { transition: none !important; }
+}
+
+/* 11. NHỮNG NÚT ĐẶC BIỆT CỦA V9/V10: độ ưu tiên cao hơn CSS cũ. */
+.admin-shell.admin-shell .af-home-hero .af-hero-actions .btn-primary {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--mint-dark) !important;
+  box-shadow: none !important;
+}
+.admin-shell.admin-shell .af-home-hero .af-hero-actions .btn-primary:hover,
+.admin-shell.admin-shell .af-home-hero .af-hero-actions .btn-primary:focus-visible {
+  background: var(--mint-hover) !important;
+  border-color: var(--mint-accent) !important;
+  color: var(--mint-dark) !important;
+  box-shadow: inset 0 -3px 0 var(--mint-accent) !important;
+}
+.admin-shell.admin-shell .af-home-hero .af-hero-actions .btn.af-hero-secondary {
+  color: #ffffff !important;
+  background: rgba(255,255,255,.14) !important;
+  border-color: rgba(255,255,255,.36) !important;
+}
+.admin-shell.admin-shell .af-home-hero .af-hero-actions .btn.af-hero-secondary:hover {
+  color: var(--mint-dark) !important;
+  background: var(--mint-hover) !important;
+  border-color: var(--mint-accent) !important;
+}
+
+/* 12. CÁC MỤC DẠNG TAB (ví dụ kiểu Trang chủ trên ForumFlash). */
+.admin-shell.admin-shell :is(.nav-pills .nav-link,.admin-tab,.tab-link):hover,
+.admin-shell.admin-shell :is(.nav-pills .nav-link,.admin-tab,.tab-link).active,
+.admin-shell.admin-shell :is(.nav-pills .nav-link,.admin-tab,.tab-link).is-active {
+  background: var(--mint-hover) !important;
+  color: var(--mint-dark) !important;
+  border-color: var(--mint-accent) !important;
+  box-shadow: inset 0 -3px 0 var(--mint-accent) !important;
+}
+
+/* 13. NHÃN/THẺ XANH DƯƠNG TỪ BOOTSTRAP CŨ TRONG ADMIN. */
+.admin-shell.admin-shell :is(.badge.bg-primary,.badge.bg-info,.bg-primary:not(.btn),.bg-info:not(.btn),
+  .pill-cyan,.admin-chip-outline),
+.grammar-page.grammar-admin :is(.badge.bg-primary,.badge.bg-info) {
+  background: var(--mint-hover) !important;
+  color: var(--mint-dark) !important;
+  border-color: var(--mint-border) !important;
+}
+.admin-shell.admin-shell :is(.text-primary,.text-info),
+.grammar-page.grammar-admin :is(.text-primary,.text-info) {
+  color: var(--mint-dark) !important;
+}
+/* Phương án Listening: nhấn nhẹ khi rê, đáp án đúng giữ xanh lá. */
+.admin-shell.admin-shell .listening-option-row:hover {
+  background: var(--mint-hover) !important;
+  border-color: var(--mint-accent) !important;
+}
+.admin-shell.admin-shell .listening-option-row.is-correct {
+  background: #e2f5e9 !important;
+  color: var(--mint-dark) !important;
+}
+
+/* 14. BO GÓC CHUNG: đổi --mint-radius ở mục 1 để thay toàn bộ. */
+.admin-shell.admin-shell :is(.panel-card,.account-panel,.account-form-card,.admin-module-card,.admin-stat),
+.grammar-page.grammar-admin :is(.panel-card,.stat-card,.example-card) {
+  border-radius: var(--mint-radius) !important;
+}
+.admin-shell.admin-shell .btn,
+.grammar-page.grammar-admin .btn { border-radius: 11px !important; }
