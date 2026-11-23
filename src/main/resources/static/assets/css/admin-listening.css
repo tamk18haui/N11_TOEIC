@@ -1,0 +1,137 @@
+/* Listening admin: local additions; inherits existing Admin shell theme. */
+.admin-shell .listening-short { min-width: 180px; max-width: 310px; white-space: pre-line; overflow-wrap: anywhere; }
+.admin-shell .listening-audio { width: 190px; max-width: 100%; height: 36px; vertical-align: middle; }
+.admin-shell .listening-thumb { width: 95px; max-height: 85px; object-fit: contain; border: 1px solid #e1e7ee; border-radius: 8px; }
+.admin-shell .listening-subpanel { padding: 20px; margin-top: 20px; background: #f6f9fd; border: 1px solid #e4ebf3; border-radius: 12px; }
+.admin-shell .listening-code { word-break: break-all; font-size: 12px; }
+@media(max-width: 768px) { .admin-shell .listening-audio { width: 160px; } }
+
+/* V6 - Show actual choices and correct answer in Admin set details */
+.admin-shell .listening-options-cell { min-width: 260px; max-width: 380px; white-space: normal; }
+.admin-shell .listening-option-row { padding: 5px 8px; margin: 3px 0; border: 1px solid #e5eaf1; border-radius: 7px; font-size: 12.5px; line-height: 1.5; overflow-wrap: anywhere; }
+.admin-shell .listening-option-row b { font-weight: 750; }
+.admin-shell .listening-option-row.is-correct { background: #effaf3; border-color: #a5dec0; color: #156f3a; }
+.admin-shell .listening-option-row.is-correct strong { font-size: 11px; font-weight: 750; }
+.admin-shell .listening-option-error { color: #b42318; font-size: 12px; font-weight: 650; }
+.admin-shell .listening-media-link { display: inline-block; font-size: 11px; margin-top: 3px; }
+
+/* N11 V7: compact media previews and question navigation */
+.admin-shell #listening-questions { scroll-margin-top: 20px; }
+.admin-shell #listening-passages { scroll-margin-top: 20px; }
+.admin-shell #listening-passages .listening-thumb { width:120px; max-width:120px; height:90px; max-height:90px; object-fit:cover; }
+.admin-shell #listening-passages .table { vertical-align: middle; }
+.admin-shell #listening-questions .listening-options-cell { min-width: 270px; }
+
+
+/* N11 LISTENING V8 - RESPONSIVE ADMIN UI */
+.admin-shell.listening-admin-page { background:#f6f8fc; padding:24px 0 60px; font-size:14px; }
+.admin-shell.listening-admin-page .listening-container { max-width:1560px; width:100%; padding-left:clamp(16px,2vw,32px); padding-right:clamp(16px,2vw,32px); }
+.admin-shell.listening-admin-page .listening-layout { display:grid; grid-template-columns:244px minmax(0,1fr); gap:24px; margin:0; align-items:start; }
+.admin-shell.listening-admin-page .listening-sidebar-col,
+.admin-shell.listening-admin-page .listening-content-col { width:auto; max-width:none; min-width:0; padding:0; margin:0; }
+.admin-shell.listening-admin-page .listening-content-col { min-width:0; }
+.admin-shell.listening-admin-page .admin-nav { position:sticky; top:100px; border:1px solid #e4eaf3; border-radius:18px; background:#fff; padding:18px 12px; box-shadow:0 8px 28px rgba(30,55,90,.05); }
+.admin-shell.listening-admin-page .admin-nav-brand { display:flex; align-items:center; gap:10px; margin:0 6px 12px; padding-bottom:14px; border-bottom:1px solid #eef0f5; }
+.admin-shell.listening-admin-page .admin-nav-brand > div:last-child { min-width:0; }
+.admin-shell.listening-admin-page .admin-nav-brand strong { display:block; font-size:13px; line-height:1.45; white-space:normal; overflow-wrap:break-word; }
+.admin-shell.listening-admin-page .admin-nav-brand span { display:block; font-size:11px; line-height:1.4; color:#77849b; }
+.admin-shell.listening-admin-page .admin-nav-avatar { display:grid; place-items:center; flex:0 0 40px; width:40px; height:40px; border-radius:12px; background:#e8f7fc; color:#08758b; font-weight:800; }
+.admin-shell.listening-admin-page .admin-nav-intro { display:block; margin:0 6px 14px; font-size:11px; line-height:1.5; padding:8px 10px; border-radius:9px; background:#eff9fc; color:#476e7e; }
+.admin-shell.listening-admin-page .admin-nav-group { margin:17px 11px 7px; font-size:10px; font-weight:800; letter-spacing:.08em; color:#8794a8; }
+.admin-shell.listening-admin-page .admin-nav .admin-link { display:flex; align-items:center; gap:10px; padding:9px 11px; margin:2px 0; border-radius:10px; color:#334761; font-size:12px; font-weight:650; text-decoration:none; line-height:1.35; }
+.admin-shell.listening-admin-page .admin-nav .admin-link .icon { flex:none; width:17px; height:17px; }
+.admin-shell.listening-admin-page .admin-nav .admin-link:hover { background:#ecf8fb; }
+.admin-shell.listening-admin-page .admin-nav .admin-link.is-active { color:#087c9e; background:#e8f6fc; }
+.admin-shell.listening-admin-page .panel-card { border:1px solid #e4e9f1; background:#fff; border-radius:19px; padding:25px; box-shadow:0 8px 28px rgba(20,40,75,.035); }
+.admin-shell.listening-admin-page .account-title { font-size:clamp(23px,2.1vw,32px); line-height:1.25; font-weight:800; letter-spacing:-.03em; overflow-wrap:anywhere; max-width:950px; }
+.admin-shell.listening-admin-page .listening-source-caption { font-size:12px; color:#8190a3; line-height:1.55; margin:4px 0 9px; overflow-wrap:anywhere; }
+.admin-shell.listening-admin-page .listening-title-sub { color:#8a9ab0; font-weight:550; font-size:.67em; white-space:nowrap; }
+.admin-shell.listening-admin-page .account-section-title { font-size:21px; line-height:1.4; font-weight:800; }
+.admin-shell.listening-admin-page .btn { border-radius:10px; font-size:12.5px; padding:10px 14px; line-height:1.35; white-space:nowrap; }
+.admin-shell.listening-admin-page .btn.btn-sm { padding:8px 12px; font-size:12px; }
+.admin-shell.listening-admin-page .badge-status { display:inline-flex; align-items:center; justify-content:center; font-size:11px; line-height:1.25; padding:7px 10px; white-space:nowrap; border-radius:999px; }
+.admin-shell.listening-admin-page .listening-section-head { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+.admin-shell.listening-admin-page .listening-eyebrow { font-size:10px; color:#13a1be; letter-spacing:.13em; font-weight:800; margin-bottom:3px; }
+.admin-shell.listening-admin-page .listening-action-main { flex:none; }
+.admin-shell.listening-admin-page .listening-table-scroll { overflow-x:auto; width:100%; max-width:100%; border:1px solid #e9edf3; border-radius:12px; }
+.admin-shell.listening-admin-page .listening-table-scroll:focus-visible { outline:3px solid #89d3e5; outline-offset:2px; }
+.admin-shell.listening-admin-page table.listening-q-table,
+.admin-shell.listening-admin-page table.listening-sets-table { border-collapse:separate; border-spacing:0; margin:0; width:100%; color:#23354f; }
+.admin-shell.listening-admin-page table.listening-q-table { min-width:960px; table-layout:fixed; }
+.admin-shell.listening-admin-page table.listening-sets-table { min-width:780px; }
+.admin-shell.listening-admin-page .listening-q-table thead th,
+.admin-shell.listening-admin-page .listening-sets-table thead th { color:#73839d; background:#f7f9fd; font-size:10px; letter-spacing:.055em; text-transform:uppercase; font-weight:800; padding:13px 12px; border-bottom:1px solid #e4eaf1; vertical-align:middle; white-space:nowrap; }
+.admin-shell.listening-admin-page .listening-q-table tbody td,
+.admin-shell.listening-admin-page .listening-sets-table tbody td { font-size:12.7px; line-height:1.55; padding:16px 12px; vertical-align:middle; border-bottom:1px solid #edf0f4; overflow-wrap:break-word; }
+.admin-shell.listening-admin-page .listening-q-table tbody tr:hover,
+.admin-shell.listening-admin-page .listening-sets-table tbody tr:hover { background:#fcfdff; }
+.admin-shell.listening-admin-page .listening-q-table tbody tr:last-child td,
+.admin-shell.listening-admin-page .listening-sets-table tbody tr:last-child td { border-bottom:0; }
+.admin-shell.listening-admin-page .listening-col-no { width:5%; }
+.admin-shell.listening-admin-page .listening-col-picture { width:12%; }
+.admin-shell.listening-admin-page .listening-col-question { width:21%; }
+.admin-shell.listening-admin-page .listening-col-choices { width:35%; }
+.admin-shell.listening-admin-page .listening-col-audio { width:17%; }
+.admin-shell.listening-admin-page .listening-col-actions { width:10%; }
+.admin-shell.listening-admin-page .listening-q-number { display:inline-flex; align-items:center; justify-content:center; background:#eaf6fb; color:#127d9b; width:30px; height:30px; border-radius:8px; font-size:12px; font-weight:800; }
+.admin-shell.listening-admin-page .listening-question-thumb { display:block; width:96px; height:72px; max-width:100%; object-fit:cover; object-position:center; border-radius:9px; border:1px solid #e1e7ef; box-shadow:0 2px 7px rgba(8,33,53,.07); transition:transform .12s; }
+.admin-shell.listening-admin-page .listening-question-thumb:hover { transform:scale(1.035); }
+.admin-shell.listening-admin-page .listening-image-missing { display:inline-block; font-size:11px; color:#b54725; background:#fff2ec; border-radius:8px; padding:6px 8px; white-space:nowrap; }
+.admin-shell.listening-admin-page .listening-image-na { color:#a6b0c0; }
+.admin-shell.listening-admin-page .listening-question-text { font-weight:700; font-size:13px; line-height:1.55; color:#102844; }
+.admin-shell.listening-admin-page .listening-passage-ref { margin-top:8px; font-size:11px; color:#8190a4; }
+.admin-shell.listening-admin-page .listening-options-cell { min-width:0; max-width:none; white-space:normal; }
+.admin-shell.listening-admin-page .listening-choices { display:grid; gap:5px; }
+.admin-shell.listening-admin-page .listening-option-row { display:flex; align-items:flex-start; gap:8px; margin:0; padding:7px 8px; border:1px solid transparent; border-radius:8px; font-size:12px; line-height:1.45; background:#f8f9fc; color:#3d4d63; overflow-wrap:anywhere; }
+.admin-shell.listening-admin-page .listening-option-row b { display:grid; place-items:center; flex:0 0 19px; height:20px; background:#e7ebf2; color:#47556c; border-radius:5px; font-size:11px; }
+.admin-shell.listening-admin-page .listening-option-row span { flex:1; min-width:0; }
+.admin-shell.listening-admin-page .listening-option-row strong { flex:none; color:#107449; background:#d4f3e1; border-radius:6px; font-size:10px; padding:3px 6px; white-space:nowrap; }
+.admin-shell.listening-admin-page .listening-option-row.is-correct { background:#edf9f3; color:#155e42; border-color:#b5e9cc; }
+.admin-shell.listening-admin-page .listening-option-row.is-correct b { background:#c7eed9; color:#0b734a; }
+.admin-shell.listening-admin-page .listening-question-audio { display:block; width:100%; height:32px; max-width:175px; min-width:125px; }
+.admin-shell.listening-admin-page .listening-q-player .listening-media-link { margin-top:6px; font-size:11px; color:#16849d; }
+.admin-shell.listening-admin-page .listening-row-actions { display:flex; flex-direction:column; align-items:stretch; gap:8px; max-width:88px; }
+.admin-shell.listening-admin-page .listening-row-actions form { margin:0; }
+.admin-shell.listening-admin-page .listening-row-actions .btn { width:100%; }
+.admin-shell.listening-admin-page .listening-help-text { font-size:12px; color:#8390a3; line-height:1.6; margin:16px 0 0; }
+.admin-shell.listening-admin-page #listening-passages .listening-thumb { display:block; width:104px!important; max-width:104px!important; height:78px!important; max-height:78px!important; object-fit:cover; border-radius:8px; }
+.admin-shell.listening-admin-page #listening-passages .table { min-width:760px; }
+.admin-shell.listening-admin-page #listening-passages .listening-audio { width:185px; }
+.admin-shell.listening-admin-page #listening-passages .listening-short { max-width:300px; min-width:120px; }
+.admin-shell.listening-admin-page #listening-questions,
+.admin-shell.listening-admin-page #listening-passages { scroll-margin-top:90px; }
+.admin-shell.listening-admin-page .listening-filter-panel { padding:18px 22px; }
+.admin-shell.listening-admin-page .listening-filter-form { display:flex; align-items:end; gap:14px; flex-wrap:wrap; }
+.admin-shell.listening-admin-page .listening-filter-field { flex:0 1 250px; min-width:210px; }
+.admin-shell.listening-admin-page .listening-filter-field .form-label { display:block; font-size:12px; font-weight:750; margin-bottom:7px; }
+.admin-shell.listening-admin-page .listening-filter-field .form-select { width:100%; min-height:44px; padding:9px 36px 9px 14px; border-radius:10px; font-size:13px; background-color:#fff; white-space:nowrap; }
+.admin-shell.listening-admin-page .listening-filter-form .btn { height:44px; }
+.admin-shell.listening-admin-page .listening-filter-result { margin-left:auto; color:#7a879a; font-size:12px; padding-bottom:12px; white-space:nowrap; }
+.admin-shell.listening-admin-page .listening-set-total { display:inline-flex; color:#557891; padding:5px 10px; border-radius:999px; background:#edf6fb; font-size:12px; font-weight:800; }
+.admin-shell.listening-admin-page .listening-sets-table .listening-set-name { min-width:250px; max-width:430px; }
+.admin-shell.listening-admin-page .listening-sets-table .listening-set-name strong { display:block; color:#102744; font-weight:750; font-size:13px; line-height:1.5; }
+.admin-shell.listening-admin-page .listening-set-subtitle { color:#91a0b0; font-size:11px; margin-top:4px; max-width:370px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.admin-shell.listening-admin-page .listening-set-code { color:#a4adbc; font-size:11px; margin-top:3px; }
+.admin-shell.listening-admin-page .listening-part-pill { display:inline-flex; padding:6px 9px; background:#ecf6fb; color:#117c9a; border-radius:7px; white-space:nowrap; font-size:12px; font-weight:750; }
+.admin-shell.listening-admin-page .listening-level { font-size:12px; color:#65768b; white-space:nowrap; }
+.admin-shell.listening-admin-page .listening-numeric { font-variant-numeric:tabular-nums; font-weight:750; color:#223d57; }
+.admin-shell.listening-admin-page .listening-sets-table .listening-set-action .btn { padding:8px 13px; }
+@media(max-width:1150px) {
+ .admin-shell.listening-admin-page .listening-layout { grid-template-columns:210px minmax(0,1fr); gap:16px; }
+ .admin-shell.listening-admin-page .panel-card { padding:20px; }
+}
+@media(max-width:850px) {
+ .admin-shell.listening-admin-page .listening-layout { display:block; }
+ .admin-shell.listening-admin-page .listening-sidebar-col { margin-bottom:20px; }
+ .admin-shell.listening-admin-page .admin-nav { position:static; }
+ .admin-shell.listening-admin-page .listening-q-table { min-width:950px; }
+ .admin-shell.listening-admin-page .listening-filter-result { margin-left:0; }
+}
+@media(max-width:540px) {
+ .admin-shell.listening-admin-page { padding:15px 0 50px; }
+ .admin-shell.listening-admin-page .panel-card { padding:15px; border-radius:14px; }
+ .admin-shell.listening-admin-page .listening-filter-field { flex:1 1 100%; }
+ .admin-shell.listening-admin-page .listening-filter-form .btn { width:100%; }
+ .admin-shell.listening-admin-page .listening-section-head { gap:10px; }
+ .admin-shell.listening-admin-page .account-title { font-size:23px; }
+}

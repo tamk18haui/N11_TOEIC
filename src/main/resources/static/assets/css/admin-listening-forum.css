@@ -1,0 +1,330 @@
+/* ===============================================================
+   N11 TOEIC - GIAO DIEN ADMIN LISTENING - V9
+   Tham khao cach phoi mau ForumFlash (khong sao chep ma nguon).
+   Pham vi: CHI cac trang co class .listening-admin-page
+   KHONG anh huong module Reading, Tai khoan hoac Hoc vien.
+
+   CACH SUA NHANH:
+   - Doi mau: sua 6 bien trong muc 1.
+   - Doi bo goc: sua --ff-radius.
+   - Doi do rong menu: sua --ff-sidebar.
+   - Doi co anh: tim .listening-question-thumb.
+   =============================================================== */
+
+/* 1. MAU SAC VA KICH THUOC - sua o day la du */
+.admin-shell.listening-admin-page {
+  --ff-green: #064d49;        /* Xanh ngoc dam - tieu de va nut chinh */
+  --ff-green-dark: #003d3a;   /* Mau khi di chuot len */
+  --ff-mint: #22bba9;         /* Diem nhan mint */
+  --ff-cream: #f8f7f2;        /* Nen kem */
+  --ff-line: #dce7e1;         /* Duong vien mong */
+  --ff-text: #203d3c;         /* Mau chu chinh */
+  --ff-muted: #6f8280;        /* Mau chu phu */
+  --ff-coral: #fc8f87;        /* Diem nhan canh bao */
+  --ff-radius: 18px;          /* Bo goc the */
+  --ff-sidebar: 240px;        /* Chieu rong menu trai */
+  background: var(--ff-cream);
+  color: var(--ff-text);
+  padding: 28px 0 70px;
+  font-family: 'Segoe UI', Inter, Arial, sans-serif;
+  line-height: 1.55;
+}
+.admin-shell.listening-admin-page h1,
+.admin-shell.listening-admin-page h2,
+.admin-shell.listening-admin-page h3 { color: var(--ff-green); letter-spacing: -.028em; }
+
+/* 2. BO CUC TRANG: menu trai / noi dung phai */
+.admin-shell.listening-admin-page .listening-container {
+  width: 100%; max-width: 1540px;
+  margin: 0 auto; padding: 0 26px;
+}
+.admin-shell.listening-admin-page .listening-layout {
+  display: grid;
+  grid-template-columns: var(--ff-sidebar) minmax(0, 1fr);
+  gap: 26px; align-items: start;
+  margin: 0;
+}
+.admin-shell.listening-admin-page .listening-sidebar-col,
+.admin-shell.listening-admin-page .listening-content-col {
+  min-width: 0; width: auto; max-width: none;
+  margin: 0; padding: 0;
+}
+
+/* 3. MENU TRAI: dau menu xanh dam, muc dang chon xanh mint */
+.admin-shell.listening-admin-page .admin-nav {
+  position: sticky; top: 102px;
+  background: #fff; border: 1px solid var(--ff-line);
+  border-radius: var(--ff-radius);
+  padding: 12px; overflow: hidden;
+  box-shadow: 0 8px 28px rgba(2, 51, 48, .035);
+}
+.admin-shell.listening-admin-page .admin-nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  margin: -12px -12px 10px; padding: 17px 15px;
+  border: 0; background: var(--ff-green);
+}
+.admin-shell.listening-admin-page .admin-nav-avatar {
+  display: grid; place-items: center; flex: 0 0 39px;
+  height: 39px; width: 39px; border-radius: 11px;
+  background: var(--ff-mint); color: var(--ff-green-dark);
+  font-size: 13px; font-weight: 800; box-shadow: none;
+}
+.admin-shell.listening-admin-page .admin-nav-brand > div:last-child { min-width: 0; }
+.admin-shell.listening-admin-page .admin-nav-brand strong {
+  display: block; color: #fff; font-size: 13px;
+  line-height: 1.45; overflow-wrap: break-word;
+}
+.admin-shell.listening-admin-page .admin-nav-brand span {
+  display: block; color: #c1e3dd; font-size: 11px; line-height: 1.5;
+}
+.admin-shell.listening-admin-page .admin-nav-intro {
+  background: #eaf7f3; color: #31645d;
+  padding: 10px 11px; margin: 9px 2px 13px;
+  font-size: 11px; line-height: 1.6; border-radius: 10px;
+}
+.admin-shell.listening-admin-page .admin-nav-group {
+  margin: 18px 11px 6px; font-size: 10px;
+  color: #82938f; letter-spacing: .07em; font-weight: 800;
+}
+.admin-shell.listening-admin-page .admin-nav .admin-link {
+  display: flex; gap: 10px; align-items: center;
+  min-height: 40px; margin: 2px 0; padding: 10px 11px;
+  color: #365750; font-size: 12.5px; font-weight: 650;
+  line-height: 1.45; border: 0; border-radius: 10px;
+  white-space: normal; overflow-wrap: break-word;
+}
+.admin-shell.listening-admin-page .admin-nav .admin-link .icon { color: #4d857b; }
+.admin-shell.listening-admin-page .admin-nav .admin-link:hover {
+  background: #edf7f3; color: var(--ff-green);
+}
+.admin-shell.listening-admin-page .admin-nav .admin-link.is-active {
+  color: var(--ff-green); background: #d8f4ed;
+  box-shadow: inset 3px 0 0 var(--ff-mint);
+}
+
+/* 4. KHUNG DAU TRANG: banner mau xanh ngoc dam */
+.admin-shell.listening-admin-page .ff-hero {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 30px; padding: 30px 34px; margin-bottom: 18px;
+  border-radius: 22px;
+  background: var(--ff-green);
+  color: #fff; overflow: hidden;
+  position: relative;
+}
+.admin-shell.listening-admin-page .ff-hero::after {
+  content: ''; position: absolute; top: -100px; right: -95px;
+  height: 290px; width: 290px; border: 1px solid rgba(255,255,255,.11);
+  border-radius: 50%; box-shadow: 0 0 0 34px rgba(255,255,255,.035);
+  pointer-events: none;
+}
+.admin-shell.listening-admin-page .ff-hero-main { min-width: 0; position: relative; z-index: 1; }
+.admin-shell.listening-admin-page .ff-kicker {
+  display: inline-block; margin-bottom: 9px;
+  font-size: 11px; letter-spacing: .13em; font-weight: 800;
+  color: #74edcc; text-transform: uppercase;
+}
+.admin-shell.listening-admin-page .ff-hero h1 {
+  color: #fff; font-size: clamp(27px, 2.6vw, 38px);
+  font-weight: 830; line-height: 1.18; margin: 0 0 10px;
+  max-width: 780px; overflow-wrap: anywhere;
+}
+.admin-shell.listening-admin-page .ff-hero p { color: #d5e9e3; margin: 0; font-size: 13px; }
+.admin-shell.listening-admin-page .ff-hero-note {
+  margin-top: 8px; color: #a8cbc5; font-size: 11px;
+  max-width: 650px; overflow-wrap: anywhere;
+}
+.admin-shell.listening-admin-page .ff-hero-stats {
+  display: flex; gap: 9px; flex: 0 0 auto; position: relative; z-index: 1;
+}
+.admin-shell.listening-admin-page .ff-stat {
+  display: flex; flex-direction: column; justify-content: center;
+  min-width: 112px; padding: 15px 18px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 14px; color: #fff;
+}
+.admin-shell.listening-admin-page .ff-stat strong { font-size: 25px; line-height: 1.25; color: #fff; }
+.admin-shell.listening-admin-page .ff-stat span { font-size: 11px; color: #d4e5e0; margin-top: 4px; }
+.admin-shell.listening-admin-page .ff-hero .badge-status { background: #ffefcc; color: #815400; }
+.admin-shell.listening-admin-page .ff-hero .badge-status.good { background: #c7f1dc; color: #006443; }
+.admin-shell.listening-admin-page .ff-hero-status { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:13px; font-size:12px; }
+.admin-shell.listening-admin-page .ff-hero-status .small-meta { color: #d3e9e2 !important; }
+.admin-shell.listening-admin-page .ff-back {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-bottom: 14px; color: var(--ff-green); font-size: 13px; font-weight: 750;
+}
+
+/* 5. NUT, FORM, ALERT */
+.admin-shell.listening-admin-page .ff-action-bar {
+  display: flex; align-items: center; justify-content: flex-start;
+  flex-wrap: wrap; gap: 10px; margin-bottom: 22px;
+}
+.admin-shell.listening-admin-page .ff-action-bar form { margin: 0; }
+.admin-shell.listening-admin-page .btn {
+  border-radius: 11px; padding: 10px 16px;
+  font-size: 12.5px; line-height: 1.4; font-weight: 750;
+  white-space: nowrap; box-shadow: none;
+}
+.admin-shell.listening-admin-page .btn-primary,
+.admin-shell.listening-admin-page .ff-action-bar .btn-primary {
+  color: #fff; background: var(--ff-green); border: 1px solid var(--ff-green);
+}
+.admin-shell.listening-admin-page .btn-primary:hover { background: var(--ff-green-dark); border-color: var(--ff-green-dark); }
+.admin-shell.listening-admin-page .btn-soft {
+  background: #e5f5ef; color: var(--ff-green); border: 1px solid #cdeade;
+}
+.admin-shell.listening-admin-page .btn-soft:hover { background: #d6eee4; color: var(--ff-green-dark); }
+.admin-shell.listening-admin-page .btn-outline-danger { border-color: #ffd0c8; color: #ae4d43; background: #fff; }
+.admin-shell.listening-admin-page .btn-outline-danger:hover { color: #fff; background: #be5c54; }
+.admin-shell.listening-admin-page .form-control,
+.admin-shell.listening-admin-page .form-select {
+  min-height: 43px; border-radius: 10px; border: 1px solid #d9e5df;
+  color: var(--ff-text); background-color: #fff; font-size: 13px;
+}
+.admin-shell.listening-admin-page textarea.form-control { min-height: 90px; }
+.admin-shell.listening-admin-page .form-control:focus,
+.admin-shell.listening-admin-page .form-select:focus {
+  border-color: var(--ff-mint); box-shadow: 0 0 0 3px #22bba922;
+}
+.admin-shell.listening-admin-page .form-label { color: var(--ff-green); font-size: 12px; font-weight: 750; }
+.admin-shell.listening-admin-page .alert { border-radius: 13px; font-size: 13px; padding: 13px 17px; }
+.admin-shell.listening-admin-page .alert-danger { background: #fff1ef; color: #944a41; border: 1px solid #f6cfc9; }
+.admin-shell.listening-admin-page .alert-success { background: #e5f7ed; color: #126543; border: 1px solid #bce6cf; }
+
+/* 6. THE NOi DUNG / BO LOC / BANG */
+.admin-shell.listening-admin-page .panel-card {
+  padding: 24px; background: #fff;
+  border-radius: var(--ff-radius); border: 1px solid var(--ff-line);
+  box-shadow: 0 8px 28px rgba(0,60,48,.03);
+}
+.admin-shell.listening-admin-page .account-section-title {
+  color: var(--ff-green); font-size: 21px; line-height: 1.3; font-weight: 810;
+}
+.admin-shell.listening-admin-page .listening-eyebrow { color: #15a794; font-weight: 850; letter-spacing: .1em; }
+.admin-shell.listening-admin-page .section-caption { color: #129f92; }
+.admin-shell.listening-admin-page .small-meta,
+.admin-shell.listening-admin-page .listening-help-text { color: var(--ff-muted) !important; }
+.admin-shell.listening-admin-page .listening-filter-panel { padding: 18px 22px; }
+.admin-shell.listening-admin-page .listening-filter-form { display:flex; gap:12px; flex-wrap:wrap; align-items:end; }
+.admin-shell.listening-admin-page .listening-filter-field { flex:0 1 260px; min-width:180px; }
+.admin-shell.listening-admin-page .listening-filter-result { margin-left:auto; font-size:12px; color:var(--ff-muted); padding-bottom:12px; }
+.admin-shell.listening-admin-page .listening-filter-field .form-select { width:100%; }
+.admin-shell.listening-admin-page .listening-filter-panel .btn { min-height:43px; }
+.admin-shell.listening-admin-page .listening-set-total,
+.admin-shell.listening-admin-page .listening-part-pill { background: #e0f4ec; color: var(--ff-green); }
+.admin-shell.listening-admin-page .listening-table-scroll {
+  width:100%; overflow-x:auto; border:1px solid #e5ece7; border-radius:13px;
+}
+.admin-shell.listening-admin-page table.listening-sets-table,
+.admin-shell.listening-admin-page table.listening-q-table { width:100%; border-collapse:collapse; border-spacing:0; margin:0; }
+.admin-shell.listening-admin-page table.listening-sets-table { min-width:800px; }
+.admin-shell.listening-admin-page table.listening-q-table { min-width:1060px; table-layout:fixed; }
+.admin-shell.listening-admin-page .listening-q-table thead th,
+.admin-shell.listening-admin-page .listening-sets-table thead th {
+  background:#f3f8f4; color:#55736a;
+  font-size:10.5px; font-weight:800; letter-spacing:.06em;
+  text-transform:uppercase; padding:14px 12px;
+  white-space:nowrap; border-bottom:1px solid #dce9e2;
+}
+.admin-shell.listening-admin-page .listening-q-table tbody td,
+.admin-shell.listening-admin-page .listening-sets-table tbody td {
+  font-size:12.6px; padding:15px 12px; vertical-align:middle;
+  border-bottom:1px solid #eef2ef; line-height:1.5; color:#264641;
+}
+.admin-shell.listening-admin-page .listening-q-table tbody tr:hover,
+.admin-shell.listening-admin-page .listening-sets-table tbody tr:hover { background:#fbfdfa; }
+.admin-shell.listening-admin-page .listening-sets-table .listening-set-name strong { color:var(--ff-green); font-size:13px; }
+.admin-shell.listening-admin-page .listening-set-subtitle { color:#8a9b97; }
+.admin-shell.listening-admin-page .listening-numeric { color:var(--ff-green); }
+.admin-shell.listening-admin-page .badge-status {
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:6px 11px; background:#fff0d6; color:#865300;
+  border-radius:999px; font-size:11px; font-weight:800; white-space:nowrap;
+}
+.admin-shell.listening-admin-page .badge-status.good { background:#dff5e8; color:#13774e; }
+.admin-shell.listening-admin-page .listening-set-action .btn { background:#e5f5ef; color:var(--ff-green); }
+
+/* 7. CAU HOI: anh nho, 4 dap an de doc */
+.admin-shell.listening-admin-page .listening-col-no { width:6%; }
+.admin-shell.listening-admin-page .listening-col-picture { width:12%; }
+.admin-shell.listening-admin-page .listening-col-question { width:20%; }
+.admin-shell.listening-admin-page .listening-col-choices { width:34%; }
+.admin-shell.listening-admin-page .listening-col-audio { width:18%; }
+.admin-shell.listening-admin-page .listening-col-actions { width:10%; }
+.admin-shell.listening-admin-page .listening-q-number {
+  width:30px; height:30px; background:#dff3eb; color:var(--ff-green);
+  border-radius:9px; font-weight:800;
+}
+.admin-shell.listening-admin-page .listening-question-thumb {
+  display:block; width:96px; height:74px; max-width:100%;
+  object-fit:contain; background:#f6faf8;
+  border-radius:10px; border:1px solid #dce9e2;
+  box-shadow:none;
+}
+.admin-shell.listening-admin-page .listening-question-thumb:hover { border-color:var(--ff-mint); }
+.admin-shell.listening-admin-page .listening-question-text { color:var(--ff-green); font-size:13px; font-weight:750; }
+.admin-shell.listening-admin-page .listening-option-row {
+  display:flex; align-items:flex-start; gap:8px;
+  background:#f7faf8; border:1px solid #eef3ef;
+  border-radius:8px; margin:0; padding:7px 8px;
+  color:#385c55; font-size:12px; line-height:1.45;
+}
+.admin-shell.listening-admin-page .listening-choices { display:grid; gap:5px; }
+.admin-shell.listening-admin-page .listening-option-row b {
+  display:grid; place-items:center; flex:0 0 20px;
+  height:20px; border-radius:6px;
+  color:#476860; background:#e7ede8; font-size:11px;
+}
+.admin-shell.listening-admin-page .listening-option-row span { min-width:0; flex:1; }
+.admin-shell.listening-admin-page .listening-option-row.is-correct {
+  background:#e3f8ed; border-color:#9edbc0; color:#07543e;
+}
+.admin-shell.listening-admin-page .listening-option-row.is-correct b { background:#c5ecd6; color:#07543e; }
+.admin-shell.listening-admin-page .listening-option-row strong { color:#0b6b46; background:#c7efd9; }
+.admin-shell.listening-admin-page .listening-image-missing,
+.admin-shell.listening-admin-page .listening-option-error {
+  display:inline-block; background:#fff0eb; color:#ad5445;
+  padding:5px 8px; border-radius:8px; font-size:11px;
+}
+.admin-shell.listening-admin-page .listening-q-player .listening-question-audio { width:100%; height:34px; max-width:185px; }
+.admin-shell.listening-admin-page .listening-q-player .listening-media-link { color:#168a7c; font-weight:700; font-size:11px; }
+.admin-shell.listening-admin-page .listening-row-actions { display:grid; gap:7px; max-width:92px; }
+.admin-shell.listening-admin-page .listening-row-actions form { margin:0; }
+.admin-shell.listening-admin-page .listening-row-actions .btn { width:100%; }
+
+/* 8. DOAN NGHE: KHONG CHO ANH CHIEM QUA NHIEU CHO */
+.admin-shell.listening-admin-page #listening-passages .listening-thumb {
+  width:96px !important; height:74px !important;
+  max-width:96px !important; max-height:74px !important;
+  object-fit:contain; border-radius:10px;
+}
+.admin-shell.listening-admin-page #listening-passages .table { min-width:760px; }
+.admin-shell.listening-admin-page #listening-passages .listening-short { max-width:300px; }
+.admin-shell.listening-admin-page .listening-subpanel {
+  background:#f5faf7; border:1px solid #dcebe1; border-radius:14px; padding:20px;
+}
+
+/* 9. TABLET, DIEN THOAI */
+@media (max-width: 1100px) {
+  .admin-shell.listening-admin-page .listening-layout { grid-template-columns:210px minmax(0,1fr); gap:17px; }
+  .admin-shell.listening-admin-page .ff-hero { padding:25px; }
+  .admin-shell.listening-admin-page .panel-card { padding:19px; }
+}
+@media (max-width: 850px) {
+  .admin-shell.listening-admin-page .listening-layout { display:block; }
+  .admin-shell.listening-admin-page .listening-sidebar-col { margin-bottom:18px; }
+  .admin-shell.listening-admin-page .admin-nav { position:static; }
+  .admin-shell.listening-admin-page .ff-hero { gap:15px; flex-wrap:wrap; }
+  .admin-shell.listening-admin-page .ff-hero-stats { width:100%; }
+  .admin-shell.listening-admin-page .listening-filter-result { margin-left:0; }
+}
+@media (max-width: 540px) {
+  .admin-shell.listening-admin-page .listening-container { padding:0 13px; }
+  .admin-shell.listening-admin-page .ff-hero { padding:23px 18px; border-radius:17px; }
+  .admin-shell.listening-admin-page .ff-hero h1 { font-size:26px; }
+  .admin-shell.listening-admin-page .ff-stat { flex:1; min-width:0; }
+  .admin-shell.listening-admin-page .ff-action-bar .btn { flex:1; text-align:center; }
+  .admin-shell.listening-admin-page .listening-filter-field { flex:1 1 100%; }
+  .admin-shell.listening-admin-page .listening-filter-form .btn { width:100%; }
+  .admin-shell.listening-admin-page .panel-card { padding:15px; }
+}

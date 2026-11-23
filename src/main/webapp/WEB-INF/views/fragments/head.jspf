@@ -19,9 +19,26 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/theme.css" />
   <c:if test="${activePage eq 'reading'}"><link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reading.css" /></c:if>
   <%-- Admin stylesheet: only loaded for /admin routes. --%>
-  <c:if test="${fn:startsWith(pageContext.request.servletPath, '/admin')}">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css?v=pr6-merge" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css?v=pr6-merge" />
+  <c:if test="${fn:contains(pageContext.request.requestURI, '/admin') or fn:contains(pageContext.request.servletPath, '/WEB-INF/views/admin/')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-shell.css?v=ui-v8" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-accounts.css?v=ui-v8" />
+  </c:if>
+  <c:if test="${fn:startsWith(pageContext.request.servletPath, '/admin/listening')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-listening.css?v=ui-v8" />
+  </c:if>
+  <%-- Listening V9: thay mau tai file CSS rieng, de sua. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-listening-forum.css?v=9.0" />
+  <%-- V10: Giao dien chung cho Admin, KHONG ap dung cho Listening V9. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-forum-global.css?v=10.1" />
+  <%-- Admin V11: mau va bo cuc dong bo, xem CSS de doi mau. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-unified-v11.css?v=11.1" />
+  <%-- V12: Đồng bộ màu Admin; sửa màu trong admin-mint-hover-v12.css. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-mint-hover-v12.css?v=12.0" />
+  <%-- V13: CSS trang tri Admin, tai CUOI cung sau V12. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-polish-v13.css?v=13.0" />
+  <%-- V14 DEV ONLY: bat helper tim code khi chay localhost, KHONG bat tren domain that. --%>
+  <c:if test="${pageContext.request.serverName eq 'localhost' or pageContext.request.serverName eq '127.0.0.1'}">
+    <script defer src="${pageContext.request.contextPath}/assets/js/admin-dev-source-v14.js?v=14.0"></script>
   </c:if>
   <%-- V15: helper mo code cua Admin; chi nap o localhost. --%>
   <c:if test="${pageContext.request.serverName eq 'localhost' or pageContext.request.serverName eq '127.0.0.1'}">
