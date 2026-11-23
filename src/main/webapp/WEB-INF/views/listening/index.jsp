@@ -1,13 +1,57 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listening.css?v=20261120-instant4" />
 <%@ include file="../fragments/header.jspf" %>
-<section class="page-hero"><div class="container container-n11"><div class="section-caption">LISTENING · PART 1–4</div><h1>Luyện nghe TOEIC đúng trọng tâm</h1><p>Giao diện luyện Listening gồm chọn Part, trình phát audio, câu hỏi, đáp án và transcript. Audio thật sẽ được gắn khi nhóm nhập dữ liệu.</p></div></section>
-<section class="page-section"><div class="container container-n11"><div class="row g-3 mb-5">
-<div class="col-md-6 col-lg-4"><div class="mini-card"><div class="d-flex justify-content-between align-items-center"><span class="feature-icon blue mb-0"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg></span><span class="part-tag">6 câu / test</span></div><h3>Part 1 · Photographs</h3><p>Quan sát hình ảnh, nghe 4 câu mô tả và chọn đáp án phù hợp.</p><a href="#" class="feature-link" data-demo-action="Bài học sẽ kết nối MySQL trong giai đoạn lập trình nghiệp vụ.">Xem nội dung →</a></div></div>
-<div class="col-md-6 col-lg-4"><div class="mini-card"><div class="d-flex justify-content-between align-items-center"><span class="feature-icon blue mb-0"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg></span><span class="part-tag">25 câu / test</span></div><h3>Part 2 · Question–Response</h3><p>Nghe câu hỏi hoặc câu nói và chọn phản hồi thích hợp.</p><a href="#" class="feature-link" data-demo-action="Bài học sẽ kết nối MySQL trong giai đoạn lập trình nghiệp vụ.">Xem nội dung →</a></div></div>
-<div class="col-md-6 col-lg-4"><div class="mini-card"><div class="d-flex justify-content-between align-items-center"><span class="feature-icon blue mb-0"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg></span><span class="part-tag">39 câu / test</span></div><h3>Part 3 · Conversations</h3><p>Nghe hội thoại, trả lời các câu hỏi theo nhóm 3 câu.</p><a href="#" class="feature-link" data-demo-action="Bài học sẽ kết nối MySQL trong giai đoạn lập trình nghiệp vụ.">Xem nội dung →</a></div></div>
-<div class="col-md-6 col-lg-4"><div class="mini-card"><div class="d-flex justify-content-between align-items-center"><span class="feature-icon blue mb-0"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg></span><span class="part-tag">30 câu / test</span></div><h3>Part 4 · Talks</h3><p>Nghe bài nói ngắn, thông báo hoặc hướng dẫn và làm câu hỏi.</p><a href="#" class="feature-link" data-demo-action="Bài học sẽ kết nối MySQL trong giai đoạn lập trình nghiệp vụ.">Xem nội dung →</a></div></div>
-</div><div class="row g-4 align-items-start"><div class="col-lg-7"><div class="panel-card"><div class="d-flex justify-content-between mb-3"><h3 style="font-size:20px" class="mb-0">Phòng luyện nghe mẫu</h3><span class="pill pill-primary">Part 2</span></div><div class="d-flex gap-3 align-items-center p-3 rounded mb-3" style="background:#f3f6ff"><span class="feature-icon cyan mb-0"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg></span><div><strong>Question 01 · Audio</strong><div class="small-meta">Chưa có file MP3 trong CSDL</div></div><button class="btn btn-soft ms-auto" data-demo-action="Bạn cần nhập đường dẫn audio từ CSDL; bản UI chưa có MP3." type="button"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#play"></use></svg></button></div><h4 class="mb-3" style="font-size:17px">Choose the best response. (Câu hỏi minh họa bằng văn bản)</h4><div data-quiz data-answer="A" data-explanation="Câu hỏi 'When will the meeting begin?' hỏi thời gian, nên 'At nine o’clock' là câu trả lời phù hợp."><p class="fw-bold">When will the meeting begin?</p><label class="quiz-option mb-2"><input name="listeningQuiz" type="radio" value="A"> A. At nine o’clock.</label><label class="quiz-option mb-2"><input name="listeningQuiz" type="radio" value="B"> B. In the conference room.</label><label class="quiz-option mb-3"><input name="listeningQuiz" type="radio" value="C"> C. With the new manager.</label><button class="btn btn-primary" type="button" data-check-quiz>Kiểm tra</button><div class="answer-result mt-3" role="status"></div></div></div></div><div class="col-lg-5"><div class="panel-card"><h3 style="font-size:20px">Transcript &amp; mẹo luyện nghe</h3><span class="pill pill-orange mb-3">Bản minh họa</span><p><strong>When will the meeting begin?</strong></p><p class="text-muted-n11 small">Khi nào cuộc họp sẽ bắt đầu?</p><hr><p class="small text-muted-n11 mb-0">Khi có dữ liệu Listening thật, hệ thống hiển thị transcript sau khi học viên nộp bài và hướng dẫn phân tích câu sai.</p></div></div></div>
-</div></section>
+<main class="n11-listening l-home" id="listeningHome" data-base="${pageContext.request.contextPath}">
+  <div class="l-container">
+    <nav class="l-breadcrumb" aria-label="Đường dẫn">
+      <a href="${pageContext.request.contextPath}/">Trang chủ</a><span aria-hidden="true">›</span>
+      <span>Luyện nghe TOEIC</span><span aria-hidden="true">›</span><b id="lPartCrumb">Part 1: Hình ảnh</b>
+    </nav>
+    <div class="l-home-grid">
+      <aside class="l-sidebar" aria-label="Chọn Part Listening">
+        <div class="l-side-heading">
+          <span class="l-side-logo" aria-hidden="true"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg></span>
+          <div><strong>Kỹ năng Nghe</strong><small>Listening · Parts 1–4</small></div>
+        </div>
+        <nav class="l-part-menu" aria-label="Các Part TOEIC Listening">
+          <button type="button" data-part="1" class="active"><span class="l-menu-icon">01</span><span>Part 1: Hình ảnh</span></button>
+          <button type="button" data-part="2"><span class="l-menu-icon">02</span><span>Part 2: Hỏi – Đáp</span></button>
+          <button type="button" data-part="3"><span class="l-menu-icon">03</span><span>Part 3: Hội thoại ngắn</span></button>
+          <button type="button" data-part="4"><span class="l-menu-icon">04</span><span>Part 4: Độc thoại</span></button>
+        </nav>
+        <div class="l-side-tip"><span aria-hidden="true">✦</span><p>Chọn Part, luyện theo 5 cấp độ và theo dõi tiến bộ của bạn.</p></div>
+      </aside>
+      <section class="l-home-main" aria-label="Các cấp độ Listening">
+        <section class="l-banner">
+          <div class="l-banner-copy">
+            <span class="l-eyebrow">✦ &nbsp; LUYỆN TẬP THEO NĂNG LỰC</span>
+            <h1 id="lHeading">Luyện Part 1 theo 5 cấp độ</h1>
+            <p id="lSubhead">Rèn luyện kỹ năng nghe với các bộ câu hỏi được chia theo độ khó từ cơ bản đến nâng cao.</p>
+            <small>TOEIC Listening · 4 Part · Theo dõi tiến độ cá nhân</small>
+          </div>
+          <span class="l-banner-icon" aria-hidden="true"><svg class="icon"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg></span>
+        </section>
+        <div class="l-section-heading"><h2>Chọn cấp độ của bạn</h2><span>Chọn cấp độ để luyện và xem giải thích ngay</span></div>
+        <div class="l-info" id="lMessage" role="status" aria-live="polite">Đang tải danh sách bộ đề...</div>
+        <div class="l-levels" aria-label="5 cấp độ Listening">
+          <c:forEach begin="1" end="5" var="level">
+            <article class="l-level l-level-${level}">
+              <div class="l-card-header"><span class="l-num">${level}</span><strong class="l-level-name">Cấp ${level}</strong></div>
+              <span class="l-tag">Đang tải</span>
+              <p class="l-level-description">Đang tải học liệu...</p>
+              <div class="l-level-metrics"><span class="l-sets">0 bộ đề</span><span class="l-separator">│</span><span class="l-count">0 câu</span></div>
+              <div class="l-card-progress"><div class="l-progress-title"><span>Chưa bắt đầu</span><b>0%</b></div><div class="l-track"><span></span></div></div>
+              <button class="l-start" type="button" disabled>Chưa có câu hỏi</button>
+              <div class="l-select-sets" hidden></div>
+            </article>
+          </c:forEach>
+        </div>
+        <section class="l-history" aria-label="Lịch sử làm bài"><h2>Lịch sử luyện tập</h2><div id="lHistory">Đang tải lịch sử...</div></section>
+      </section>
+    </div>
+  </div>
+</main>
+<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=20261120-instant4"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>
