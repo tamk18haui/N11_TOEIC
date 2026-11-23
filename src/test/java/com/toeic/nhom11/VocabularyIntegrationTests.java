@@ -68,7 +68,7 @@ class VocabularyIntegrationTests {
             .andReturn();
         @SuppressWarnings("unchecked")
         List<Object> words = (List<Object>) lesson.getModelAndView().getModel().get("words");
-        assertTrue(words.isEmpty());
+        assertEquals(10, words.size());
     }
 
     @Test
@@ -182,14 +182,106 @@ class VocabularyIntegrationTests {
             SELECT target_word_count FROM vocabulary_lessons
             WHERE topic_id=1 AND sort_order=2
             """, Integer.class));
-        assertEquals(36, jdbc.queryForObject("""
+        assertEquals(30, jdbc.queryForObject("""
             SELECT target_word_count FROM vocabulary_lessons
             WHERE topic_id=1 AND sort_order=3
             """, Integer.class));
     }
 
     @Test
-    void travelAndTransportHasTwentyWordsInEveryLessonLevel() {
+    void everyPublishedTopicContainsAtLeastThirtyVocabularyTerms() {
+        assertEquals(0, jdbc.queryForObject("""
+            SELECT COUNT(*) FROM vocabulary_topics t
+            WHERE t.is_published=1
+              AND (SELECT COUNT(*) FROM vocabulary_terms term
+                   WHERE term.topic_id=t.id) < 30
+            """, Integer.class));
+        assertTrue(jdbc.queryForObject(
+            "SELECT COUNT(*) FROM vocabulary_terms", Integer.class) >= 750);
+    }
+
+    @Test
+    void everyTopicRoadmapHasTenTwentyAndThirtyTermLessons() {
+        assertEquals(75, jdbc.queryForObject("""
+            SELECT COUNT(*) FROM (
+                SELECT l.id
+                FROM vocabulary_lessons l
+                JOIN vocabulary_lesson_terms lt ON lt.lesson_id=l.id
+                WHERE l.is_published=1
+                GROUP BY l.id, l.target_word_count
+                HAVING COUNT(DISTINCT lt.term_id)=CASE
+                    WHEN l.target_word_count > 30 THEN 30
+                    ELSE l.target_word_count
+                END
+            ) complete_lessons
+            """, Integer.class));
+    }
+
+    @Test
+    void vocabularyAdministrationRequiresAdminRole() throws Exception {
+        mvc.perform(get("/admin/vocabulary"))
+            .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(username = "student@n11.local", roles = "STUDENT")
+    void studentCannotOpenVocabularyAdministration() throws Exception {
+        mvc.perform(get("/admin/vocabulary"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "admin@n11.local", roles = "ADMIN")
+    void adminCanManageVocabularyTopicsTermsAndLessons() throws Exception {
+        mvc.perform(get("/admin/vocabulary"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("vocabulary/admin/index"))
+            .andExpect(model().attributeExists("topics", "stats"));
+
+        mvc.perform(get("/admin/vocabulary/topics/1"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("vocabulary/admin/topic"))
+            .andExpect(model().attributeExists("topic", "lessons", "terms"));
+
+        mvc.perform(get("/admin/vocabulary/topics/1/terms/new"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("vocabulary/admin/term"));
+
+        mvc.perform(post("/admin/vocabulary/terms/save")
+                .param("topicId", "1")
+                .param("word", "administration example")
+                .param("meaningVi", "ví dụ quản trị")
+                .param("definitionEn", "A term saved through vocabulary administration.")
+                .param("exampleEn", "The admin saved an administration example.")
+                .param("exampleVi", "Quản trị viên đã lưu một ví dụ.")
+                .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/admin/vocabulary/topics/1"));
+
+        assertEquals(1, jdbc.queryForObject("""
+            SELECT COUNT(*) FROM vocabulary_terms
+            WHERE topic_id=1 AND word='administration example'
+            """, Integer.class));
+    }
+
+    @Test
+    @WithMockUser(username = "admin@n11.local", roles = "ADMIN")
+    void publishedTopicCannotBeReducedBelowThirtyTerms() throws Exception {
+        Long termId = jdbc.queryForObject("""
+            SELECT id FROM vocabulary_terms WHERE topic_id=4 ORDER BY id LIMIT 1
+            """, Long.class);
+        mvc.perform(post("/admin/vocabulary/topics/4/terms/" + termId + "/delete")
+                .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(flash().attributeExists("error"));
+
+        assertEquals(30, jdbc.queryForObject("""
+            SELECT COUNT(*) FROM vocabulary_terms WHERE topic_id=4
+            """, Integer.class));
+    }
+
+    @Test
+    void travelAndTransportHasTenTwentyAndThirtyWordLessons() {
         assertEquals(3, jdbc.queryForObject("""
             SELECT COUNT(*) FROM (
                 SELECT l.id
@@ -198,8 +290,8 @@ class VocabularyIntegrationTests {
                 JOIN vocabulary_lesson_terms lt ON lt.lesson_id=l.id
                 WHERE t.title='Travel and Transport'
                 GROUP BY l.id, l.target_word_count
-                HAVING COUNT(DISTINCT lt.term_id)=20 AND l.target_word_count=20
-            ) lessons_with_twenty_words
+                HAVING COUNT(DISTINCT lt.term_id)=l.target_word_count
+            ) lessons_with_progressive_words
             """, Integer.class));
     }
 

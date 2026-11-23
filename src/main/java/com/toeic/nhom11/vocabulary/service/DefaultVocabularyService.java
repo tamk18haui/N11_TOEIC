@@ -190,7 +190,7 @@ public class DefaultVocabularyService implements VocabularyService {
         if (email == null || email.isBlank()) {
             return Collections.emptyMap();
         }
-        return dao.userId(email).map(dao::bestScores).orElse(Collections.emptyMap());
+        return dao.userId(email).map(userId -> dao.bestScores(userId)).orElse(Collections.emptyMap());
     }
 
     @Override
@@ -214,7 +214,7 @@ public class DefaultVocabularyService implements VocabularyService {
     @Transactional
     public VocabularyQuiz startLessonQuiz(long topicId, long lessonId, String mode, String email) {
         userId(email);
-        VocabularyLesson lesson = beginLesson(topicId, lessonId, email);
+        beginLesson(topicId, lessonId, email);
         if (!"EXERCISE".equals(mode) && !"DICTATION".equals(mode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chế độ học không hợp lệ.");
         }
@@ -227,11 +227,6 @@ public class DefaultVocabularyService implements VocabularyService {
         return createQuiz(topicId, lessonId, "LESSON",
             dictation ? "Luyện nghe viết" : "Bài tập từ vựng", words, count,
             dictation ? 0 : count);
-    }
-
-    private VocabularyQuiz createQuiz(long topicId, Long lessonId, String type, String title,
-                                      List<VocabularyWord> words, int totalQuestions) {
-        return createQuiz(topicId, lessonId, type, title, words, totalQuestions, totalQuestions);
     }
 
     private VocabularyQuiz createQuiz(long topicId, Long lessonId, String type, String title,
@@ -358,7 +353,7 @@ public class DefaultVocabularyService implements VocabularyService {
             return new VocabularyUserPreferences();
         }
         return dao.userId(email)
-            .map(dao::preferences)
+            .map(userId -> dao.preferences(userId))
             .orElseGet(VocabularyUserPreferences::new);
     }
 
@@ -412,5 +407,129 @@ public class DefaultVocabularyService implements VocabularyService {
         long userId = dao.userId(email)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy tài khoản"));
         dao.markFavorite(userId, termId, favorite);
+    }
+
+    @Override
+    public List<VocabularyLesson> lessons(long topicId) {
+        topic(topicId, true);
+        return dao.lessons(topicId);
+    }
+
+    @Override
+    public List<VocabularyTerm> terms(long topicId) {
+        topic(topicId, true);
+        return dao.terms(topicId);
+    }
+
+    @Override
+    public VocabularyTerm term(long id) {
+        return dao.term(id).orElseThrow(() ->
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy từ vựng"));
+    }
+
+    @Override
+    @Transactional
+    public long saveTopic(VocabularyTopic topic) {
+        requireText(topic.getTitle(), 180, "Tên chủ đề");
+        requireOptionalText(topic.getDescription(), 2000, "Mô tả");
+        if (topic.getSortOrder() < 0) {
+            throw new IllegalArgumentException("Thứ tự phải không âm.");
+        }
+        if (!Set.of("BASIC", "INTERMEDIATE", "ADVANCED").contains(topic.getLevel())) {
+            throw new IllegalArgumentException("Mức độ không hợp lệ.");
+        }
+        if (topic.getPublished()
+            && (topic.getId() == null || dao.terms(topic.getId()).size() < 30)) {
+            throw new IllegalArgumentException("Chủ đề cần ít nhất 30 từ trước khi công bố.");
+        }
+        if (topic.getId() != null) topic(topic.getId(), true);
+        return dao.saveTopic(topic);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTopic(long id) {
+        topic(id, true);
+        if (!dao.lessons(id).isEmpty() || !dao.terms(id).isEmpty()) {
+            throw new IllegalArgumentException("Chủ đề còn bài học hoặc từ vựng. Hãy xóa nội dung trước.");
+        }
+        dao.deleteTopic(id);
+    }
+
+    @Override
+    @Transactional
+    public long saveLesson(VocabularyLesson lesson) {
+        topic(lesson.getTopicId(), true);
+        requireText(lesson.getTitle(), 200, "Tên bài học");
+        requireOptionalText(lesson.getDescription(), 2000, "Mô tả");
+        if (lesson.getSortOrder() < 0) {
+            throw new IllegalArgumentException("Thứ tự phải không âm.");
+        }
+        if (lesson.getTargetWordCount() < 10 || lesson.getTargetWordCount() > 36) {
+            throw new IllegalArgumentException("Mục tiêu từ vựng phải từ 10 đến 36.");
+        }
+        if (lesson.getId() != null) {
+            dao.lesson(lesson.getTopicId(), lesson.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy bài học"));
+        }
+        if (lesson.getPublished() && dao.terms(lesson.getTopicId()).size() < lesson.getTargetWordCount()) {
+            throw new IllegalArgumentException("Chủ đề chưa đủ số từ để công bố bài học.");
+        }
+        long lessonId = dao.saveLesson(lesson);
+        dao.assignLessonTerms(lessonId, lesson.getTopicId(), lesson.getTargetWordCount());
+        return lessonId;
+    }
+
+    @Override
+    @Transactional
+    public void deleteLesson(long id) {
+        dao.deleteLesson(id);
+    }
+
+    @Override
+    @Transactional
+    public long saveTerm(VocabularyTerm term) {
+        topic(term.getTopicId(), true);
+        requireText(term.getWord(), 160, "Từ vựng");
+        requireOptionalText(term.getIpa(), 160, "Phiên âm");
+        requireText(term.getMeaningVi(), 500, "Nghĩa tiếng Việt");
+        requireOptionalText(term.getDefinitionEn(), 4000, "Định nghĩa tiếng Anh");
+        requireOptionalText(term.getExampleEn(), 4000, "Ví dụ tiếng Anh");
+        requireOptionalText(term.getExampleVi(), 4000, "Bản dịch ví dụ");
+        if (term.getId() != null) {
+            VocabularyTerm existing = term(term.getId());
+            if (existing.getTopicId() != term.getTopicId()) {
+                throw new IllegalArgumentException("Không được chuyển từ vựng sang chủ đề khác.");
+            }
+        }
+        return dao.saveTerm(term);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTerm(long id) {
+        VocabularyTerm existing = term(id);
+        VocabularyTopic parent = topic(existing.getTopicId(), true);
+        if (parent.getPublished() && dao.terms(parent.getId()).size() <= 30) {
+            throw new IllegalArgumentException("Chủ đề đã công bố phải giữ ít nhất 30 từ.");
+        }
+        dao.deleteTerm(id);
+    }
+
+    @Override
+    public Map<String, Object> statistics() {
+        return dao.statistics();
+    }
+
+    private void requireText(String value, int max, String field) {
+        if (value == null || value.isBlank() || value.length() > max) {
+            throw new IllegalArgumentException(field + " không được trống và tối đa " + max + " ký tự.");
+        }
+    }
+
+    private void requireOptionalText(String value, int max, String field) {
+        if (value != null && value.length() > max) {
+            throw new IllegalArgumentException(field + " tối đa " + max + " ký tự.");
+        }
     }
 }

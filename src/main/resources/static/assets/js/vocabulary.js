@@ -608,14 +608,18 @@
         });
       });
     }
-    document.getElementById('vocab-close-study').addEventListener('click', function () {
-      flashcardPanel.hidden = true;
-    });
+    const closeStudyButton = document.getElementById('vocab-close-study');
+    if (closeStudyButton && flashcardPanel) {
+      closeStudyButton.addEventListener('click', function () {
+        flashcardPanel.hidden = true;
+      });
+    }
 
     let quizQuestions = [];
     createQuiz = function () {
       const panel = document.getElementById('vocab-quiz-questions');
       const result = document.getElementById('vocab-quiz-result');
+      if (!panel || !result) return;
       panel.replaceChildren();
       result.textContent = '';
       quizQuestions = shuffle(wordCards).slice(0, Math.min(5, wordCards.length)).map(function (item) {
@@ -649,19 +653,25 @@
       });
     };
 
-    document.getElementById('vocab-quiz-check').addEventListener('click', function () {
-      if (!quizQuestions.length) createQuiz();
-      let correct = 0;
-      quizQuestions.forEach(function (question, index) {
-        const selected = document.querySelector('input[name="vocab-quiz-' + index + '"]:checked');
-        if (selected && selected.value === question.item.word) correct++;
+    const quizCheckButton = document.getElementById('vocab-quiz-check');
+    if (quizCheckButton) {
+      quizCheckButton.addEventListener('click', function () {
+        if (!quizQuestions.length) createQuiz();
+        let correct = 0;
+        quizQuestions.forEach(function (question, index) {
+          const selected = document.querySelector('input[name="vocab-quiz-' + index + '"]:checked');
+          if (selected && selected.value === question.item.word) correct++;
+        });
+        document.getElementById('vocab-quiz-result').textContent =
+          translate('quizScore') + ' ' + correct + ' / ' + quizQuestions.length + ' ' + translate('quizQuestions');
       });
-      document.getElementById('vocab-quiz-result').textContent =
-        translate('quizScore') + ' ' + correct + ' / ' + quizQuestions.length + ' ' + translate('quizQuestions');
-    });
-    document.getElementById('vocab-close-quiz').addEventListener('click', function () {
-      quizPanel.hidden = true;
-    });
+    }
+    const closeQuizButton = document.getElementById('vocab-close-quiz');
+    if (closeQuizButton && quizPanel) {
+      closeQuizButton.addEventListener('click', function () {
+        quizPanel.hidden = true;
+      });
+    }
     renderStudyCard();
   }
 

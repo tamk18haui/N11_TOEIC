@@ -10,7 +10,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.*;
 
 @Repository
@@ -40,6 +39,7 @@ public class JdbcVocabularyDao implements VocabularyDao {
         return jdbc.query("""
             SELECT t.id, t.title, t.description, t.level, t.sort_order AS displayOrder,
                    t.is_published AS published, COUNT(l.id) AS totalLessons,
+                   (SELECT COUNT(*) FROM vocabulary_terms vt WHERE vt.topic_id=t.id) AS totalWords,
                    SUM(CASE WHEN p.status='COMPLETED' THEN 1 ELSE 0 END) AS completedLessons,
                    COALESCE(SUM(p.stars), 0) AS totalStars,
                    EXISTS(SELECT 1 FROM vocabulary_quiz_attempts qa
@@ -60,6 +60,7 @@ public class JdbcVocabularyDao implements VocabularyDao {
             summary.setDisplayOrder(rs.getInt("displayOrder"));
             summary.setPublished(rs.getBoolean("published"));
             summary.setTotalLessons(rs.getInt("totalLessons"));
+            summary.setTotalWords(rs.getLong("totalWords"));
             summary.setCompletedLessons(rs.getInt("completedLessons"));
             summary.setTotalStars(rs.getInt("totalStars"));
             summary.setPlacementPassed(rs.getBoolean("placementPassed"));
@@ -145,6 +146,25 @@ public class JdbcVocabularyDao implements VocabularyDao {
     }
 
     @Override
+    public List<VocabularyLesson> lessons(long topicId) {
+        return jdbc.query("""
+            SELECT id, topic_id AS topicId, title, description, sort_order AS sortOrder,
+                   target_word_count AS targetWordCount, is_published AS published
+            FROM vocabulary_lessons WHERE topic_id=? ORDER BY sort_order, id
+            """, BeanPropertyRowMapper.newInstance(VocabularyLesson.class), topicId);
+    }
+
+    @Override
+    public List<VocabularyTerm> terms(long topicId) {
+        return jdbc.query("""
+            SELECT id, topic_id AS topicId, word, ipa, meaning_vi AS meaningVi,
+                   definition_en AS definitionEn, example_en AS exampleEn,
+                   example_vi AS exampleVi, audio_media_id AS audioMediaId
+            FROM vocabulary_terms WHERE topic_id=? ORDER BY word, id
+            """, BeanPropertyRowMapper.newInstance(VocabularyTerm.class), topicId);
+    }
+
+    @Override
     public List<VocabularyWord> allWords() {
         return jdbc.query("""
             SELECT t.id, t.topic_id AS topicId, t.word, t.ipa, t.meaning_vi AS meaningVi,
@@ -171,6 +191,17 @@ public class JdbcVocabularyDao implements VocabularyDao {
             WHERE t.id=?
             """,
             BeanPropertyRowMapper.newInstance(VocabularyWord.class), id).stream().findFirst();
+    }
+
+    @Override
+    public Optional<VocabularyTerm> term(long id) {
+        return jdbc.query("""
+            SELECT id, topic_id AS topicId, word, ipa, meaning_vi AS meaningVi,
+                   definition_en AS definitionEn, example_en AS exampleEn,
+                   example_vi AS exampleVi, audio_media_id AS audioMediaId
+            FROM vocabulary_terms WHERE id=?
+            """, BeanPropertyRowMapper.newInstance(VocabularyTerm.class), id)
+            .stream().findFirst();
     }
 
     @Override
@@ -357,5 +388,123 @@ public class JdbcVocabularyDao implements VocabularyDao {
                 "INSERT INTO user_vocabulary_progress (user_id, term_id, is_favorite) VALUES (?, ?, ?)",
                 userId, termId, favorite);
         }
+    }
+
+    @Override
+    public long saveTopic(VocabularyTopic topic) {
+        if (topic.getId() == null) {
+            return insert("""
+                INSERT INTO vocabulary_topics
+                  (title, description, level, sort_order, is_published)
+                VALUES (?, ?, ?, ?, ?)
+                """, topic.getTitle(), topic.getDescription(), topic.getLevel(),
+                topic.getSortOrder(), topic.getPublished());
+        }
+        jdbc.update("""
+            UPDATE vocabulary_topics
+            SET title=?, description=?, level=?, sort_order=?, is_published=?
+            WHERE id=?
+            """, topic.getTitle(), topic.getDescription(), topic.getLevel(),
+            topic.getSortOrder(), topic.getPublished(), topic.getId());
+        return topic.getId();
+    }
+
+    @Override
+    public void deleteTopic(long id) {
+        jdbc.update("DELETE FROM vocabulary_topics WHERE id=?", id);
+    }
+
+    @Override
+    public long saveLesson(VocabularyLesson lesson) {
+        if (lesson.getId() == null) {
+            return insert("""
+                INSERT INTO vocabulary_lessons
+                  (topic_id, title, description, sort_order, target_word_count, is_published)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """, lesson.getTopicId(), lesson.getTitle(), lesson.getDescription(),
+                lesson.getSortOrder(), lesson.getTargetWordCount(), lesson.getPublished());
+        }
+        jdbc.update("""
+            UPDATE vocabulary_lessons
+            SET topic_id=?, title=?, description=?, sort_order=?, target_word_count=?, is_published=?
+            WHERE id=?
+            """, lesson.getTopicId(), lesson.getTitle(), lesson.getDescription(),
+            lesson.getSortOrder(), lesson.getTargetWordCount(), lesson.getPublished(),
+            lesson.getId());
+        return lesson.getId();
+    }
+
+    @Override
+    public void deleteLesson(long id) {
+        jdbc.update("DELETE FROM vocabulary_lesson_terms WHERE lesson_id=?", id);
+        jdbc.update("DELETE FROM vocabulary_lessons WHERE id=?", id);
+    }
+
+    @Override
+    public long saveTerm(VocabularyTerm term) {
+        if (term.getId() == null) {
+            return insert("""
+                INSERT INTO vocabulary_terms
+                  (topic_id, word, ipa, meaning_vi, definition_en, example_en, example_vi, audio_media_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """, term.getTopicId(), term.getWord(), term.getIpa(), term.getMeaningVi(),
+                term.getDefinitionEn(), term.getExampleEn(), term.getExampleVi(),
+                term.getAudioMediaId());
+        }
+        jdbc.update("""
+            UPDATE vocabulary_terms
+            SET topic_id=?, word=?, ipa=?, meaning_vi=?, definition_en=?, example_en=?,
+                example_vi=?, audio_media_id=?
+            WHERE id=?
+            """, term.getTopicId(), term.getWord(), term.getIpa(), term.getMeaningVi(),
+            term.getDefinitionEn(), term.getExampleEn(), term.getExampleVi(),
+            term.getAudioMediaId(), term.getId());
+        return term.getId();
+    }
+
+    @Override
+    public void deleteTerm(long id) {
+        jdbc.update("DELETE FROM vocabulary_terms WHERE id=?", id);
+    }
+
+    @Override
+    public void assignLessonTerms(long lessonId, long topicId, int limit) {
+        jdbc.update("DELETE FROM vocabulary_lesson_terms WHERE lesson_id=?", lessonId);
+        jdbc.update("""
+            INSERT INTO vocabulary_lesson_terms(lesson_id, term_id, sort_order)
+            SELECT ?, ranked.id, ranked.term_order
+            FROM (
+                SELECT t.id, ROW_NUMBER() OVER (ORDER BY t.id) AS term_order
+                FROM vocabulary_terms t
+                WHERE t.topic_id=?
+            ) ranked
+            WHERE ranked.term_order <= ?
+            """, lessonId, topicId, limit);
+    }
+
+    @Override
+    public Map<String, Object> statistics() {
+        return jdbc.queryForMap("""
+            SELECT
+              (SELECT COUNT(*) FROM vocabulary_topics) AS topics,
+              (SELECT COUNT(*) FROM vocabulary_lessons) AS lessons,
+              (SELECT COUNT(*) FROM vocabulary_terms) AS terms,
+              (SELECT COUNT(*) FROM vocabulary_quiz_attempts) AS attempts,
+              (SELECT COALESCE(ROUND(AVG(100.0 * correct_count / NULLIF(question_count, 0)), 1), 0)
+                 FROM vocabulary_quiz_attempts) AS average
+            """);
+    }
+
+    private long insert(String sql, Object... arguments) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbc.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql, new String[]{"id"});
+            for (int index = 0; index < arguments.length; index++) {
+                statement.setObject(index + 1, arguments[index]);
+            }
+            return statement;
+        }, keyHolder);
+        Number key = keyHolder.getKey();
+        return key == null ? -1L : key.longValue();
     }
 }

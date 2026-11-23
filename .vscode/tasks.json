@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run-spring-boot-with-h2",
+            "type": "process",
+            "command": "sh",
+            "args": [
+                "./mvnw",
+                "-Dspring-boot.run.profiles=dev",
+                "spring-boot:run"
+            ],
+            "windows": {
+                "command": ".\\mvnw.cmd",
+                "args": [
+                    "-Dspring-boot.run.profiles=dev",
+                    "spring-boot:run"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {}
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "java",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": {
+                    "regexp": "^\\[ERROR\\] (.+\\.java):\\[(\\d+),(\\d+)\\] (.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 4,
+                    "severity": "error"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": ".*Starting Nhom11Application.*",
+                    "endsPattern": ".*Tomcat started on port 8080.*"
+                }
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

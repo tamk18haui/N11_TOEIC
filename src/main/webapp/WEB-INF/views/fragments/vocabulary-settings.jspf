@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <div class="vocab-user-toolbar"
      data-vocab-settings
      data-signed-in="${not empty userEmail}"
