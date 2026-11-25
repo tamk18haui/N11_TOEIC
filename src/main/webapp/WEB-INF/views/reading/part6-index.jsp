@@ -12,7 +12,7 @@
       <p class="reading-sidebar-tip">Mỗi câu là một bước tiến.<br>Luyện đều đặn, hiểu thật kỹ.</p>
     </aside>
     <div class="reading-content">
-      <section class="reading-hero"><div><span class="reading-eyebrow">LUYỆN TẬP THEO NĂNG LỰC</span><h1>Luyện Part 6 theo 5 cấp độ</h1><p>Hoàn thành đoạn văn, củng cố ngữ pháp và mở rộng vốn từ. Chọn đủ bốn câu trong mỗi bài đọc để xem đúng/sai. Bật Song ngữ hoặc Tra từ khi cần hỗ trợ.</p><small>Học liệu N11 biên soạn · Tiến độ được lưu theo tài khoản</small></div><span class="reading-hero-icon" aria-hidden="true"><svg><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"/></svg></span></section>
+      <section class="reading-hero"><div><span class="reading-eyebrow">LUYỆN TẬP THEO NĂNG LỰC</span><h1>Luyện Part 6 theo 5 cấp độ</h1><p>Hoàn thành đoạn văn, củng cố ngữ pháp và mở rộng vốn từ. Chọn đủ bốn câu trong mỗi bài đọc để xem đúng/sai. Bật Song ngữ khi cần hỗ trợ.</p><small>Học liệu N11 biên soạn · Tiến độ được lưu theo tài khoản</small></div><span class="reading-hero-icon" aria-hidden="true"><svg><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"/></svg></span></section>
       <div class="reading-section-title"><h2>Chọn cấp độ của bạn</h2><span>Học từ dễ đến khó</span></div>
       <div class="reading-levels">
         <c:forEach var="item" items="${levels}">

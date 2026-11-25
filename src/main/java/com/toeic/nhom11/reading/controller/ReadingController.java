@@ -40,15 +40,6 @@ public class ReadingController {
     public Map<String,Object> answer(@PathVariable long id,@RequestBody AnswerRequest body,Principal principal) { return service.answer(id,body.questionId(),body.optionId(),principal.getName()); }
     @PostMapping("/reading/api/attempts/{id}/finish") @ResponseBody
     public Map<String,Object> finish(@PathVariable long id,Principal principal) {service.finish(id,principal.getName()); return service.state(id,principal.getName());}
-    @GetMapping("/reading/api/cart") @ResponseBody
-    public List<Map<String,Object>> cart(Principal principal) {return service.cart(principal.getName());}
-    public record WordsRequest(long questionId,List<Long> termIds) {}
-    @PostMapping("/reading/api/attempts/{id}/words") @ResponseBody
-    public List<Map<String,Object>> words(@PathVariable long id,@RequestBody WordsRequest body,Principal principal) {
-        service.saveWords(id,body.questionId(),body.termIds(),principal.getName()); return service.cart(principal.getName());
-    }
-    @PostMapping("/reading/api/cart/{term}/remove") @ResponseBody
-    public List<Map<String,Object>> remove(@PathVariable long term,Principal principal) {service.removeWord(term,principal.getName()); return service.cart(principal.getName());}
     @ExceptionHandler(ResponseStatusException.class)
     public Object error(ResponseStatusException exception,jakarta.servlet.http.HttpServletRequest request,Model model) {
         if(request.getRequestURI().contains("/reading/api/")) return ResponseEntity.status(exception.getStatusCode()).body(Map.of("message",Objects.toString(exception.getReason(),"Không thể xử lý yêu cầu.")));

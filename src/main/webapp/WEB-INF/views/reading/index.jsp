@@ -27,7 +27,7 @@
           </section>
         </c:forEach>
       </div>
-      <c:if test="${empty pageContext.request.userPrincipal}"><p class="reading-signin-note"><a href="${pageContext.request.contextPath}/login">Đăng nhập</a> để làm bài, lưu tiến độ và tạo giỏ từ của riêng bạn.</p></c:if>
+      <c:if test="${empty pageContext.request.userPrincipal}"><p class="reading-signin-note"><a href="${pageContext.request.contextPath}/login">Đăng nhập</a> để làm bài và lưu tiến độ.</p></c:if>
       <c:if test="${not empty history}"><section class="reading-history"><h2>Lượt luyện gần đây</h2><div class="table-responsive"><table class="table"><thead><tr><th>Bộ luyện</th><th>Đúng / Tổng</th><th>Kết quả</th><th></th></tr></thead><tbody><c:forEach var="attempt" items="${history}"><tr><td><c:out value="${attempt.title}"/><small><c:out value="${attempt.submitted_at}"/></small></td><td>${attempt.correct_count}/${attempt.total_questions}</td><td>${attempt.score_percent}%</td><td><a href="${pageContext.request.contextPath}/reading/attempts/${attempt.id}">Xem lại →</a></td></tr></c:forEach></tbody></table></div></section></c:if>
     </div>
   </div>

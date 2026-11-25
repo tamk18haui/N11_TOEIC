@@ -139,24 +139,4 @@ public class ReadingService {
     public List<Map<String,Object>> history(String email) {
         return dao.rows("SELECT a.id,s.title,a.correct_count,a.total_questions,a.score_percent,a.submitted_at FROM practice_attempts a JOIN practice_sets s ON s.id=a.practice_set_id WHERE a.user_id=? AND s.skill='READING' AND s.part_no=5 AND a.submitted_at IS NOT NULL ORDER BY a.id DESC LIMIT 20",user(email));
     }
-    public List<Map<String,Object>> cart(String email) {
-        return dao.rows("SELECT t.id,t.word,t.ipa,t.meaning_vi,t.example_en,t.example_vi FROM user_vocabulary_progress p JOIN vocabulary_terms t ON t.id=p.term_id JOIN vocabulary_topics topic ON topic.id=t.topic_id WHERE p.user_id=? AND p.is_favorite=TRUE AND topic.title='N11 Reading Part 5' ORDER BY t.word",user(email));
-    }
-    @Transactional
-    public void saveWords(long attemptId,long questionId,List<Long> terms,String email) {
-        require(terms!=null && terms.size()<=30,"Danh sách từ không hợp lệ.");
-        var attempt=owned(attemptId,email,false);
-        var q=dao.rows("SELECT q.explanation FROM practice_attempt_answers a JOIN practice_questions q ON q.id=a.question_id WHERE a.attempt_id=? AND a.question_id=?",attemptId,questionId).stream().findFirst().orElseThrow(missingException());
-        var allowed=dao.vocabulary(words(metadata(q.get("explanation")))).stream().map(t->number(t.get("id"))).collect(java.util.stream.Collectors.toSet());
-        require(allowed.containsAll(terms),"Từ vựng không thuộc câu hỏi.");
-        long user=number(attempt.get("user_id")); dao.rows("SELECT id FROM users WHERE id=? FOR UPDATE",user);
-        for(Long term:new HashSet<>(terms)) {
-            if(dao.rows("SELECT term_id FROM user_vocabulary_progress WHERE user_id=? AND term_id=?",user,term).isEmpty())
-                dao.update("INSERT INTO user_vocabulary_progress(user_id,term_id,learning_status,is_favorite) VALUES(?,?,'NEW',TRUE)",user,term);
-            else dao.update("UPDATE user_vocabulary_progress SET is_favorite=TRUE WHERE user_id=? AND term_id=?",user,term);
-        }
-    }
-    public void removeWord(long term,String email) {
-        dao.update("UPDATE user_vocabulary_progress SET is_favorite=FALSE WHERE user_id=? AND term_id=? AND term_id IN (SELECT t.id FROM vocabulary_terms t JOIN vocabulary_topics p ON p.id=t.topic_id WHERE p.title='N11 Reading Part 5')",user(email),term);
-    }
 }

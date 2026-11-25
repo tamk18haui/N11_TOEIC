@@ -3,8 +3,8 @@
 <div id="reading-app" data-base="${pageContext.request.contextPath}" data-attempt="${attemptId}" data-csrf="${_csrf.token}" data-csrf-header="${_csrf.headerName}">
   <header class="reading-toolbar">
     <div class="reading-toolbar-brand"><a class="reading-back" href="${pageContext.request.contextPath}/reading" aria-label="Trở lại danh sách">←</a><img src="${pageContext.request.contextPath}/assets/img/logo.svg" width="40" height="40" alt="N11 TOEIC"/></div>
-    <div class="reading-tools" aria-label="Công cụ học"><button type="button" data-action="dictionary">▤ Tra từ</button><button type="button" data-action="bilingual" aria-pressed="true">Aあ Song ngữ</button><button type="button" data-action="highlight" aria-pressed="false">✎ Bút nhớ</button><button type="button" data-action="notes">▧ Ghi chú</button><button type="button" data-action="settings" aria-label="Cài đặt">⚙</button></div>
-    <div class="reading-toolbar-actions"><button class="reading-cart-button" type="button" data-action="cart">Giỏ từ <span id="cart-count">0</span></button><a href="${pageContext.request.contextPath}/reading">Thoát</a><button type="button" data-action="finish">✓ Kết thúc</button></div>
+    <div class="reading-tools" aria-label="Công cụ học"><button type="button" data-action="bilingual" aria-pressed="true">Aあ Song ngữ</button><button type="button" data-action="highlight" aria-pressed="false">✎ Bút nhớ</button><button type="button" data-action="notes">▧ Ghi chú</button><button type="button" data-action="settings" aria-label="Cài đặt">⚙</button></div>
+    <div class="reading-toolbar-actions"><a href="${pageContext.request.contextPath}/reading">Thoát</a><button type="button" data-action="finish">✓ Kết thúc</button></div>
   </header>
   <main class="reading-workspace">
     <div class="reading-session-heading"><span><c:out value="${attemptTitle}"/></span><span id="session-progress"></span></div>

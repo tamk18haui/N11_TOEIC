@@ -131,7 +131,7 @@ Nguồn bổ sung là PDF **Ngữ pháp tiếng anh cơ bản toàn tập**, n�
 
 ## Luyện Reading Parts 5–7
 
-Chọn Đọc trên thanh điều hướng, sau đó chọn Part 5, 6 hoặc 7. Mỗi phần có 5 cấp độ, lưu tiến độ và lịch sử theo tài khoản. Part 6/7 hỗ trợ Song ngữ, Tra từ và chỉ chấm khi hoàn thành nhóm câu hỏi. Part 7 có bài đọc đơn/đôi/ba và lời giải kèm dẫn chứng.
+Chọn Đọc trên thanh điều hướng, sau đó chọn Part 5, 6 hoặc 7. Mỗi phần có 5 cấp độ, lưu tiến độ và lịch sử theo tài khoản. Các phần Reading hỗ trợ Song ngữ; Part 6/7 chỉ chấm khi hoàn thành nhóm câu hỏi. Part 7 có bài đọc đơn/đôi/ba và lời giải kèm dẫn chứng.
 
 Database hiện có: nhập lần lượt `database/updates/003_reading_part5.sql`, `004_reading_part6.sql`, `005_reading_part7.sql`. Cài mới dùng `database/n11_toeic.sql`. Hướng dẫn và giới hạn học liệu: [Part 5](docs/READING_PART5.md), [Part 6](docs/READING_PART6.md), [Part 7](docs/READING_PART7.md).
 

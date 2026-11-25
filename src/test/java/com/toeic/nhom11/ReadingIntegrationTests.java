@@ -12,7 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -101,17 +102,6 @@ class ReadingIntegrationTests {
         assertThrows(ResponseStatusException.class,()->service.answer(id,q,correct(q),ADMIN));
         assertThrows(ResponseStatusException.class,()->service.finish(id,ADMIN));
         service.finish(id,STUDENT); assertTrue(service.history(ADMIN).isEmpty()); assertEquals(1,service.history(STUDENT).size());
-    }
-    @Test @SuppressWarnings("unchecked") void cartUsesAllowedWordsAndDoesNotDuplicateOrResetLearning() {
-        long id=service.start(1,STUDENT); var question=questions(id).get(0); long q=n(question.get("id"));
-        var words=(List<Map<String,Object>>)question.get("vocabulary"); long term=n(words.get(0).get("id"));
-        service.saveWords(id,q,List.of(term,term),STUDENT); service.saveWords(id,q,List.of(term),STUDENT);
-        assertEquals(1,service.cart(STUDENT).size()); assertTrue(service.cart(ADMIN).isEmpty());
-        jdbc.update("UPDATE user_vocabulary_progress SET learning_status='MASTERED',review_count=7 WHERE user_id=? AND term_id=?",service.user(STUDENT),term);
-        service.removeWord(term,STUDENT); assertTrue(service.cart(STUDENT).isEmpty()); service.saveWords(id,q,List.of(term),STUDENT);
-        assertEquals("MASTERED",jdbc.queryForObject("SELECT learning_status FROM user_vocabulary_progress WHERE user_id=? AND term_id=?",String.class,service.user(STUDENT),term));
-        assertThrows(ResponseStatusException.class,()->service.saveWords(id,q,List.of(999999L),STUDENT));
-        assertThrows(ResponseStatusException.class,()->service.saveWords(id,q,List.of(term),ADMIN));
     }
     @Test void draftsAndInvalidLevelsCannotBeStarted() {
         jdbc.update("UPDATE practice_sets SET is_published=FALSE WHERE id=?",dao.level(1).orElseThrow().get("id"));
