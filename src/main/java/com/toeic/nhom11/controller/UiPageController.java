@@ -30,11 +30,7 @@ public class UiPageController {
     @GetMapping("/exams/sample")
     public String sampleExam(Model model) { return page(model, "exams/sample", "exams", "Đề thi mẫu"); }
 
-    @GetMapping("/roadmap")
-    public String roadmap(Model model) { return page(model, "roadmap/index", "roadmap", "Lộ trình học"); }
 
-    @GetMapping("/progress")
-    public String progress(Model model) { return page(model, "progress/index", "progress", "Tiến độ học tập"); }
 
     @GetMapping("/login")
     public String login(Model model) { return page(model, "auth/login", "login", "Đăng nhập"); }
