@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
 <%@ include file="../fragments/header.jspf" %>
 
 <main class="vocabulary-page">
@@ -44,6 +45,6 @@
   </section>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js?v=46"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

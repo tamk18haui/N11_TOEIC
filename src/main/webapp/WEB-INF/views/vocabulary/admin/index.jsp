@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:set var="activePage" value="admin-vocabulary" scope="request" />
 <%@ include file="../../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
 <%-- Bố cục JSP: sidebar, lưới 3/9 và nội dung. Màu/kích thước: admin-content-v19.css. --%>
-<main data-n11-src="vocabulary/admin/index.jsp|1" class="admin-shell grammar-page grammar-admin n11-admin-content"><div data-n11-src="vocabulary/admin/index.jsp|2" class="container container-n11"><div data-n11-src="vocabulary/admin/index.jsp|3" class="row g-4">
+<main data-n11-src="vocabulary/admin/index.jsp|1" class="v44-admin admin-shell grammar-page grammar-admin n11-admin-content"><div data-n11-src="vocabulary/admin/index.jsp|2" class="container container-n11"><div data-n11-src="vocabulary/admin/index.jsp|3" class="row g-4">
 <div data-n11-src="vocabulary/admin/index.jsp|4" class="col-lg-3"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
 <div data-n11-src="vocabulary/admin/index.jsp|5" class="col-lg-9 n11-content-main">
 <%@ include file="../../grammar/alerts.jspf" %>
@@ -27,4 +28,5 @@
   </tr></c:forEach><c:if test="${empty topics}"><tr data-n11-src="vocabulary/admin/index.jsp|49"><td data-n11-src="vocabulary/admin/index.jsp|50" colspan="4" class="n11-empty">Chưa có chủ đề. Chọn Thêm chủ đề để bắt đầu.</td></tr></c:if></tbody></table></div>
 </section>
 </div></div></div></main>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary-v44.js?v=44"></script>
 <%@ include file="../../fragments/scripts.jspf" %>

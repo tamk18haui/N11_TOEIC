@@ -18,8 +18,11 @@
      <li class="nav-item"><a class="nav-link ${activePage eq 'listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/listening" data-nav="listening"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#listening"></use></svg>Listening</a></li>
      <li class="nav-item"><a class="nav-link ${activePage eq 'reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/reading" data-nav="reading"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#reading"></use></svg>Reading</a></li>
      <li class="nav-item"><a class="nav-link ${activePage eq 'exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/exams" data-nav="exams"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#exams"></use></svg>Thi thử</a></li>
+     <%-- N11_V45_PERSONAL_NAV --%>
+     <c:if test="${not empty pageContext.request.userPrincipal}">
      <li class="nav-item"><a class="nav-link ${activePage eq 'roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/roadmap" data-nav="roadmap"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#roadmap"></use></svg>Lộ trình</a></li>
      <li class="nav-item"><a class="nav-link ${activePage eq 'progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/progress" data-nav="progress"><svg class="n11-nav-icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/nav-icons.svg#progress"></use></svg>Tiến độ</a></li>
+     </c:if>
     </ul>
     <div class="nav-right d-flex align-items-center gap-2">
       <c:choose><c:when test="${not empty pageContext.request.userPrincipal}">

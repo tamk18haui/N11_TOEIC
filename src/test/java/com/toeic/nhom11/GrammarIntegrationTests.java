@@ -99,7 +99,14 @@ class GrammarIntegrationTests {
         mvc.perform(get("/grammar")).andExpect(status().isOk()).andExpect(view().name("grammar/index"));
         mvc.perform(get("/admin/grammar")).andExpect(status().is3xxRedirection());
         mvc.perform(get("/progress")).andExpect(status().is3xxRedirection());
-        mvc.perform(get("/exams")).andExpect(status().is3xxRedirection());
+        // N11_V45_GUEST_TESTS
+        mvc.perform(get("/exams")).andExpect(status().isOk());
+        mvc.perform(get("/grammar/1")).andExpect(status().is3xxRedirection());
+        mvc.perform(get("/exams/1/ready")).andExpect(status().is3xxRedirection());
+        mvc.perform(get("/listening")).andExpect(status().isOk());
+        mvc.perform(get("/listening/api/overview").param("part", "1")).andExpect(status().isOk());
+        mvc.perform(get("/listening/practice/1")).andExpect(status().is3xxRedirection());
+        mvc.perform(get("/listening/api/sets/1")).andExpect(status().is3xxRedirection());
         mvc.perform(get("/login")).andExpect(status().isOk());
         mvc.perform(get("/register")).andExpect(status().isOk());
         mvc.perform(get("/assets/css/main.css")).andExpect(status().isOk());
@@ -123,7 +130,7 @@ class GrammarIntegrationTests {
             .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/register"));
         assertEquals(1,jdbc.queryForObject("SELECT COUNT(*) FROM users u JOIN user_profiles p ON p.user_id=u.id WHERE u.email=?",Integer.class,"grammar.integration@example.com"));
         mvc.perform(post("/login").with(csrf()).param("email","grammar.integration@example.com").param("password","Strong@123"))
-            .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/grammar"));
+            .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/"));
     }
     @Test void everyLessonHasTwentyDistinctQuestionsWithFourExplanations() {
         for (Lesson lesson : service.lessons(null, null, null, false)) {

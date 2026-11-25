@@ -2,7 +2,7 @@
 <%@ include file="../fragments/head.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listening.css?v=20261125-v1" />
 <%@ include file="../fragments/header.jspf" %>
-<main class="n11-listening l-home" id="listeningHome" data-base="${pageContext.request.contextPath}">
+<main class="n11-listening l-home" id="listeningHome" data-v45-authenticated="${not empty pageContext.request.userPrincipal}" data-base="${pageContext.request.contextPath}">
   <div class="l-container">
     <nav class="l-breadcrumb" aria-label="Đường dẫn">
       <a href="${pageContext.request.contextPath}/">Trang chủ</a><span aria-hidden="true">›</span>
@@ -52,6 +52,6 @@
     </div>
   </div>
 </main>
-<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=20261125-v4"></script>
+<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=45"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

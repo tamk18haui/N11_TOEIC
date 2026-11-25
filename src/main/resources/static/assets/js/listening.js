@@ -146,7 +146,15 @@
         });
       } catch (error) { target.textContent = error.message; }
     }
-    activate(active); historyRows();
+    // N11_V45_GUEST_HISTORY: no private API request before login.
+    activate(active);
+    if (app.dataset.v45Authenticated === 'true') historyRows();
+    else {
+      const target = $('#lHistory');
+      if (target) {
+        target.replaceChildren(link('Đăng nhập để xem lịch sử luyện tập →', '', '/login'));
+      }
+    }
     return;
   }
 

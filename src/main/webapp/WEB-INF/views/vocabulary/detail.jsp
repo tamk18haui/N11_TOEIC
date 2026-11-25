@@ -1,5 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v46.css?v=46" />
 <%@ include file="../fragments/header.jspf" %>
 
 <main class="vocabulary-page">
@@ -8,7 +10,7 @@
     <a class="vocab-back-link" href="${pageContext.request.contextPath}/vocabulary" data-i18n="backRoadmap">← Quay lại lộ trình</a>
 
     <header class="vocab-detail-heading">
-      <span class="vocab-eyebrow">IELTS VOCABULARY TOPIC ${topic.sortOrder}</span>
+      <span class="vocab-eyebrow">TOEIC VOCABULARY TOPIC ${topic.sortOrder}</span>
       <div class="vocab-detail-title-row">
         <div>
           <h1><c:out value="${topic.title}"/></h1>
@@ -43,26 +45,28 @@
           <c:when test="${not empty pageContext.request.userPrincipal}">
             <c:choose>
               <c:when test="${placementPassed}">
-                <span class="vocab-status-pill completed" data-i18n="placementPassed">✓ Đã vượt qua bài kiểm tra đầu vào</span>
+                <span class="vocab-status-pill completed" data-i18n="placementPassed">✓ Đã đạt bài kiểm tra tổng hợp</span>
               </c:when>
               <c:otherwise>
                 <a class="btn grammar-btn" href="${pageContext.request.contextPath}/vocabulary/${topic.id}/placement" data-i18n="takePlacement">
-                  Làm bài kiểm tra vượt cấp (30 câu)
+                  Làm bài kiểm tra tổng hợp (30 câu)
                 </a>
               </c:otherwise>
             </c:choose>
           </c:when>
           <c:otherwise>
-            <a class="btn grammar-btn" href="${pageContext.request.contextPath}/login" data-i18n="signInPlacement">
-              Đăng nhập để làm bài kiểm tra vượt cấp
+            <a class="btn grammar-btn" href="${pageContext.request.contextPath}/vocabulary/${topic.id}/placement" data-i18n="signInPlacement">
+              Đăng nhập để làm bài kiểm tra tổng hợp
             </a>
           </c:otherwise>
         </c:choose>
-        <span class="vocab-topic-caption" data-i18n="placementHint">Đạt từ 25/30 câu sẽ mở khóa toàn bộ bài học.</span>
+        <span class="vocab-topic-caption" data-i18n="placementHint">Bài kiểm tra tự đánh giá (đạt từ 25/30). Mọi bài học đều học tự do.</span>
       </div>
     </header>
 
+    <%-- N11_V46_FREE_STUDY --%>
     <section class="vocab-roadmap" aria-labelledby="lesson-roadmap-title">
+      <div class="v46-free-note">Bạn có thể học bất kỳ bài nào sau khi đăng nhập, không cần hoàn thành bài trước.</div>
       <div class="vocab-list-heading">
         <div>
           <span class="vocab-eyebrow" data-i18n="learningPath">YOUR LEARNING PATH</span>
@@ -72,14 +76,13 @@
       </div>
 
       <c:forEach items="${lessons}" var="entry" varStatus="status">
-        <article class="vocab-lesson-row ${entry.state eq 'LOCKED' ? 'is-locked' : ''}">
+        <article class="vocab-lesson-row">
           <div class="vocab-lesson-number">${status.index + 1}</div>
           <div class="vocab-lesson-copy">
             <div class="vocab-lesson-title">
               <h3><c:out value="${entry.lesson.title}"/></h3>
-              <span class="vocab-status-pill ${entry.state eq 'COMPLETED' ? 'completed' : entry.state eq 'IN_PROGRESS' ? 'learning' : entry.state eq 'LOCKED' ? 'locked' : 'open'}">
+              <span class="vocab-status-pill ${entry.state eq 'COMPLETED' ? 'completed' : entry.state eq 'IN_PROGRESS' ? 'learning' : 'open'}">
                 <c:choose>
-                  <c:when test="${entry.state eq 'LOCKED'}"><span data-i18n="locked">Khóa</span></c:when>
                   <c:when test="${entry.state eq 'IN_PROGRESS'}"><span data-i18n="inProgress">Đang học</span></c:when>
                   <c:when test="${entry.state eq 'COMPLETED'}"><span data-i18n="completed">Hoàn thành</span></c:when>
                   <c:otherwise><span data-i18n="open">Mở</span></c:otherwise>
@@ -98,16 +101,9 @@
               </span>
             </div>
           </div>
-          <c:choose>
-            <c:when test="${entry.state eq 'LOCKED'}">
-              <button class="vocab-outline-btn" type="button" disabled data-i18n="locked">🔒 Khóa</button>
-            </c:when>
-            <c:otherwise>
-              <a class="vocab-primary-btn" href="${pageContext.request.contextPath}/vocabulary/${topic.id}/lessons/${entry.lesson.id}" data-i18n="openLesson">
+          <a class="vocab-primary-btn" href="${pageContext.request.contextPath}/vocabulary/${topic.id}/lessons/${entry.lesson.id}" data-i18n="openLesson">
                 Vào học →
               </a>
-            </c:otherwise>
-          </c:choose>
         </article>
       </c:forEach>
 
@@ -121,6 +117,6 @@
   </div>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js?v=46"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

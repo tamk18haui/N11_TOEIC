@@ -1,5 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v46.css?v=46" />
 <%@ include file="../fragments/header.jspf" %>
 
 <main class="vocabulary-page">
@@ -34,20 +36,41 @@
       </div>
       <c:choose>
         <c:when test="${not empty words}">
-          <div class="vocab-study-card" id="vocab-study-card" role="button" tabindex="0"
-               aria-label="Lật thẻ để xem nghĩa">
+
+          <%-- N11_V46_FREE_STUDY --%>
+          <div class="v46-toolbar">
+            <label class="v46-pick-label" for="v46-picker">Chọn từ <select id="v46-picker" class="form-select" aria-label="Chọn từ"></select></label>
+            <button class="vocab-outline-btn" id="v46-shuffle" type="button">⤨ Xáo trộn</button>
+            <button class="vocab-outline-btn" id="v46-only-review" type="button" disabled>Ôn từ chưa thuộc</button>
+            <button class="vocab-outline-btn" id="v46-reset" type="button">Tất cả từ</button>
+            <label class="v46-auto"><input id="v46-auto-audio" type="checkbox"> Tự phát âm</label>
+          </div>
+          <div class="v46-progress-line"><span id="v46-known-count"></span><span id="v46-review-count"></span></div>
+          <progress id="v46-progress" max="100" value="0" aria-label="Từ đã thuộc trong phiên này"></progress>
+          <div class="vocab-study-card v46-flip" id="vocab-study-card" role="button" tabindex="0" aria-label="Lật thẻ để xem nghĩa" aria-pressed="false">
             <span class="vocab-study-counter"></span>
-            <strong class="vocab-study-word"></strong>
-            <span class="vocab-study-phonetic"></span>
-            <span class="vocab-study-meaning"></span>
-            <span class="vocab-study-example"></span>
-            <span class="vocab-study-example-meaning"></span>
-            <span class="vocab-study-hint" data-i18n="flipCardHint">Nhấn để lật thẻ</span>
+            <div class="v46-flip-inner">
+              <div class="v46-face v46-front" id="v46-front">
+                <span class="v46-face-label">TIẾNG ANH · ENGLISH</span>
+                <strong class="vocab-study-word"></strong>
+                <span class="vocab-study-phonetic"></span>
+                <span class="vocab-study-hint">↻ Nhấn để xem nghĩa</span>
+              </div>
+              <div class="v46-face v46-back" id="v46-back" aria-hidden="true">
+                <span class="v46-face-label">NGHĨA &amp; VÍ DỤ</span>
+                <span id="v46-back-word"></span>
+                <strong class="vocab-study-meaning"></strong>
+                <span class="vocab-study-example"></span>
+                <span class="vocab-study-example-meaning"></span>
+                <span class="vocab-study-hint">↻ Nhấn để xem từ</span>
+              </div>
+            </div>
           </div>
           <div class="vocab-study-controls">
             <button class="vocab-outline-btn" id="vocab-study-prev" type="button" data-i18n="previous">← Trước</button>
             <div class="d-flex flex-wrap gap-2">
               <button class="vocab-soft-btn" id="vocab-study-speak" type="button" data-i18n="listen">🔊 Nghe</button>
+              <button class="vocab-outline-btn" id="v46-review" type="button">↺ Chưa thuộc</button>
               <button class="vocab-soft-btn" id="vocab-mark-mastered" type="button"
                       data-signed-in="${not empty userEmail}"
                       data-csrf-header="${_csrf.headerName}" data-csrf-token="${_csrf.token}"
@@ -56,6 +79,7 @@
             </div>
             <button class="vocab-outline-btn" id="vocab-study-next" type="button" data-i18n="next">Tiếp →</button>
           </div>
+          <p class="v46-key-hint">Khi chọn thẻ: Space / Enter để lật · ← / → đổi thẻ · S để nghe</p>
           <p class="vocab-flashcard-status" id="vocab-flashcard-status" role="status" aria-live="polite"></p>
         </c:when>
         <c:otherwise>
@@ -94,6 +118,6 @@
   </div>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js?v=46"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

@@ -47,18 +47,12 @@ public class DefaultVocabularyService implements VocabularyService {
     public List<VocabularyLessonSummary> lessonSummaries(long topicId, String email) {
         topic(topicId, false);
         long userId = userIdOrZero(email);
-        boolean placementPassed = userId > 0 && dao.placementPassed(topicId, userId);
+
+        // N11_V46_FREE_STUDY: every published lesson is available independently.
         List<VocabularyLessonSummary> summaries = dao.lessonSummaries(topicId, userId);
-        boolean previousLessonCompleted = true;
         for (VocabularyLessonSummary summary : summaries) {
-            if ("COMPLETED".equals(summary.getState())) {
-                previousLessonCompleted = true;
-            } else if (placementPassed || previousLessonCompleted) {
-                summary.setState("IN_PROGRESS".equals(summary.getState()) ? "IN_PROGRESS" : "OPEN");
-                previousLessonCompleted = false;
-            } else {
-                summary.setState("LOCKED");
-                previousLessonCompleted = false;
+            if (!"COMPLETED".equals(summary.getState()) && !"IN_PROGRESS".equals(summary.getState())) {
+                summary.setState("OPEN");
             }
         }
         return summaries;
@@ -73,9 +67,7 @@ public class DefaultVocabularyService implements VocabularyService {
             .filter(item -> item.getLesson().getId() == lessonId)
             .findFirst()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy bài học"));
-        if ("LOCKED".equals(summary.getState())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Hãy hoàn thành bài học trước hoặc vượt qua bài kiểm tra đầu vào.");
-        }
+
         if (email != null && !email.isBlank() && !"COMPLETED".equals(summary.getState())) {
             dao.updateLessonProgress(lessonId, userId(email), BigDecimal.ZERO, 0);
         }
@@ -207,7 +199,7 @@ public class DefaultVocabularyService implements VocabularyService {
         if (words.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Chủ đề chưa có từ vựng để tạo bài kiểm tra.");
         }
-        return createQuiz(topicId, null, "PLACEMENT", "Bài kiểm tra vượt cấp", words, 30, 25);
+        return createQuiz(topicId, null, "PLACEMENT", "Bài kiểm tra tổng hợp", words, 30, 25);
     }
 
     @Override
@@ -235,6 +227,9 @@ public class DefaultVocabularyService implements VocabularyService {
         if (allWords.size() < 4) {
             allWords = words;
         }
+        // N11_V44_DISTRACTORS: different IDs may contain the same English word.
+        words = new ArrayList<>(words);
+        Collections.shuffle(words);
         List<VocabularyQuiz.Question> questions = new ArrayList<>();
         for (int index = 0; index < totalQuestions; index++) {
             VocabularyWord term = words.get(index % words.size());
@@ -249,7 +244,10 @@ public class DefaultVocabularyService implements VocabularyService {
                 Collections.shuffle(distractors);
                 for (VocabularyWord candidate : distractors) {
                     if (!candidate.getId().equals(term.getId())
-                        && options.stream().noneMatch(option -> option.getId().equals(candidate.getId()))) {
+                        && options.stream().noneMatch(option -> option.getId().equals(candidate.getId())
+                            || normalizeAnswer(option.getWord()).equals(normalizeAnswer(candidate.getWord()))
+                            || (option.getMeaningVi() != null && candidate.getMeaningVi() != null
+                                && option.getMeaningVi().strip().equalsIgnoreCase(candidate.getMeaningVi().strip())))) {
                         options.add(candidate);
                     }
                     if (options.size() == Math.min(4, allWords.size())) break;
