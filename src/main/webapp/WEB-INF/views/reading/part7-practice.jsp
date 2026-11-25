@@ -3,7 +3,7 @@
 <div id="reading-app" class="part7-app" data-base="${pageContext.request.contextPath}" data-attempt="${attemptId}" data-csrf="${_csrf.token}" data-csrf-header="${_csrf.headerName}">
   <header class="reading-toolbar">
     <div class="reading-toolbar-brand"><a class="reading-back" href="${pageContext.request.contextPath}/reading/part7" aria-label="Trở lại danh sách">←</a><img src="${pageContext.request.contextPath}/assets/img/logo.svg" width="40" height="40" alt="N11 TOEIC"/></div>
-    <div class="reading-tools" aria-label="Công cụ học"><button type="button" data-action="dictionary" aria-pressed="false">▤ Tra từ</button><button type="button" data-action="bilingual" aria-pressed="false">Aあ Song ngữ</button></div>
+    <div class="reading-tools" aria-label="Công cụ học"><button type="button" data-action="bilingual" aria-pressed="false">Aあ Song ngữ</button></div>
     <div class="reading-toolbar-actions"><a href="${pageContext.request.contextPath}/reading/part7">Thoát</a><button type="button" data-action="finish">✓ Kết thúc</button></div>
   </header>
   <main class="reading-workspace">
@@ -12,7 +12,6 @@
     <section id="reading-result" class="reading-result" hidden></section>
     <div id="reading-loading" role="status">Đang tải bài luyện…</div>
     <div class="part7-columns"><article id="part7-passage" class="part7-passage" aria-label="Bài đọc"></article><section id="reading-question" aria-label="Câu hỏi" hidden></section></div>
-    <section id="reading-vocabulary" class="reading-vocabulary" aria-label="Từ vựng nên học" hidden></section>
     <noscript><p>Vui lòng bật JavaScript để làm bài luyện Part 7.</p></noscript>
   </main>
   <nav class="reading-question-nav" aria-label="Điều hướng câu hỏi"><button type="button" data-action="previous" aria-label="Bài đọc trước">‹</button><button type="button" class="reading-position" data-action="grid" aria-label="Mở danh sách bài đọc">▦ <span id="question-position">…</span></button><button type="button" data-action="next" aria-label="Bài đọc tiếp theo">›</button></nav>

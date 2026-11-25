@@ -4,10 +4,9 @@ Mở `/reading/part6` hoặc chọn Part 6 trong thanh bên trang Reading. Giao 
 
 ## Quy tắc làm bài
 
-- Song ngữ và Tra từ mặc định **tắt**, bật/tắt độc lập. Song ngữ hiển thị bản dịch từng đoạn và lựa chọn. Tra từ mở ô tìm theo từ tiếng Anh/nghĩa Việt; nháy đúp từ trong bài đọc để tra nhanh. Khi tắt, văn bản trở về bình thường.
-- Tra từ dùng từ điển học liệu của bài hiện tại, không phải từ điển Internet toàn bộ tiếng Anh. Từ chưa có hiện thông báo rõ ràng; có thể dùng Song ngữ để hiểu cả câu. Phát âm dùng giọng tiếng Anh của trình duyệt.
+- Song ngữ mặc định **tắt**. Khi bật, giao diện hiển thị bản dịch từng đoạn và lựa chọn; khi tắt, văn bản trở về bình thường.
 - Mỗi lựa chọn được lưu ngay trên server, nhưng **chưa trả đúng/sai, đáp án chuẩn hay lời giải** khi bài đọc chưa đủ 4 câu. Người học có thể đổi đáp án trong giai đoạn này.
-- Chọn câu cuối cùng sẽ mở kết quả cả bốn câu và khóa lựa chọn trong bài đọc đó. Đúng màu xanh, lựa chọn sai màu đỏ; trạng thái có chữ để không phụ thuộc hoàn toàn vào màu.
+- Chọn câu cuối cùng sẽ mở kết quả cả bốn câu và khóa lựa chọn trong bài đọc đó. Đúng màu xanh, lựa chọn sai màu đỏ.
 - Lời giải nằm trong `details` mặc định đóng dưới từng câu; chỉ mở khi người học nhấn **Giải thích chi tiết**.
 - Mỗi bài đọc được kiểm tra riêng, không chờ các bài khác của cùng cấp độ. Danh sách bài đọc và nút trước/sau hỗ trợ bộ có nhiều bài.
 - Tải lại/Thoát vẫn giữ lựa chọn. Bắt đầu lại cùng cấp sẽ tiếp tục lượt chưa kết thúc. Kết thúc chỉ được thực hiện khi trả lời đủ bộ luyện; muốn dừng giữa chừng dùng Thoát, sau đó quay lại tiếp tục.

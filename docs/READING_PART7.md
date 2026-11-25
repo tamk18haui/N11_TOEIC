@@ -3,7 +3,7 @@
 Trang `/reading/part7` có 5 cấp độ, số bài/câu và tiến độ lấy từ dữ liệu thực. Đăng nhập → chọn cấp độ → bắt đầu hoặc tiếp tục lượt đang làm.
 
 - Bài đọc đơn, đôi và ba văn bản hiển thị bên trái, câu hỏi bên phải; màn hình nhỏ xếp thành một cột.
-- Song ngữ và Tra từ bật/tắt độc lập, mặc định tắt. Nháy đúp từ khi bật Tra từ hoặc tìm trong ô tra cứu. Từ điển giới hạn ở học liệu của nhóm bài hiện tại; không gọi dịch vụ dịch bên ngoài.
+- Song ngữ mặc định tắt; khi bật, giao diện hiển thị bản dịch của văn bản và câu hỏi.
 - Có thể thay đổi lựa chọn đến khi chọn đủ câu trong nhóm. Máy chủ chỉ trả đáp án, điểm, dẫn chứng và phân tích A–D sau khi cả nhóm hoàn tất. Lời giải chỉ mở khi nhấn **Giải thích chi tiết**.
 - Thoát giữ lại tiến độ. Kết thúc yêu cầu làm đủ câu; kết quả và lựa chọn được lưu theo tài khoản. API kiểm tra quyền sở hữu, CSRF và lựa chọn thuộc đúng câu hỏi.
 

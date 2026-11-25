@@ -7,7 +7,7 @@
   const base = app.dataset.base;
   const endpoint = `/reading/api/attempts/${app.dataset.attempt}`;
   const dialog = $('#reading-dialog');
-  let state, index = 0, busy = false, cart = [], selectedWords = new Set(), detailWords = true;
+  let state, index = 0, busy = false, detailWords = true;
   let prefs = { bilingual: true, highlight: false, fontSize: 19, autoExplanation: false };
   let statusTimer;
   const escape = text => String(text ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -61,10 +61,9 @@
         const correct = showReview && option.id === q.correct_option;
         const wrong = showReview && option.id === q.selected && !correct;
         return `<button type="button" class="reading-answer${correct ? ' correct' : wrong ? ' wrong' : ''}" data-option="${option.id}" ${busy || showReview ? 'disabled' : ''}>
-          <span class="reading-answer-letter">${escape(option.label)}</span><span>${escape(option.text)}${prefs.bilingual && option.translation ? `<span class="reading-translation">${escape(option.translation)}</span>` : ''}${correct || wrong ? `<span class="reading-answer-state">${correct ? '✓ Đáp án đúng' : '✕ Bạn đã chọn'}${correct && option.id === q.selected ? ' · Bạn đã chọn' : ''}</span>` : ''}</span></button>`;
+          <span class="reading-answer-letter">${escape(option.label)}</span><span>${escape(option.text)}${prefs.bilingual && option.translation ? `<span class="reading-translation">${escape(option.translation)}</span>` : ''}</span></button>`;
       }).join('')}</div>
-      ${showReview ? `<div class="reading-feedback" role="status">${q.selected === null ? 'Bạn đã bỏ qua câu này.' : q.selected === q.correct_option ? 'Chính xác! Bạn đã chọn đúng đáp án.' : 'Chưa chính xác. Hãy đọc giải thích để hiểu cách chọn đáp án.'}</div>
-      <details class="reading-explanation" ${prefs.autoExplanation ? 'open' : ''}><summary>Xem giải thích chi tiết</summary><p>${escape(q.explanation)}</p>${Object.keys(q.analysis || {}).length ? `<ul>${Object.entries(q.analysis).map(([label, text]) => `<li><strong>${escape(label)}.</strong> ${escape(text)}</li>`).join('')}</ul>` : ''}</details>` : '<p class="reading-dialog-help">Chọn một đáp án để kiểm tra. Bạn có thể chuyển câu và quay lại sau.</p>'}`;
+      ${showReview ? `<details class="reading-explanation" ${prefs.autoExplanation ? 'open' : ''}><summary>Xem giải thích chi tiết</summary><p>${escape(q.explanation)}</p>${Object.keys(q.analysis || {}).length ? `<ul>${Object.entries(q.analysis).map(([label, text]) => `<li><strong>${escape(label)}.</strong> ${escape(text)}</li>`).join('')}</ul>` : ''}</details>` : '<p class="reading-dialog-help">Chọn một đáp án để kiểm tra. Bạn có thể chuyển câu và quay lại sau.</p>'}`;
     renderVocabulary();
     $('#reading-result').hidden = !state.finished;
     if (state.finished) $('#reading-result').innerHTML = `<div class="reading-target" aria-hidden="true">✓</div><h1>Đã hoàn thành lượt luyện</h1><p>${escape(state.title)}</p><div class="reading-result-metrics"><div><strong>${state.correct}/${state.total}</strong><span>Câu đúng</span></div><div><strong>${state.score}%</strong><span>Độ chính xác</span></div><div><strong>${state.total - state.answered}</strong><span>Chưa trả lời</span></div></div><p>Câu chưa trả lời được tính vào tổng số câu. Xem lại lời giải bên dưới để củng cố kiến thức.</p><a class="reading-primary" href="${base}/reading">Chọn cấp độ / Luyện lại →</a>`;
@@ -73,27 +72,16 @@
   function renderVocabulary() {
     const words = current().vocabulary;
     $('#reading-vocabulary').hidden = words.length === 0;
-    $('#reading-vocabulary').innerHTML = `<div class="reading-vocabulary-top"><h2>Từ vựng nên học <span>(${words.length})</span></h2><div class="reading-vocabulary-actions"><button type="button" data-action="select-words">${selectedWords.size === words.length ? 'Bỏ chọn tất cả' : '✓ Chọn tất cả'}</button><button type="button" class="reading-add-words" data-action="save-words" ${!selectedWords.size || busy ? 'disabled' : ''}>+ Thêm vào giỏ từ (${selectedWords.size})</button><button type="button" data-action="word-details" aria-pressed="${detailWords}">${detailWords ? 'Ẩn chi tiết' : 'Xem chi tiết'}</button></div></div>
-      ${words.map(word => `<div class="reading-word"><input type="checkbox" data-word="${word.id}" aria-label="Chọn từ ${escape(word.word)}" ${selectedWords.has(word.id) ? 'checked' : ''}/><div><strong>${escape(word.word)}</strong>${word.ipa ? `<span class="reading-ipa">${escape(word.ipa)}</span>` : ''}<button type="button" data-speak="${word.id}" aria-label="Nghe từ ${escape(word.word)}">♪ Nghe</button><p>${escape(word.meaning_vi)}</p>${detailWords ? `<div class="reading-word-details">${word.definition_en ? `<p>${escape(word.definition_en)}</p>` : ''}${word.example_en ? `<blockquote><em>${escape(word.example_en)}</em>${prefs.bilingual ? `<br>${escape(word.example_vi)}` : ''}</blockquote>` : ''}</div>` : ''}${cart.some(item => item.id === word.id) ? '<small>✓ Đã có trong giỏ từ</small>' : ''}</div></div>`).join('')}`;
+    $('#reading-vocabulary').innerHTML = `<div class="reading-vocabulary-top"><h2>Từ vựng nên học <span>(${words.length})</span></h2><div class="reading-vocabulary-actions"><button type="button" data-action="word-details" aria-pressed="${detailWords}">${detailWords ? 'Ẩn chi tiết' : 'Xem chi tiết'}</button></div></div>
+      ${words.map(word => `<div class="reading-word"><div><strong>${escape(word.word)}</strong>${word.ipa ? `<span class="reading-ipa">${escape(word.ipa)}</span>` : ''}<button type="button" data-speak="${word.id}" aria-label="Nghe từ ${escape(word.word)}">♪ Nghe</button><p>${escape(word.meaning_vi)}</p>${detailWords ? `<div class="reading-word-details">${word.definition_en ? `<p>${escape(word.definition_en)}</p>` : ''}${word.example_en ? `<blockquote><em>${escape(word.example_en)}</em>${prefs.bilingual ? `<br>${escape(word.example_vi)}` : ''}</blockquote>` : ''}</div>` : ''}</div></div>`).join('')}`;
   }
   function showDialog(title, html) {
     $('#dialog-title').textContent = title; $('#dialog-content').innerHTML = html;
     if (!dialog.open) dialog.showModal();
   }
-  function openCart() {
-    showDialog('Giỏ từ của bạn', cart.length ? `<p class="reading-dialog-help">Từ đã lưu gắn với tài khoản, có thể xem lại ở các lượt luyện khác.</p>${cart.map(word => `<div class="reading-cart-row"><div><strong>${escape(word.word)}</strong><p>${escape(word.meaning_vi)}</p></div><button type="button" data-remove="${word.id}">Bỏ khỏi giỏ</button></div>`).join('')}` : '<p>Giỏ từ đang trống. Chọn từ bên dưới câu hỏi để thêm vào giỏ.</p>');
-  }
-  function openDictionary() {
-    showDialog('Tra từ trong câu hiện tại', '<p class="reading-dialog-help">Tra các từ thuộc học liệu của câu này. Nút Nghe sử dụng giọng tiếng Anh của trình duyệt.</p><label class="reading-field">Từ cần tra<input type="search" id="dictionary-search" placeholder="Nhập từ hoặc nghĩa tiếng Việt…" autocomplete="off"></label><div id="dictionary-results"></div>');
-    searchDictionary(''); $('#dictionary-search').focus();
-  }
-  function searchDictionary(query) {
-    const words = current().vocabulary.filter(word => `${word.word} ${word.meaning_vi}`.toLowerCase().includes(query.toLowerCase().trim()));
-    $('#dictionary-results').innerHTML = words.length ? words.map(word => `<div class="reading-cart-row"><div><strong>${escape(word.word)}</strong><p>${escape(word.meaning_vi)}</p><p><em>${escape(word.example_en)}</em></p></div><button type="button" data-speak="${word.id}">♪ Nghe</button></div>`).join('') : '<p>Không tìm thấy từ này trong học liệu của câu hiện tại.</p>';
-  }
   function go(position) {
     if (busy || position < 0 || position >= state.questions.length) return;
-    index = position; selectedWords.clear(); error(''); dialog.close(); render();
+    index = position; error(''); dialog.close(); render();
     $('#reading-question').scrollIntoView({block:'start'});
     window.scrollBy(0, -$('.reading-toolbar').offsetHeight - 20);
   }
@@ -113,9 +101,6 @@
     bilingual: () => { prefs.bilingual = !prefs.bilingual; saveLocal('preferences', prefs); render(); },
     highlight: () => { prefs.highlight = !prefs.highlight; saveLocal('preferences', prefs); render(); notify(prefs.highlight ? 'Đã đánh dấu các từ vựng nên học trong câu.' : 'Đã tắt đánh dấu từ.'); },
     'word-details': () => { detailWords = !detailWords; renderVocabulary(); },
-    'select-words': () => { selectedWords = selectedWords.size === current().vocabulary.length ? new Set() : new Set(current().vocabulary.map(word => word.id)); renderVocabulary(); },
-    'save-words': () => mutate(async () => { cart = await api(`${endpoint}/words`, {questionId:current().id, termIds:[...selectedWords]}); selectedWords.clear(); $('#cart-count').textContent = cart.length; notify('Đã lưu từ vào giỏ từ.'); }),
-    cart: openCart, dictionary: openDictionary,
     notes: () => { const qid=current().id; showDialog(`Ghi chú · Câu ${index+1}`, `<p class="reading-dialog-help">Tự động lưu trên trình duyệt này theo tài khoản và câu hỏi.</p><label class="reading-field">Ghi chú của bạn<textarea id="question-notes" maxlength="5000" placeholder="Ghi lại cấu trúc hoặc từ vựng cần nhớ…">${escape(notes.get(qid) ?? readLocal(`note.${qid}`, ''))}</textarea></label><small id="note-status"></small>`); },
     settings: () => showDialog('Cài đặt luyện tập', `<label class="reading-field">Cỡ chữ<select id="reading-font">${[17,19,22,25].map(size => `<option value="${size}" ${size === prefs.fontSize ? 'selected' : ''}>${size}px</option>`).join('')}</select></label><label class="reading-field"><input type="checkbox" id="reading-auto-explanation" ${prefs.autoExplanation ? 'checked' : ''}> Tự mở giải thích sau khi trả lời</label>`),
     grid: () => showDialog('Danh sách câu hỏi', `<p class="reading-dialog-help">✓ Đúng · ✕ Sai · ○ Chưa trả lời</p><div class="reading-grid">${state.questions.map((q, i) => { const answered=q.selected!==null; const correct=answered && q.selected===q.correct_option; return `<button type="button" data-go="${i}" class="${i===index?'is-current ':''}${answered?(correct?'is-correct':'is-wrong'):''}" aria-label="Câu ${i+1}, ${answered?(correct?'đúng':'sai'):'chưa trả lời'}">${i+1} ${answered?(correct?'✓':'✕'):'○'}</button>`; }).join('')}</div>`),
@@ -129,7 +114,6 @@
     if (busy) return;
     if (button.dataset.option) await mutate(async () => {state = await api(`${endpoint}/answers`, {questionId:current().id,optionId:Number(button.dataset.option)});});
     if (button.dataset.go) go(Number(button.dataset.go));
-    if (button.dataset.remove) await mutate(async () => {cart = await api(`/reading/api/cart/${button.dataset.remove}/remove`, {}); $('#cart-count').textContent=cart.length; openCart();});
     if (button.dataset.speak) {
       const word = current().vocabulary.find(item => item.id === Number(button.dataset.speak));
       if (!word) return;
@@ -140,12 +124,10 @@
   });
   app.addEventListener('change', event => {
     const input=event.target;
-    if (input.dataset.word) {const id=Number(input.dataset.word); input.checked?selectedWords.add(id):selectedWords.delete(id); renderVocabulary();}
     if (input.id === 'reading-font') {prefs.fontSize=Number(input.value); saveLocal('preferences',prefs); render();}
     if (input.id === 'reading-auto-explanation') {prefs.autoExplanation=input.checked; saveLocal('preferences',prefs); render();}
   });
   app.addEventListener('input', event => {
-    if(event.target.id==='dictionary-search') searchDictionary(event.target.value);
     if(event.target.id==='question-notes') {notes.set(current().id,event.target.value); const saved=saveLocal(`note.${current().id}`,event.target.value); $('#note-status').textContent=saved?'Đã lưu ghi chú trên trình duyệt.':'Chỉ giữ ghi chú trong trang đang mở.';}
   });
   async function load() {
@@ -156,7 +138,6 @@
       const saved=readLocal(`position.${state.id}`,firstUnanswered<0?0:firstUnanswered);
       index=Number.isInteger(saved)&&saved>=0&&saved<state.questions.length?saved:0;
       render();
-      try {cart=await api('/reading/api/cart'); $('#cart-count').textContent=cart.length; renderVocabulary();} catch(failure) {error(failure.message);}
     } catch(failure) {$('#reading-loading').textContent='Không tải được bài luyện. Tải lại trang để thử lại.'; error(failure.message);}
   }
   load();

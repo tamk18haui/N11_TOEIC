@@ -19,9 +19,9 @@ Chức năng nằm tại `/reading`, sử dụng Spring Boot/JSP/JDBC và đúng
 2. Server mở lượt luyện; nếu tài khoản đã có lượt chưa kết thúc ở cấp này thì tiếp tục lượt đó.
 3. Chọn một trong A–D: server kiểm tra và lưu ngay; đáp án đúng màu xanh, lựa chọn sai màu đỏ. Không đổi được đáp án sau khi xem lời giải. Gửi lại cùng đáp án không cộng thêm lượt.
 4. Chuyển câu bằng nút trước/sau hoặc bảng câu hỏi. Câu bỏ qua vẫn có thể trả lời trước khi kết thúc.
-5. Nút Song ngữ bật/tắt bản dịch; Bút nhớ đánh dấu các từ thuộc học liệu xuất hiện trong câu. Tra từ tìm trong danh sách từ vựng của câu hiện tại (không phải từ điển Internet).
-6. Chọn từng từ hoặc tất cả rồi thêm vào Giỏ từ. Giỏ từ lưu MySQL theo tài khoản; thêm trùng không tạo bản ghi thứ hai. Bỏ khỏi giỏ chỉ tắt yêu thích, giữ nguyên trạng thái đã học và số lần ôn. Phát âm dùng SpeechSynthesis tiếng Anh của thiết bị; nếu không hỗ trợ hoặc phát lỗi, giao diện thông báo.
-7. Ghi chú tự lưu trên trình duyệt theo tài khoản/câu hỏi, tối đa 5.000 ký tự. Cài đặt gồm cỡ chữ và tự mở giải thích. Ghi chú, cài đặt, vị trí câu không đồng bộ sang thiết bị khác; đáp án, giỏ từ và tiến độ có lưu server.
+5. Nút Song ngữ bật/tắt bản dịch; Bút nhớ đánh dấu các từ thuộc học liệu xuất hiện trong câu.
+6. Phần Từ vựng nên học hiển thị nghĩa và ví dụ; có thể nghe phát âm và ẩn/hiện chi tiết.
+7. Ghi chú tự lưu trên trình duyệt theo tài khoản/câu hỏi, tối đa 5.000 ký tự. Cài đặt gồm cỡ chữ và tự mở giải thích. Ghi chú, cài đặt, vị trí câu không đồng bộ sang thiết bị khác; đáp án và tiến độ có lưu server.
 8. Thoát giữ lượt luyện đang làm. Kết thúc mở hộp xác nhận có số câu bỏ trống; sau xác nhận, lưu kết quả và mở toàn bộ lời giải. Điểm = số đúng / tổng câu × 100; câu bỏ trống tính chưa đúng. Đây là phần trăm luyện tập, không quy đổi điểm TOEIC.
 9. Trang Reading hiện 20 lượt đã kết thúc gần nhất; mở lại để xem đáp án. Kết thúc một lượt rồi chọn cấp độ lần nữa sẽ tạo lượt mới.
 
@@ -36,9 +36,8 @@ Chức năng nằm tại `/reading`, sử dụng Spring Boot/JSP/JDBC và đúng
 | `practice_attempts` | Lưu người học, bộ luyện, tổng câu, thời điểm bắt đầu/kết thúc, điểm. `submitted_at IS NULL` là đang làm. |
 | `practice_attempt_answers` | Tạo bản ghi cho toàn bộ câu lúc bắt đầu, `selected_option_id=NULL` là chưa trả lời. Giữ nguyên tập câu nếu nhập thêm câu mới giữa lượt. |
 | `vocabulary_topics` / `vocabulary_terms` | Chủ điểm `N11 Reading Part 5`, từ được liên kết với câu qua `words` trong JSON. |
-| `user_vocabulary_progress` | Giỏ từ dùng `is_favorite`. Không đặt lại trạng thái MASTERED, số lần ôn hay lịch ôn khi thêm/bỏ khỏi giỏ. |
 
-Tiến độ “Đã luyện” đếm số câu khác nhau đã trả lời trong mọi lượt của người dùng, kể cả lượt đang làm; làm lại không tăng quá tổng số câu. Dùng khóa người dùng khi tạo lượt và khóa lượt khi chấm/kết thúc để xử lý yêu cầu đồng thời. Mỗi thao tác ghi dùng transaction, truy vấn tham số; kiểm tra chủ sở hữu cho mọi lượt và từ gửi lên, có CSRF. API không trả đáp án đúng/lời giải của câu chưa làm trước khi kết thúc.
+Tiến độ “Đã luyện” đếm số câu khác nhau đã trả lời trong mọi lượt của người dùng, kể cả lượt đang làm; làm lại không tăng quá tổng số câu. Dùng khóa người dùng khi tạo lượt và khóa lượt khi chấm/kết thúc để xử lý yêu cầu đồng thời. Mỗi thao tác ghi dùng transaction, truy vấn tham số; kiểm tra chủ sở hữu cho mọi lượt, có CSRF. API không trả đáp án đúng/lời giải của câu chưa làm trước khi kết thúc.
 
 Không sửa/xóa nội dung câu đã có lượt làm: schema nhóm không lưu bản sao nội dung. Bộ nhập ban đầu chỉ thêm; khi cần sửa nội dung đã dùng, tạo bộ/câu mới theo quy trình quản trị của nhóm. Chức năng quản trị Reading không nằm trong đợt triển khai này.
 
@@ -60,11 +59,11 @@ Chạy `python scripts/build_reading_seed.py` để sinh lại `003_reading_part
 
 ## Kiểm thử
 
-`mvn test`: H2 độc lập, không ghi MySQL. `ReadingIntegrationTests` kiểm tra đủ 5 cấp, chấm/lưu, tiếp tục, cố định danh sách câu, câu trống, gửi lặp, ID giả, riêng tư, giỏ từ, CSRF, bộ nháp, cấu hình câu sai và đăng nhập quay lại cấp đã chọn.
+`mvn test`: H2 độc lập, không ghi MySQL. `ReadingIntegrationTests` kiểm tra đủ 5 cấp, chấm/lưu, tiếp tục, cố định danh sách câu, câu trống, gửi lặp, ID giả, riêng tư, CSRF, bộ nháp, cấu hình câu sai và đăng nhập quay lại cấp đã chọn.
 
 Trong môi trường Windows hạn chế quyền attach, Mockito mặc định có thể treo khi tự gắn Java agent. Phiên kiểm chứng này truyền agent có sẵn qua `-DargLine=-javaagent:<đường-dẫn-mockito-core-5.23.0.jar>`; không cần thay cấu hình ứng dụng. Chạy `mvn -DskipTests package` để đóng gói WAR sau khi kiểm thử thành công.
 
-Kiểm tra trực tiếp: mở `/reading` → cấp 1 → chọn sai câu 1, đúng câu 2 → thêm từ vào giỏ → ghi chú → tải lại → kết thúc khi còn câu trống → xác nhận điểm 1/6 = 16,67% → quay lại xem tiến độ 2/6 và lịch sử. Kiểm tra responsive ở desktop và điện thoại, dùng Tab/Enter để thao tác các nút, Escape để đóng dialog.
+Kiểm tra trực tiếp: mở `/reading` → cấp 1 → chọn sai câu 1, đúng câu 2 → bật/tắt Song ngữ → ghi chú → tải lại → kết thúc khi còn câu trống → xác nhận điểm 1/6 = 16,67% → quay lại xem tiến độ 2/6 và lịch sử. Kiểm tra responsive ở desktop và điện thoại, dùng Tab/Enter để thao tác các nút, Escape để đóng dialog.
 
 ## Học liệu bổ sung ngày 16/11/2026
 
