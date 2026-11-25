@@ -97,3 +97,8 @@ target/
 /listening-uploads/
 /backup_before_cloudinary_v4_*/
 /cloudinary-sync-report.json
+# N11 V36: local data and credentials
+/.local/
+/application-local.yaml
+/application-local.properties
+/.env

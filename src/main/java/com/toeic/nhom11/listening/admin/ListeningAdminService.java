@@ -50,9 +50,11 @@ public class ListeningAdminService {
                 || "true".equalsIgnoreCase(String.valueOf(value));
     }
     private void editable(long id) {
+        dao.lockExamSource(id); // N11 V33 source lock
         var s = set(id);
         if (yes(s.get("is_published"))) throw new IllegalArgumentException("Hãy chuyển bộ này về bản nháp trước khi chỉnh sửa.");
         if (((Number)s.get("attempt_count")).longValue()>0) throw new IllegalArgumentException("Bộ đã có lượt làm bài; không được sửa nội dung để bảo toàn lịch sử chấm điểm.");
+        dao.checkExamSource(id); // N11 V33 source guard
     }
     private void verifyMedia(Long id, String expected) {
         if (id==null) return;
@@ -83,6 +85,7 @@ public class ListeningAdminService {
 
     @Transactional
     public void publish(long id, boolean publish) {
+        dao.lockExamSource(id); // N11 V33 publication lock
         var s=set(id);
         if (publish) {
             if (dao.count(id,"practice_questions")==0) throw new IllegalArgumentException("Cần ít nhất một câu hỏi trước khi công bố.");

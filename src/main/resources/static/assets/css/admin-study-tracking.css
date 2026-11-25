@@ -1,0 +1,30 @@
+/* V32.1 — chỉ dành cho Admin Lộ trình và Thống kê. Không áp dụng Student. */
+/* Banner: đổi màu nền tại background, màu chữ tại color, bo góc tại border-radius. */
+.admin-shell.n11-tracking .n11-tracking-hero {
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  gap:20px; padding:24px 27px; border:1px solid #86dfca; border-radius:22px;
+  background:linear-gradient(105deg,#f2fff7 0%,#e1fff0 66%,#fff4e5 100%);
+  box-shadow:0 12px 25px rgba(0,118,94,.08);
+}
+.admin-shell.n11-tracking .n11-tracking-hero h1 {font-size:clamp(26px,3vw,36px);margin:6px 0;font-weight:850;color:#063e39;}
+.admin-shell.n11-tracking .n11-tracking-hero p {margin:0;color:#4e7269;line-height:1.65;max-width:650px;}
+/* Các thẻ thống kê: chiều cao, khoảng đệm, viền màu riêng theo chỉ số. */
+.admin-shell.n11-tracking .n11-stat {min-height:130px;padding:18px;border-top:3px solid #62afaa;overflow-wrap:anywhere;}
+.admin-shell.n11-tracking .n11-stat small {line-height:1.4;font-weight:650;}
+.admin-shell.n11-tracking .n11-stat strong {font-size:clamp(24px,2.5vw,32px);font-variant-numeric:tabular-nums;}
+.admin-shell.n11-tracking .row > div:nth-child(2) > .n11-stat {border-top-color:#79b6e3;}
+.admin-shell.n11-tracking .row > div:nth-child(3) > .n11-stat {border-top-color:#e6b36c;}
+.admin-shell.n11-tracking .row > div:nth-child(4) > .n11-stat {border-top-color:#83cda5;}
+/* Biểu đồ thanh ngang: mỗi hàng là ngày, thanh và số lượt. */
+.admin-shell.n11-tracking .n11-activity {grid-template-columns:minmax(90px,110px) minmax(0,1fr) minmax(65px,95px);gap:12px;padding:10px 12px;margin:6px 0;background:#f5faf9;border-radius:10px;}
+.admin-shell.n11-tracking .n11-activity strong {text-align:right;color:#245b6d;font-variant-numeric:tabular-nums;}
+.admin-shell.n11-tracking .n11-meter {display:block;width:100%;height:14px;border:0;border-radius:8px;overflow:hidden;background:#dceee9;accent-color:#238c80;}
+.admin-shell.n11-tracking .n11-meter::-webkit-progress-bar {background:#dceee9;border-radius:8px;}
+.admin-shell.n11-tracking .n11-meter::-webkit-progress-value {background:linear-gradient(90deg,#63c9aa,#218f88);border-radius:8px;}
+.admin-shell.n11-tracking .n11-meter::-moz-progress-bar {background:#238c80;border-radius:8px;}
+.admin-shell.n11-tracking .table-responsive {max-width:100%;}
+.admin-shell.n11-tracking .table td {vertical-align:middle;overflow-wrap:anywhere;}
+@media(max-width:575px){
+ .admin-shell.n11-tracking .n11-tracking-hero {padding:17px;}
+ .admin-shell.n11-tracking .n11-activity {grid-template-columns:85px minmax(0,1fr) 65px;gap:6px;padding:8px 6px;font-size:12px;}
+}

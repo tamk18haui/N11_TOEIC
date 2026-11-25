@@ -97,7 +97,15 @@ public class ListeningAdminDao {
         jdbc.update("UPDATE practice_sets SET part_no=?,title=?,instructions=?,difficulty=? WHERE id=? AND skill='LISTENING'",
                 part,title,instructions,difficulty,id);
     }
+    // N11 V33: serialize changes to source bank and protect exam question references.
+    public void lockExamSource(long id) {
+        jdbc.queryForList("SELECT id FROM practice_sets WHERE id=? FOR UPDATE",id);
+    }
+    public void checkExamSource(long id) {
+        if(!jdbc.queryForList("SELECT x.id FROM exam_paper_questions x JOIN practice_questions q ON q.id=x.question_id WHERE q.practice_set_id=? FOR UPDATE",id).isEmpty()) throw new IllegalArgumentException("Bộ luyện đang được dùng trong đề thi. Hãy bỏ liên kết khỏi đề nháp trước khi sửa hoặc ẩn bộ.");
+    }
     public void publish(long id, boolean published) {
+        if(!published) checkExamSource(id);
         jdbc.update("UPDATE practice_sets SET is_published=? WHERE id=? AND skill='LISTENING'",published,id);
     }
     public void deleteSet(long id) {
