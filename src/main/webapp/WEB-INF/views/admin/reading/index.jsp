@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ include file="../../fragments/head.jspf" %>
-<main data-n11-src="admin/reading/index.jsp|1" class="admin-shell admin-reading-page" data-reading-admin data-base="${pageContext.request.contextPath}">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-lr-v47.css?v=47.1" />
+<main data-n11-src="admin/reading/index.jsp|1" class="admin-shell admin-reading-page n11-lr-v47" data-reading-admin data-base="${pageContext.request.contextPath}">
  <div data-n11-src="admin/reading/index.jsp|2" class="container container-n11"><div data-n11-src="admin/reading/index.jsp|3" class="row g-4">
   <div data-n11-src="admin/reading/index.jsp|4" class="col-lg-3"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
   <div data-n11-src="admin/reading/index.jsp|5" class="col-lg-9">
@@ -52,4 +53,5 @@
   </div></div></div>
 </main>
 <script defer src="${pageContext.request.contextPath}/assets/js/admin-reading-ajax-v18.js?v=18"></script>
+<script defer src="${pageContext.request.contextPath}/assets/js/admin-lr-v47.js?v=47"></script>
 <%@ include file="../../fragments/scripts.jspf" %>
