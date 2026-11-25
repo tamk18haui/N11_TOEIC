@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/exam-student.css?v=3.1" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/exam-review-v42.css?v=42" />
 <%@ include file="../fragments/header.jspf" %>
 <main class="n11-exam"><div class="container container-n11 py-4 py-lg-5">
   <div class="exam-section-heading"><div><span class="exam-overline">KẾT QUẢ THI THỬ</span><h1><c:out value="${result.title}" /></h1></div><a class="exam-secondary-button exam-button-link" href="${pageContext.request.contextPath}/exams/history">Lịch sử thi →</a></div>
@@ -41,7 +42,7 @@
             </div>
           </c:forEach>
         </div></c:if>
-        <c:if test="${not empty q.audio or not empty q.image or not empty q.questionImage or not empty q.passage or not empty q.explanation}">
+        <c:if test="${not empty q.audio or not empty q.image or not empty q.questionImage or not empty q.passage or not empty q.explanation or not empty q.reviewRaw}">
           <details class="exam-review-material">
             <summary>Học liệu và giải thích</summary>
             <c:if test="${not empty q.audio}"><c:url var="audioUrl" value="${q.audio}" /><audio controls preload="none" src="<c:out value='${audioUrl}' />" aria-label="Bài nghe câu ${q.order}"></audio></c:if>
@@ -50,13 +51,19 @@
               <img loading="lazy" src="<c:out value='${imageUrl}' />" alt="Hình học liệu của câu ${q.order}" />
               <c:if test="${q.part ge 6}"><a class="exam-image-zoom" href="<c:out value='${imageUrl}' />" target="_blank" rel="noopener noreferrer">Mở ảnh lớn</a></c:if>
             </c:if>
-            <c:if test="${not empty q.passage}"><p class="exam-passage"><c:out value="${q.passage}" /></p></c:if>
+            <c:if test="${not empty q.passage}"><c:choose>
+              <c:when test="${q.part le 4}"><div class="n11-review-render" data-part="${q.part}" data-passage="true"><template><c:out value="${q.passage}" /></template></div></c:when>
+              <c:otherwise><p class="exam-passage"><c:out value="${q.passage}" /></p></c:otherwise>
+            </c:choose></c:if>
             <c:if test="${not empty q.questionImage}">
               <c:url var="questionImageUrl" value="${q.questionImage}" />
               <img loading="lazy" src="<c:out value='${questionImageUrl}' />" alt="Hình riêng của câu ${q.order}" />
               <a class="exam-image-zoom" href="<c:out value='${questionImageUrl}' />" target="_blank" rel="noopener noreferrer">Mở ảnh câu hỏi</a>
             </c:if>
-            <c:if test="${not empty q.explanation}"><p class="exam-review-explanation"><c:out value="${q.explanation}" /></p></c:if>
+            <c:if test="${not empty q.reviewRaw or not empty q.explanation}">
+              <div class="n11-review-render" data-part="${q.part}"><template><c:out value="${empty q.reviewRaw ? q.explanation : q.reviewRaw}" /></template></div>
+              <noscript>Hãy bật JavaScript để xem lời giải theo từng đáp án.</noscript>
+            </c:if>
           </details>
         </c:if>
       </article>
@@ -64,4 +71,5 @@
   </div>
 </div></main>
 <%@ include file="../fragments/footer.jspf" %>
+<script defer src="${pageContext.request.contextPath}/assets/js/exam-review-v42.js?v=42"></script>
 <%@ include file="../fragments/scripts.jspf" %>

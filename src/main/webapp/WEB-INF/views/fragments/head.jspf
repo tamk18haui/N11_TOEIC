@@ -58,5 +58,7 @@
 <c:if test="${fn:contains(pageContext.request.requestURI, '/admin/') or fn:startsWith(activePage, 'admin-')}"><link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-levels.css?v=26.0"/></c:if>
   <%-- N11 CSS ORGANIZATION V26 : giữ thứ tự CSS, dùng tên file theo chức năng. --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-visual-v31.css?v=31.1">
+  <%-- V40: CSS chỉ tác động các trang có class V40. --%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/account-ui-v40.css?v=41" />
 </head>
 <body>

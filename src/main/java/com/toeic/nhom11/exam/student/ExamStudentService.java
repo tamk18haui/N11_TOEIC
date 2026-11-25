@@ -384,6 +384,8 @@ public class ExamStudentService {
             var numbers=gapNumbers.getOrDefault(q.get("passageId"),Map.of());
             record.put("text",ExamContent.renumberGaps(ExamContent.plain(q.get("questionText")),numbers));
             record.put("explanation",ExamContent.explanation(q.get("explanation")));
+            // N11 V42: giữ đầy đủ lời giải nguồn, chỉ cho màn hình kết quả.
+            record.put("reviewRaw",ExamContent.plain(q.get("explanation")));
             record.put("options",choicesById.getOrDefault(id,List.of()));
             record.put("audio",ExamContent.media(q.get("audioUrl")));
             Pictures images=pictures(q,part);

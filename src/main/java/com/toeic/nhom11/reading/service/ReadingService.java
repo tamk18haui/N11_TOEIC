@@ -91,13 +91,15 @@ public class ReadingService {
         var data=new LinkedHashMap<String,Object>();
         data.put("id",id); data.put("title",attempt.get("title")); data.put("finished",finished);
         data.put("user_id",attempt.get("user_id")); data.put("total",attempt.get("total_questions"));
-        var answers=dao.rows("SELECT a.question_id,a.selected_option_id,a.is_correct,q.question_text,q.explanation FROM practice_attempt_answers a JOIN practice_questions q ON q.id=a.question_id WHERE a.attempt_id=? ORDER BY q.sort_order,q.id",id);
+        var answers=dao.rows("SELECT a.question_id,a.selected_option_id,a.is_correct,q.question_text,q.explanation,im.file_url AS image_url FROM practice_attempt_answers a JOIN practice_questions q ON q.id=a.question_id LEFT JOIN media_assets im ON im.id=q.image_media_id AND im.media_type='IMAGE' WHERE a.attempt_id=? ORDER BY q.sort_order,q.id",id);
         var questions=new ArrayList<Map<String,Object>>(); int correct=0,answered=0;
         for(var answer:answers) {
             long qid=number(answer.get("question_id")); boolean chosen=answer.get("selected_option_id")!=null;
             if(chosen) {answered++; if(truth(answer.get("is_correct"))) correct++;}
             var meta=metadata(answer.get("explanation"));
             var question=new LinkedHashMap<String,Object>();
+            // N11_READING_MEDIA_V43
+            question.put("imageUrl",answer.get("image_url"));
             question.put("id",qid); question.put("text",answer.get("question_text")); question.put("translation",meta.getOrDefault("translation",""));
             question.put("selected",answer.get("selected_option_id")); question.put("vocabulary",dao.vocabulary(words(meta)));
             var options=new ArrayList<Map<String,Object>>();

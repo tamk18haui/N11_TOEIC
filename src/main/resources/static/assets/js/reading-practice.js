@@ -41,7 +41,30 @@
     const terms = new Set(question.vocabulary.map(term => term.word.toLowerCase()));
     return question.text.split(/(\b[\w'-]+\b)/).map(token => terms.has(token.toLowerCase()) ? `<mark>${escape(token)}</mark>` : escape(token)).join('');
   }
+  // N11_READING_MEDIA_V43: dynamic URL, no HTML injection.
+  function addPracticeImage(target, url, label) {
+    if (!target || !url) return;
+    const raw=String(url);
+    let src;
+    try {
+      if (/^\/listening-media\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(png|jpe?g|webp)$/i.test(raw)) src=base+raw;
+      else { const u=new URL(raw); if(u.protocol!=='https:' || u.username || u.password) return; src=u.href; }
+    } catch (_) {return;}
+    const a=document.createElement('a');a.href=src;a.target='_blank';a.rel='noopener noreferrer';a.style.display='block';a.style.margin='10px 0';a.dataset.n11PracticeMedia='1';
+    const img=document.createElement('img');img.src=src;img.alt=label;img.loading='lazy';img.style.maxWidth='100%';img.style.height='auto';img.style.borderRadius='8px';
+    a.append(img); target.append(a);
+  }
   function render() {
+    // N11 V43.1: run once after the existing DOM rendering is complete.
+    queueMicrotask(() => {
+      app.querySelectorAll('[data-n11-practice-media]').forEach(el=>el.remove());
+
+    if (!state || !Array.isArray(state.questions)) return;
+    const q=current(); if(!q)return;
+    addPracticeImage(app.querySelector('#reading-question .reading-question-title') || app.querySelector('#reading-question'),q.imageUrl,'Hình câu hỏi');
+
+    });
+
     const q = current();
     if (!q) { error('Lượt luyện không có câu hỏi. Vui lòng quay lại danh sách.'); return; }
     $('#reading-loading').hidden = true; $('#reading-question').hidden = false;
