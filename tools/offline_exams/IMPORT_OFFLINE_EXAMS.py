@@ -126,9 +126,38 @@ class Media:
         if len(candidates)==1:found=next(iter(candidates))
         self.cache[key]=found;return found
 
+def choice_values(raw, part, ci):
+    # Chỉ giải mã kiểu lưu trữ; không tự đoán đáp án hoặc dịch chuyển chỉ số.
+    if isinstance(raw,str):
+        try: raw=json.loads(raw)
+        except ValueError: return None
+    if isinstance(raw,dict):
+        labels='ABC' if part==2 else 'ABCD'
+        normalized={str(k).strip().upper():v for k,v in raw.items()}
+        if set(normalized)==set(labels): raw=[normalized[k] for k in labels]
+        else: return None
+    if not isinstance(raw,list): return None
+    if part==2 and len(raw)==4 and not text(raw[3]) and ci is not None and ci<3: raw=raw[:3]
+    if len(raw)!=(3 if part==2 else 4): return None
+    opts=[text(v) for v in raw]
+    # Part 1/2 trong đề TOEIC chỉ hiện A/B/C(/D), nội dung được phát qua audio.
+    # Chỉ giữ nhãn nếu nguồn có đúng số ô trống và có đáp án gốc; không tạo transcript giả.
+    if part in (1,2) and not any(opts) and ci is not None: return list('ABCD'[:len(opts)])
+    return opts if all(opts) else None
+
+def merge_group(old,new):
+    # Các phản hồi API khác nhau có thể chỉ chứa một tập con trường.
+    # Bỏ qua trường rỗng, nhưng không ghi đè nội dung thực sự mâu thuẫn.
+    merged=dict(old); conflict=False
+    for k,v in new.items():
+        if v is None or v=='': continue
+        if k not in merged or merged[k] is None or merged[k]=='': merged[k]=v
+        elif k in ('part','audiourl','imageurl','imageurl2','imageurl3','passage','passage2','passage3','passagehtml','passage2html','passage3html') and str(merged[k]).strip()!=str(v).strip(): conflict=True
+    return merged,conflict
+
 def scan(root,out):
     raw=root/'raw';assert raw.is_dir(),f'Khong tim thay {raw}'
-    files=[];groups={};explanations={};tests={};conflicts=set();bad_groups=set();errors=[]
+    files=[];groups={};explanations={};tests={};conflicts=set();bad_groups=set();errors=[];group_links={};group_link_conflicts=set()
     for p in sorted(raw.rglob('*.json')):
         try:o=read(p);d=norm(o);data=d.get('data',o);ep=endpoint(d.get('sourcepath'));files.append((p,d,data,ep))
         except (OSError,ValueError,UnicodeError) as e:errors.append({'file':p.name,'error':type(e).__name__});continue
@@ -143,9 +172,14 @@ def scan(root,out):
                         if k in old and old[k]!=a[k]:conflicts.add(i)
                         old[k]=a[k]
             elif ep=='question_groups':
-                if i in groups and groups[i]!=a:bad_groups.add(i)
-                groups[i]=a
-            elif 'explanation' in a or 'aiexplanation' in a:
+                merged,conflict=merge_group(groups.get(i,{}),a)
+                if conflict:bad_groups.add(i)
+                groups[i]=merged
+            elif ep=='questions':
+                link=uid(a.get('groupid'))
+                if link:
+                    if i in group_links and group_links[i]!=link:group_link_conflicts.add(i)
+                    group_links[i]=link
                 old=explanations.setdefault(i,{})
                 for k in ('explanation','aiexplanation'):
                     if a.get(k):old[k]=a[k]
@@ -181,13 +215,21 @@ def scan(root,out):
         title=field(meta,'title') or 'TOEIC Offline - '+p.stem[:12]
         items=[];warnings=[];fatal=[];group_positions=collections.defaultdict(list)
         for position,(_,q) in enumerate(ordered,1):
-            i=uid(q['id']);part=num(q['part']);gid=uid(q.get('groupid'));g=groups.get(gid,{})
-            opts=q.get('choices');ci=num(q.get('correctindex'))
-            if not isinstance(opts,list) or len(opts)!=(3 if part==2 else 4) or ci is None or ci>=len(opts):fatal.append(f'Q{position}: invalid options/answer');continue
-            opts=[text(v) for v in opts]
-            if any(not v for v in opts):fatal.append(f'Q{position}: empty option');continue
+            i=uid(q['id']);part=num(q['part']);gid=uid(q.get('groupid'))
+            known=group_links.get(i)
+            if part in (3,4,6,7) and (i in group_link_conflicts or (gid and known and gid!=known)):
+                fatal.append(f'Q{position}: conflicting group links');continue
+            gid=gid or known;g=groups.get(gid,{})
+            ci=num(q.get('correctindex'));opts=choice_values(q.get('choices'),part,ci)
+            # Với Part 1/2, audio và đáp án gốc đủ để hiển thị các nút A/B/C/D.
+            # Trường choices không có nội dung được đánh dấu để Admin kiểm tra.
+            if opts is None and part in (1,2) and q.get('choices') in (None,[], '') and ci is not None and ci<(3 if part==2 else 4):
+                opts=list('ABC' if part==2 else 'ABCD');warnings.append(f'Q{position}: listening labels only; source has no option text')
+            if opts is None or ci is None or ci>=len(opts):
+                fatal.append(f'Q{position}: invalid options/answer (Part {part}, choices type {type(q.get("choices")).__name__}, count {len(q["choices"]) if isinstance(q.get("choices"),(list,dict)) else "?"}, correctindex {ci})');continue
             if part in (3,4,6,7):
-                if not gid or gid not in groups or gid in bad_groups or num(g.get('part')) not in (None,part):fatal.append(f'Q{position}: missing/conflicting group');continue
+                if not gid or gid in bad_groups or num(g.get('part')) not in (None,part):fatal.append(f'Q{position}: missing/conflicting group ID');continue
+                if gid not in groups:warnings.append(f'Q{position}: group metadata missing; original group ID retained')
                 group_positions[gid].append((position,part))
             else:gid=None;g={}
             prompt=text(q.get('prompt'))
@@ -206,6 +248,20 @@ def scan(root,out):
             if len(imgs)>1:warnings.append(f'Q{position}: multiple images; schema supports only one image per question/passage, others in local archive')
             if part>=6 and not (gp or own_passage or imgs):warnings.append(f'Q{position}: reading passage unavailable')
             items.append({'order':position,'id':i,'part':part,'gid':gid,'prompt':prompt,'options':opts,'correct':ci,'explanation':ex,'passage':gp or own_passage,'audio':str(audio) if audio else None,'images':[str(v) for v in imgs],'raw_question':q,'raw_group':g,'raw_explanations':expl})
+        # Khi nhóm có media riêng ở một câu, dùng chung chỉ khi duy nhất một nguồn xác định.
+        for gid,positions in group_positions.items():
+            members=[q for q in items if q['gid']==gid]
+            passages={q['passage'] for q in members if q['passage']}
+            if len(passages)>1 and not group_text(groups.get(gid,{})) and positions[0][1]>=6:
+                fatal.append(f'Group {gid}: conflicting reading passages')
+            if len(passages)==1:
+                for q in members:
+                    if not q['passage']:q['passage']=next(iter(passages))
+            if positions[0][1] in (3,4):
+                audios={q['audio'] for q in members if q['audio']}
+                if len(audios)==1:
+                    for q in members:
+                        if not q['audio']:q['audio']=next(iter(audios))
         for gid,positions in group_positions.items():
             pos=[x[0] for x in positions];part=positions[0][1];n=len(pos)
             if len({x[1] for x in positions})!=1 or pos!=list(range(pos[0],pos[0]+n)) or (part in (3,4) and n!=3) or (part==6 and n!=4) or (part==7 and not 2<=n<=5):fatal.append(f'Group {gid}: invalid size/order ({n})')
@@ -225,6 +281,12 @@ def scan(root,out):
     result={'sqlite_inventory':inventory,'raw_files':len(files),'unique_test_ids':len(tests),'errors':errors,'files_with_questions':len(report),'exact_structure_files':sum(1 for x in report if 'key' in x),'draft_candidates':len(candidates),'media_review':sum(bool(x['warnings']) for x in candidates),'files':report,'note':'Original order preserved within each file. Unknown original title/ID; no claim of source identity. Drafts only, no publication or score scales.'}
     save_json(out/'REPORT.json',result);save_json(out/'EXAMS_LOCAL.json',candidates)
     print(f'File co cau hoi: {len(report)} | Du cau va thu tu: {result["exact_structure_files"]} | Co the nhap nhap ban: {len(candidates)} | Can xem media: {result["media_review"]}')
+    print('--- Chi tiet tung file (khong ghi MySQL khi quet) ---')
+    for f in report:
+        print(f'{f["file"]}: {f["status"]} | {f["rows"]} rows | {len(f["issues"])} loi | {len(f.get("warnings",[]))} canh bao')
+        for issue in f['issues'][:6]:print('  - '+issue)
+        if len(f['issues'])>6:print('  ... xem REPORT.json de thay tat ca loi')
+        for warning in f.get('warnings',[])[:2]:print('  ! '+warning)
     return candidates,result
 
 def envfile(path):
@@ -236,7 +298,7 @@ def envfile(path):
     return {**vals,**os.environ}
 def ask(label,default):return input(f'{label} [{default}]: ').strip() or str(default)
 def apply(args,candidates,out,report):
-    if not candidates:print('Khong co de hop le de nhap.');raise SystemExit(2)
+    if not candidates:print('Khong co de hop le de nhap. Xem loi theo tung file trong REPORT.json.');raise SystemExit(3)
     if not args.server and input('Chi nhap hoc lieu ban co quyen su dung. De duoc luu ban nhap, KHONG cong bo. Go IMPORT de tiep tuc: ').strip()!='IMPORT':print('Da huy.');return
     try:import pymysql
     except ImportError:raise SystemExit('Can PyMySQL: py -3 -m pip install pymysql; sau do chay lai --apply')
@@ -300,10 +362,15 @@ def apply(args,candidates,out,report):
                     if e['test_id']:desc+='\nSource test ID: '+e['test_id']
                     if e['warnings']:desc+='\nCan kiem tra '+str(len(e['warnings']))+' canh bao media; xem REPORT.json.'
                     eid=insert("INSERT INTO exam_papers(title,description,exam_type,duration_minutes,is_published,created_by) VALUES(%s,%s,'LR_FULL',120,0,%s)",e['title'][:220],desc,admin_id)
+                    # N11 V42: human-readable fallback title; ID is stable, no fabricated ETS/year.
+                    if re.fullmatch(r'TOEIC Offline - [0-9a-fA-F]{12}', e['title']):
+                        e['title']=f'TOEIC Full Test {eid:02d}'
+                        cur.execute('UPDATE exam_papers SET title=%s WHERE id=%s',(e['title'],eid))
+                        res['title']=e['title']
                     sids={};passages={}
                     for q in e['questions']:
                         part=q['part'];skill='LISTENING' if part<=4 else 'READING'
-                        if part not in sids:sids[part]=insert("INSERT INTO practice_sets(skill,part_no,title,instructions,difficulty,is_published,created_by) VALUES(%s,%s,%s,%s,'MEDIUM',0,%s)",skill,part,(e['title']+' - Part '+str(part))[:200],marker+'\nEXAM SOURCE DRAFT - do not publish as practice'+('\n[N11_OFFLINE_REVIEW_REQUIRED]' if any('generic instruction used' not in w for w in e['warnings']) else ''),admin_id)
+                        if part not in sids:sids[part]=insert("INSERT INTO practice_sets(skill,part_no,title,instructions,difficulty,is_published,created_by) VALUES(%s,%s,%s,%s,'MEDIUM',0,%s)",skill,part,(e['title']+' - Part '+str(part))[:200],marker+'\nEXAM SOURCE DRAFT - do not publish as practice'+('\n[N11_OFFLINE_REVIEW_REQUIRED]' if any('generic instruction used' not in w and 'listening labels only' not in w for w in e['warnings']) else ''),admin_id)
                         sid=sids[part];audio=media_id(q['audio']);images=[media_id(x) for x in q['images'][:2]];image=images[0] if images else None
                         # Shared group: keep common passage and first image in passage; question may have a second image.
                         # Extra images/HTML remain in the local archive, not silently treated as complete.
@@ -336,5 +403,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--root',default=r'E:\AnhNgu24H_TOEIC_Offline');ap.add_argument('--project',default=r'E:\N11_TOEIC');ap.add_argument('--out',default=str(Path.home()/'Downloads'/'N11_OFFLINE_IMPORT_V35'));ap.add_argument('--media-dir');ap.add_argument('--apply',action='store_true');ap.add_argument('--server',action='store_true',help=argparse.SUPPRESS);a=ap.parse_args();out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
     c,r=scan(Path(a.root).resolve(),out);print('REPORT:',out/'REPORT.json')
     if a.apply:apply(a,c,out,r)
-    else:print('READ ONLY: de nhap MySQL, chay lai voi --apply.')
+    else:
+        print('READ ONLY: de nhap MySQL, chay lai voi --apply.')
+        if not c:raise SystemExit(3)
 if __name__=='__main__':main()

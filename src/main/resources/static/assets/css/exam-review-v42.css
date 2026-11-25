@@ -1,0 +1,15 @@
+/* Chỉ áp dụng màn hình xem kết quả thi. */
+.n11-exam .n11-review-render{display:grid;gap:10px;margin:16px 0 8px}
+.n11-exam .n11-review-block{border:1px solid #dce7ef;background:#fff;border-radius:12px;padding:14px 17px;line-height:1.7;color:#243b50;font-size:14px;overflow-wrap:anywhere;min-width:0}
+.n11-exam .n11-review-block h4{font-size:14px;font-weight:800;color:#1d4e66;margin:0 0 7px}
+.n11-exam .n11-review-block p{margin:0;white-space:pre-wrap;line-height:1.8;font-size:14px;color:#263e54}
+.n11-exam .n11-review-plain{padding:4px 0;border:0;background:transparent}
+.n11-exam .n11-review-correct{background:#effaf4;border-color:#bde7cf;border-left:4px solid #249666}
+.n11-exam .n11-review-correct h4{color:#166b48}
+.n11-exam .n11-review-wrong{background:#fff7f5;border-color:#f0d6d0;border-left:4px solid #d4796c}
+.n11-exam .n11-review-wrong h4{color:#a14336}
+.n11-exam .n11-review-summary,.n11-exam .n11-review-notice{background:#fff9ed;border-color:#eadbb7;border-left:4px solid #d5a347}
+.n11-exam .n11-review-summary h4,.n11-exam .n11-review-notice h4{color:#815b19}
+.n11-exam .n11-review-transcript{background:#f0f8fc;border-color:#cfe4ef}
+.n11-exam .exam-review-material audio{width:min(100%,420px)}
+.n11-exam .exam-description{overflow-wrap:anywhere;line-height:1.65}

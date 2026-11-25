@@ -1,0 +1,85 @@
+/* V40 — scope riêng; không đổi các màn hình Admin khác hoặc trang đăng ký. */
+.admin-shell.n11-account-v40.n11-account-v40 {
+  --acc-ink:#162c47; --acc-muted:#52677f; --acc-accent:#087e83; --acc-border:#dce5ee;
+  background:linear-gradient(135deg,#f3f7fc,#f5f9fb 58%,#edf6f5) !important;
+  min-height:100vh;padding:28px 0 48px !important;
+}
+.admin-shell.n11-account-v40 .container-n11{max-width:1510px!important}
+.admin-shell.n11-account-v40 .col-lg-9{min-width:0}
+.admin-shell.n11-account-v40 .account-title{font-size:clamp(27px,2.4vw,36px)!important;font-weight:850!important;letter-spacing:-.035em;color:var(--acc-ink)!important;margin:6px 0 8px;line-height:1.2}
+.admin-shell.n11-account-v40 .account-section-title{font-size:19px!important;color:var(--acc-ink)!important;letter-spacing:-.02em;font-weight:750!important}
+.admin-shell.n11-account-v40 .small-meta,.admin-shell.n11-account-v40 .text-muted-n11{color:var(--acc-muted)!important;font-size:13px}
+.admin-shell.n11-account-v40 .n11-account-hero{position:relative;isolation:isolate;overflow:hidden;padding:25px 28px;border-radius:20px;background:linear-gradient(112deg,#fff 0%,#edf8f8 63%,#e1eefb);border:1px solid #d6e7ed;box-shadow:0 6px 24px #214f7710}
+.admin-shell.n11-account-v40 .n11-account-hero::after{content:"";position:absolute;z-index:-1;right:-36px;top:-130px;width:280px;height:280px;border:1px solid #b8d8df80;border-radius:50%;box-shadow:0 0 0 30px #b8d8df25,0 0 0 60px #b8d8df18;pointer-events:none}
+.admin-shell.n11-account-v40 .section-caption{color:#087778!important;letter-spacing:.12em;font-size:11px;font-weight:800}
+.admin-shell.n11-account-v40 .n11-account-hero .btn{display:inline-flex;gap:9px;align-items:center}
+.n11-account-plus{font-size:21px;line-height:1;font-weight:500}
+.admin-shell.n11-account-v40 .n11-account-stats.row.g-3>div>.admin-stat{background:#fff!important;border:1px solid var(--acc-border)!important;border-radius:16px!important;min-height:117px;padding:20px 19px!important;box-shadow:0 3px 14px #1c3c5a08!important;position:relative;overflow:hidden}
+.admin-shell.n11-account-v40 .n11-account-stats.row.g-3>div>.admin-stat::before{display:none!important}
+.admin-shell.n11-account-v40 .n11-account-stats.row.g-3>div>.admin-stat .small-meta{display:block;font-size:13px;color:#52677f!important;font-weight:650;padding-right:42px}
+.admin-shell.n11-account-v40 .n11-account-stats.row.g-3>div>.admin-stat .num{font-size:31px!important;line-height:1.1;font-weight:800!important;color:var(--acc-ink)!important;letter-spacing:-.04em;margin:12px 0 0}
+.n11-account-stat-icon{position:absolute;right:16px;top:17px;width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:#e5f4f3;color:#087d80}
+.n11-account-stat-icon svg{width:21px;height:21px}
+.n11-account-stats>div:nth-child(2) .n11-account-stat-icon{background:#e8f0ff;color:#365eb2}
+.n11-account-stats>div:nth-child(3) .n11-account-stat-icon{background:#f1ebfe;color:#6945a2}
+.n11-account-stats>div:nth-child(4) .n11-account-stat-icon{background:#fcebec;color:#b63a52}
+.admin-shell.n11-account-v40 .panel-card{background:#fff!important;border:1px solid var(--acc-border)!important;border-radius:18px!important;box-shadow:0 5px 23px #213d5a08!important;padding:23px!important}
+.n11-account-panel-heading{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 17px;color:#223b55}
+.n11-account-panel-heading strong{font-size:16px;font-weight:750}.n11-account-panel-heading span{font-size:12px;color:#52677f}
+.admin-shell.n11-account-v40 :is(.form-control,.form-select){border:1px solid #cbd8e5!important;background-color:#fff!important;color:#20354f!important;border-radius:10px!important;min-height:46px;font-size:14px!important;box-shadow:none!important;padding-top:11px;padding-bottom:11px}
+.admin-shell.n11-account-v40 :is(.form-control,.form-select):focus{border-color:#16898d!important;box-shadow:0 0 0 3px #13898c22!important}
+.admin-shell.n11-account-v40 .form-label{font-size:13px!important;font-weight:700!important;color:#2b415a!important;margin-bottom:8px}
+.admin-shell.n11-account-v40 .btn.btn-primary{background:#087e83!important;border:1px solid #087e83!important;color:white!important;box-shadow:0 5px 12px #087e8320!important;border-radius:10px!important;min-height:43px;padding:10px 18px!important;font-weight:700!important}
+.admin-shell.n11-account-v40 .btn.btn-primary:hover{background:#056568!important;border-color:#056568!important}
+.admin-shell.n11-account-v40 .btn.btn-soft{background:#f0f5fb!important;color:#294e78!important;border:1px solid #d4e0ed!important;border-radius:9px!important;box-shadow:none!important}
+.admin-shell.n11-account-v40 .btn.btn-soft:hover{background:#e1ebf7!important}
+.admin-shell.n11-account-v40 .account-table{min-width:740px;margin:0!important}
+.admin-shell.n11-account-v40 .admin-table-wrap{border:1px solid #e1e8ef!important;border-radius:12px!important;overflow-x:auto}
+.admin-shell.n11-account-v40 .account-table thead th{background:#f4f7fa!important;color:#52677f!important;font-size:11px!important;letter-spacing:.06em;padding:14px 12px!important;border-bottom:1px solid #e1e8ef!important}
+.admin-shell.n11-account-v40 .account-table tbody td{padding:14px 12px!important;font-size:13px!important;color:#22394f;vertical-align:middle;border-bottom:1px solid #e9eef3!important}
+.admin-shell.n11-account-v40 .account-table tbody tr:last-child td{border-bottom:0!important}
+.admin-shell.n11-account-v40 .account-table tbody tr:hover td{background:#f6fafb!important}
+.n11-account-avatar{display:inline-grid;place-items:center;vertical-align:middle;width:32px;height:32px;border-radius:10px;background:#e8f1f7;color:#42729c;margin-right:8px}
+.n11-account-avatar svg{width:17px;height:17px}
+.admin-shell.n11-account-v40 .account-table td:first-child{white-space:nowrap}
+.admin-shell.n11-account-v40 .account-role{background:#e8f0ff!important;color:#315a9a!important;font-size:11px!important;padding:6px 10px!important}
+.admin-shell.n11-account-v40 .account-role.account-role-admin{background:#f0eafd!important;color:#68439d!important}
+.admin-shell.n11-account-v40 .badge-status.good{background:#e4f6ed!important;color:#14734d!important}
+.admin-shell.n11-account-v40 .badge-status.warn{background:#fcebed!important;color:#aa344e!important}
+.admin-shell.n11-account-v40 .account-actions .btn{min-height:34px!important;padding:7px 12px!important;font-size:12px!important;font-weight:700!important;box-shadow:none!important;border-radius:8px!important}
+.admin-shell.n11-account-v40 .account-actions form .btn{background:#fff1f2!important;color:#a92d46!important;border:1px solid #f2ced5!important}
+.admin-shell.n11-account-v40 .account-actions form:has(input[name=status][value=ACTIVE]) .btn{background:#e8f7ef!important;border-color:#c4e6d5!important;color:#146b49!important}
+/* Form thêm/sửa: giới hạn chiều rộng, nhóm trường rõ ràng, không đổi tên input. */
+.admin-shell.n11-account-v40 .account-back{font-size:13px;color:#087e83!important;font-weight:700}
+.n11-account-intro{color:#52677f;font-size:14px;margin:0 0 22px}
+.admin-shell.n11-account-v40 .n11-account-edit-panel{max-width:920px;padding:28px!important}
+.n11-account-form-heading{display:flex;align-items:center;gap:13px;padding-bottom:20px;margin-bottom:23px;border-bottom:1px solid #e4ebf1}
+.n11-account-form-icon{width:46px;height:46px;display:grid;place-items:center;flex-shrink:0;border-radius:13px;background:#e5f4f3;color:#087d80}
+.n11-account-form-icon svg{width:23px;height:23px}
+.admin-shell.n11-account-v40 .n11-account-form-heading h2{font-size:19px!important;font-weight:750!important;color:#162c47!important;margin:0 0 4px}
+.n11-account-form-heading p{font-size:13px;color:#52677f;margin:0}
+.admin-shell.n11-account-v40 .n11-account-editor .row{--bs-gutter-x:1.3rem;--bs-gutter-y:1.2rem}
+.n11-account-editor .form-text{font-size:12px;color:#52677f!important;margin-top:8px}
+.n11-account-security-note{display:flex;align-items:center;gap:9px;margin:22px 0 0;padding:12px;border-radius:10px;color:#315872;background:#eef5f9;font-size:13px}
+.n11-account-security-note svg{width:20px;height:20px;flex-shrink:0}
+.n11-account-form-actions{border-top:1px solid #e4ebf1;padding-top:21px;margin-top:25px}
+.admin-shell.n11-account-v40 .n11-account-form-actions .btn{min-width:104px;min-height:43px}
+.admin-shell.n11-account-v40 .form-control:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #fff inset!important;-webkit-text-fill-color:#20354f!important}
+/* Login V40.1: giữ nguyên màu và bố cục của register.css + theme.css. Chỉ chỉnh vị trí liên kết. */
+.n11-reg-page[data-n11-login] .n11-login-forgot{border:0;margin:0;padding:0;text-align:right;font-size:13px;}
+.n11-reg-page[data-n11-login] .n11-reg-eye:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media(max-width:1199px){.admin-shell.n11-account-v40 .n11-account-stats.row.g-3>div>.admin-stat{min-height:105px}}
+@media(max-width:991px){.admin-shell.n11-account-v40 .n11-account-hero{padding:21px}}
+@media(max-width:575px){.admin-shell.n11-account-v40 .panel-card,.admin-shell.n11-account-v40 .n11-account-edit-panel{padding:17px!important}.admin-shell.n11-account-v40 .n11-account-hero{padding:18px}}
+
+/* N11 V41 — form rộng bằng vùng nội dung, chữ dễ đọc, không đổi sidebar chung. */
+.admin-shell.n11-account-v40.n11-account-v40 .n11-account-edit-panel{max-width:none!important;width:100%;padding:30px!important}
+.admin-shell.n11-account-v40.n11-account-v40 .n11-account-editor :is(.form-control,.form-select){min-height:52px;font-size:16px!important;line-height:1.45;padding-top:12px;padding-bottom:12px}
+.admin-shell.n11-account-v40.n11-account-v40 .form-label{font-size:14px!important;margin-bottom:9px}
+.admin-shell.n11-account-v40.n11-account-v40 .n11-account-form-heading h2{font-size:21px!important}
+.admin-shell.n11-account-v40.n11-account-v40 .n11-account-form-heading p,.admin-shell.n11-account-v40.n11-account-v40 .n11-account-security-note,.admin-shell.n11-account-v40.n11-account-v40 .n11-account-intro{font-size:14px!important;line-height:1.6}
+.admin-shell.n11-account-v40.n11-account-v40 .n11-account-form-actions .btn{min-height:48px;font-size:14px!important;min-width:118px}
+.admin-shell.n11-account-v40.n11-account-v40 .account-table tbody td{font-size:14px!important;padding:16px 12px!important}
+.admin-shell.n11-account-v40.n11-account-v40 .account-actions .btn{font-size:13px!important;min-height:38px!important}
+@media(max-width:575px){.admin-shell.n11-account-v40.n11-account-v40 .n11-account-edit-panel{padding:18px!important}}
+/* N11 V41 END */

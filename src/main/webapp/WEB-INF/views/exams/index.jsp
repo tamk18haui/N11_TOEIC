@@ -27,7 +27,7 @@
             <article class="exam-paper-card">
               <div class="exam-card-head"><span class="exam-tag ${paper.examType eq 'LR_FULL' ? 'exam-tag-full' : 'exam-tag-mini'}">${paper.examType eq 'LR_FULL' ? 'FULL TEST' : 'CUSTOM TEST'}</span><span class="exam-tag-muted">Đã công bố</span></div>
               <h3><c:out value="${paper.title}" /></h3>
-              <p class="exam-description"><c:out value="${paper.description}" default="Bài thi TOEIC Listening &amp; Reading" /></p>
+              <p class="exam-description"><c:choose><c:when test="${empty paper.description or fn:contains(paper.description, '[N11_OFFLINE_EXAM_V35:')}">Bài thi TOEIC Listening &amp; Reading.</c:when><c:otherwise><c:out value="${paper.description}" /></c:otherwise></c:choose></p>
               <div class="exam-stats"><div><strong><c:out value="${paper.questionCount}" /></strong><span>Câu hỏi</span></div><div><strong><c:out value="${paper.durationMinutes}" />'</strong><span>Thời gian</span></div><div><strong><c:out value="${paper.listeningCount}" /> / <c:out value="${paper.readingCount}" /></strong><span>Nghe / Đọc</span></div></div>
               <c:choose><c:when test="${paper.questionCount gt 0}">
                 <a class="exam-primary-button exam-button-link" href="${pageContext.request.contextPath}/exams/${paper.id}/ready">Mở đề thi <span aria-hidden="true">→</span></a>

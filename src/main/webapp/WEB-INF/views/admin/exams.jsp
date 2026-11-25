@@ -4,6 +4,14 @@
 <main data-n11-src="admin/exams.jsp|1" class="admin-shell n11-admin-content n11-exam-admin"><div data-n11-src="admin/exams.jsp|2" class="container container-n11"><div data-n11-src="admin/exams.jsp|3" class="row g-4">
 <div data-n11-src="admin/exams.jsp|4" class="col-lg-3"><%@ include file="../fragments/admin-sidebar.jspf" %></div><div data-n11-src="admin/exams.jsp|5" class="col-lg-9 n11-content-main">
 <header data-n11-src="admin/exams.jsp|6" class="n11-content-hero"><div data-n11-src="admin/exams.jsp|7"><div data-n11-src="admin/exams.jsp|8" class="section-caption">QUẢN LÝ ĐỀ THI</div><h1 data-n11-src="admin/exams.jsp|9" class="account-title">Ngân hàng đề TOEIC</h1><p data-n11-src="admin/exams.jsp|10" class="small-meta mb-0">Tạo đề từ ngân hàng Listening và Reading, quản lý công bố.</p></div><a data-n11-src="admin/exams.jsp|900" class="btn btn-soft" href="${pageContext.request.contextPath}/admin/exams/offline">Nhập đề offline / Nguồn media</a></header>
+<%-- N11_PRACTICE_SYNC_V43 --%>
+<section class="panel-card mb-4" data-n11-src="admin/exams.jsp|943">
+ <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
+  <div><h2 class="account-section-title mb-2">Đồng bộ ngân hàng luyện tập</h2><p class="small-meta mb-0">Đề offline được công bố sẽ tự thêm câu hợp lệ vào Listening và Reading (5 cấp độ). Các đề đã công bố trước V43 cần đồng bộ một lần.</p><p class="small-meta mb-0">Giữ nguyên nhóm câu, media và lịch sử; cấp độ phân bổ theo số lượng, chưa hiệu chuẩn độ khó.</p></div>
+  <form method="post" action="${pageContext.request.contextPath}/admin/exams/sync-practice" onsubmit="return confirm('Đồng bộ tất cả đề đã công bố vào ngân hàng luyện tập?')"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/><button type="submit" class="btn btn-primary">Đồng bộ đề đã công bố</button></form>
+ </div>
+</section>
+
 <!-- N11 V39 EXAM MEDIA ACTIONS -->
 <section data-n11-src="admin/exams.jsp|910" class="panel-card mb-4">
  <div data-n11-src="admin/exams.jsp|911" class="d-flex flex-wrap justify-content-between align-items-center gap-3">

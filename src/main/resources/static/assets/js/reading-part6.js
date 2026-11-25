@@ -21,7 +21,40 @@
    return esc(token);
   }).join('');
  }
+  // N11_READING_MEDIA_V43: dynamic URL, no HTML injection.
+  function addPracticeImage(target, url, label) {
+    if (!target || !url) return;
+    const raw=String(url);
+    let src;
+    try {
+      if (/^\/listening-media\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(png|jpe?g|webp)$/i.test(raw)) src=base+raw;
+      else { const u=new URL(raw); if(u.protocol!=='https:' || u.username || u.password) return; src=u.href; }
+    } catch (_) {return;}
+    const a=document.createElement('a');a.href=src;a.target='_blank';a.rel='noopener noreferrer';a.style.display='block';a.style.margin='10px 0';a.dataset.n11PracticeMedia='1';
+    const img=document.createElement('img');img.src=src;img.alt=label;img.loading='lazy';img.style.maxWidth='100%';img.style.height='auto';img.style.borderRadius='8px';
+    a.append(img); target.append(a);
+  }
  function render(){
+    // N11 V43.1: run once after the existing DOM rendering is complete.
+    queueMicrotask(() => {
+      app.querySelectorAll('[data-n11-practice-media]').forEach(el=>el.remove());
+
+    if (!state || !Array.isArray(state.passages) || !state.passages.length) return;
+    const pg=passage(); if(!pg)return;
+    addPracticeImage(app.querySelector('#part6-passage'),pg.imageUrl,'Hình bài đọc');
+    for(const q of questions()) {
+      const option=Array.from(app.querySelectorAll('[data-question]')).find(el=>el.dataset.question===String(q.id));
+      const section=option?.closest('section'); if(!section)continue;
+      if(q.imageUrl!==pg.imageUrl)addPracticeImage(section,q.imageUrl,'Hình câu hỏi');
+      const heading=section.querySelector('h2');
+      const text=String(q.text??'').trim();
+      if(heading && text && !/^\[\d+\]$/.test(text) && !section.textContent.includes(text)) {
+        const p=document.createElement('p');p.dataset.n11PracticeMedia='1';p.textContent=text;heading.after(p);
+      }
+    }
+
+    });
+
   if(!state.passages.length){error('Bộ luyện chưa có bài đọc.');return;}
   const qs=questions(),done=qs.every(q=>q.reviewed),count=qs.filter(q=>q.selected!==null).length;
   const expanded=new Set([...app.querySelectorAll("details[data-explanation][open]")].map(el=>el.dataset.explanation));
