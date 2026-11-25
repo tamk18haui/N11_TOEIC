@@ -81,10 +81,14 @@ public class ReadingAdminService {
         result.put("instructions_clean", PREFIX.matcher(Objects.toString(result.get("instructions"), "")).replaceFirst(""));
         return result;
     }
+    private void lockExamSource(long id) { jdbc.queryForList("SELECT id FROM practice_sets WHERE id=? FOR UPDATE",id); }
+    private void checkExamSource(long id) { if(!jdbc.queryForList("SELECT x.id FROM exam_paper_questions x JOIN practice_questions q ON q.id=x.question_id WHERE q.practice_set_id=? FOR UPDATE",id).isEmpty()) throw new IllegalArgumentException("Bộ luyện đang được dùng trong đề thi. Hãy bỏ liên kết khỏi đề nháp trước khi sửa hoặc ẩn bộ."); }
     private void editable(long id) {
+        lockExamSource(id); // N11 V33 source lock
         var set = set(id);
         if (yes(set.get("is_published"))) throw new IllegalArgumentException("Hãy ẩn bộ Reading trước khi chỉnh sửa.");
         if (number(set.get("attempt_count")) > 0) throw new IllegalArgumentException("Bộ đã có lượt làm bài; không thể sửa nội dung để bảo toàn lịch sử chấm điểm.");
+        checkExamSource(id); // N11 V33 source guard
     }
     private long adminId(String email) {
         if (email == null) throw new IllegalArgumentException("Cần đăng nhập tài khoản Admin.");
@@ -112,6 +116,8 @@ public class ReadingAdminService {
 
     @Transactional
     public void publish(long id, boolean published) {
+        lockExamSource(id); // N11 V33 publication lock
+        if(!published) checkExamSource(id);
         var set = set(id);
         if (published) {
             int part = ((Number)set.get("part_no")).intValue();

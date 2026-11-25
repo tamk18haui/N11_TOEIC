@@ -11,6 +11,7 @@
  <a data-n11-src="admin/listening/import.jsp|6" class="account-back" href="${pageContext.request.contextPath}/admin/listening">← Quản lý Listening</a>
  <h1 data-n11-src="admin/listening/import.jsp|7" class="account-title mt-3 mb-3">Nhập hàng loạt dữ liệu Listening</h1>
  <p data-n11-src="admin/listening/import.jsp|8" class="small-meta">Nhập học liệu Listening từ kho dữ liệu cục bộ.</p>
+<a data-n11-src="admin/listening/import.jsp|900" class="btn btn-soft mb-3" href="${pageContext.request.contextPath}/admin/exams/offline">Cài đặt Local / Cloudinary</a>
  <section data-n11-src="admin/listening/import.jsp|9" class="panel-card mb-4">
   <h2 data-n11-src="admin/listening/import.jsp|10" class="account-section-title">Nguồn dữ liệu hiện tại</h2>
   <p data-n11-src="admin/listening/import.jsp|11" class="mb-1"><strong data-n11-src="admin/listening/import.jsp|12">CSDL SQLite:</strong> <code><c:out value="${bankPath}"/></code></p>
