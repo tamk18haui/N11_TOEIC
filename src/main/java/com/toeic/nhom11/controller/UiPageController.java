@@ -24,8 +24,7 @@ public class UiPageController {
     @GetMapping("/listening")
     public String listening(Model model) { return page(model, "listening/index", "listening", "Luyện Listening"); }
 
-    @GetMapping("/exams")
-    public String exams(Model model) { return page(model, "exams/index", "exams", "Thi thử TOEIC"); }
+
 
     @GetMapping("/exams/sample")
     public String sampleExam(Model model) { return page(model, "exams/sample", "exams", "Đề thi mẫu"); }

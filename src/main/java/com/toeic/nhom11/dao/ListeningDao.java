@@ -41,7 +41,7 @@ public class ListeningDao {
     public List<Map<String,Object>> questions(long setId) {
         return jdbc.queryForList("""
             SELECT q.id, q.passage_id, q.question_text, q.sort_order,
-                   COALESCE(qa.file_url, pa.file_url) AS audio_url,
+                   COALESCE(qa.file_url, pa.file_url) AS audio_url, pa.file_url AS passage_audio_url,
                    COALESCE(qi.file_url, pi.file_url) AS image_url
             FROM practice_questions q
             LEFT JOIN practice_passages p ON p.id=q.passage_id AND p.practice_set_id=q.practice_set_id
@@ -116,6 +116,25 @@ public class ListeningDao {
             """, (rs,i)->rs.getLong("id"), userId, setId).stream().findFirst();
     }
 
+    /**
+     * Explicit retake: end any unfinished sessions so they cannot be accidentally
+     * resumed after the new attempt is completed. Existing answers stay in MySQL.
+     */
+    public void closeOpenAttempts(long userId,long setId) {
+        jdbc.update("""
+            UPDATE practice_attempts
+            SET submitted_at=CURRENT_TIMESTAMP
+            WHERE user_id=? AND practice_set_id=? AND submitted_at IS NULL
+            """,userId,setId);
+    }
+
+    public Optional<Map<String,Object>> latestAttempt(long userId,long setId) {
+        return jdbc.queryForList("""
+            SELECT id,total_questions,submitted_at,correct_count FROM practice_attempts
+            WHERE user_id=? AND practice_set_id=? ORDER BY id DESC LIMIT 1
+            """, userId,setId).stream().findFirst();
+    }
+
     public long createOpenAttempt(long userId, long setId, int count) {
         var keys=new GeneratedKeyHolder();
         jdbc.update(connection -> {
@@ -164,11 +183,17 @@ public class ListeningDao {
 
     public List<Map<String,Object>> history(long userId) {
         return jdbc.queryForList("""
-            SELECT a.id, s.part_no, s.title, a.correct_count, a.total_questions,
-                   a.score_percent, a.submitted_at
+            SELECT a.id, s.id AS set_id, s.part_no, s.title, s.instructions, a.correct_count, a.total_questions,
+                   a.score_percent, a.submitted_at,
+                   (SELECT COUNT(*) FROM practice_attempt_answers aa
+                    WHERE aa.attempt_id=a.id AND aa.selected_option_id IS NOT NULL)
+                    AS answered_count
             FROM practice_attempts a
             JOIN practice_sets s ON s.id=a.practice_set_id
-            WHERE a.user_id=? AND s.skill='LISTENING' AND a.submitted_at IS NOT NULL
+            WHERE a.user_id=? AND s.skill='LISTENING' AND s.is_published=1
+              AND s.instructions LIKE '%[LISTENING_LEVEL:%' AND a.submitted_at IS NOT NULL
+              AND EXISTS(SELECT 1 FROM practice_attempt_answers aa
+                         WHERE aa.attempt_id=a.id AND aa.selected_option_id IS NOT NULL)
             ORDER BY a.id DESC LIMIT 15
             """,userId);
     }

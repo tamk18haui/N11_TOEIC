@@ -1,0 +1,10 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/exam-student.css?v=2.0" />
+<%@ include file="../fragments/header.jspf" %>
+<main class="n11-exam"><div class="container container-n11 py-4 py-lg-5">
+  <div class="exam-section-heading"><div><span class="exam-overline">CỦA HỌC VIÊN</span><h1>Lịch sử thi thử</h1><p class="exam-muted">Mỗi lượt thi được lưu theo tài khoản của bạn.</p></div><a class="exam-primary-button exam-button-link" href="${pageContext.request.contextPath}/exams">Chọn đề thi</a></div>
+  <c:choose><c:when test="${empty attempts}"><div class="exam-empty"><div class="exam-empty-symbol">◷</div><h3>Bạn chưa có lượt thi nào</h3><p>Chọn một đề đã công bố để bắt đầu. Kết quả sẽ tự động xuất hiện tại đây.</p></div></c:when><c:otherwise><div class="exam-table-scroll"><table class="exam-table"><thead><tr><th>Đề thi</th><th>Bắt đầu</th><th>Trạng thái</th><th>Listening</th><th>Reading</th><th>Điểm quy đổi</th><th></th></tr></thead><tbody><c:forEach var="a" items="${attempts}"><tr><td><strong><c:out value="${a.title}" /></strong></td><td><c:out value="${a.startedAt}" /></td><td><c:choose><c:when test="${a.status eq 'IN_PROGRESS'}"><span class="exam-status exam-status-progress">Đang làm</span></c:when><c:when test="${a.status eq 'EXPIRED'}"><span class="exam-status exam-status-expired">Hết giờ</span></c:when><c:otherwise><span class="exam-status exam-status-done">Đã nộp</span></c:otherwise></c:choose></td><td><c:out value="${a.listeningCorrect}" default="—" /></td><td><c:out value="${a.readingCorrect}" default="—" /></td><td><c:out value="${a.totalScaled}" default="—" /></td><td><c:choose><c:when test="${a.status eq 'IN_PROGRESS'}"><a href="${pageContext.request.contextPath}/exams/attempts/${a.id}">Tiếp tục →</a></c:when><c:otherwise><a href="${pageContext.request.contextPath}/exams/attempts/${a.id}/result">Xem kết quả →</a></c:otherwise></c:choose></td></tr></c:forEach></tbody></table></div></c:otherwise></c:choose>
+</div></main>
+<%@ include file="../fragments/footer.jspf" %>
+<%@ include file="../fragments/scripts.jspf" %>

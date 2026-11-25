@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listening.css?v=20261120-instant4" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listening.css?v=20261125-v1" />
 <%@ include file="../fragments/header.jspf" %>
 <main class="n11-listening l-home" id="listeningHome" data-base="${pageContext.request.contextPath}">
   <div class="l-container">
@@ -52,6 +52,6 @@
     </div>
   </div>
 </main>
-<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=27-media"></script>
+<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=20261125-v4"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

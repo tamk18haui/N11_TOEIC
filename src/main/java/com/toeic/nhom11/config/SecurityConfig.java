@@ -52,7 +52,8 @@ public class SecurityConfig {
                         String context = request.getContextPath();
                         if (path.startsWith(context)) {
                             String relative = path.substring(context.length());
-                            if (relative.matches("/reading(?:/part[5-7](?:/[1-5](?:/ready)?)?)?")) {
+                            if (relative.matches("/reading(?:/part[5-7](?:/[1-5](?:/ready)?)?)?")
+                                    || relative.matches("/exams(?:/[0-9]+/ready|/attempts/[0-9]+(?:/result)?|/history)?/?")) {
                                 destination = relative;
                                 requestCache.removeRequest(request, response);
                             }

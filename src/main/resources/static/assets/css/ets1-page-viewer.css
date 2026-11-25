@@ -1,0 +1,7 @@
+.n11-exam .exam-image-frame.ets1-scanned-mode img{max-height:none;max-width:100%;width:auto;object-fit:contain;display:block;margin:0 auto}
+.ets1-page-bar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid #d8e7ee;padding-bottom:14px;margin-bottom:10px}
+.ets1-page-bar[hidden],.ets1-page-tip[hidden]{display:none!important}
+.ets1-page-bar button,.ets1-page-bar a{border-radius:10px;background:#edf7fa;border:1px solid #b8dbe6;color:#16677e;padding:9px 12px;font-size:13px;font-weight:600;text-decoration:none;cursor:pointer}
+.ets1-page-bar button:disabled{opacity:.4;cursor:not-allowed}
+.ets1-page-label{font-size:13px;font-weight:700;color:#245773;min-width:160px}
+.ets1-page-tip{margin:10px 0 3px;font-size:12px;line-height:1.5;color:#6e8291}

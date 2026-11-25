@@ -1,0 +1,38 @@
+-- FILE MAU - DO NOT EXECUTE WITHOUT REPLACING THE CLOUDINARY URLS.
+-- In MySQL Workbench, first USE your actual database (for example: USE n11_toeic;).
+-- This example adds ONE Part 1 question to the existing Level 1 scaffold.
+-- Images are required for Part 1. Public MP3 is delivered from Cloudinary's /video/upload/ path.
+-- For Part 2 use exactly three options A,B,C; for Part 3/4 use four options A-D.
+-- For Part 3/4 place one audio in practice_passages and associate 3 practice_questions
+-- with its passage_id; q.audio_media_id can be NULL to inherit the passage audio.
+
+START TRANSACTION;
+-- REPLACE BOTH URLs WITH YOUR ACTUAL PUBLIC HTTPS DELIVERY URLs BEFORE RUNNING!
+SET @audio_url='https://res.cloudinary.com/REPLACE_CLOUD_NAME/video/upload/REPLACE_AUDIO.mp3';
+SET @image_url='https://res.cloudinary.com/REPLACE_CLOUD_NAME/image/upload/REPLACE_IMAGE.jpg';
+
+INSERT INTO media_assets(media_type,file_url,mime_type) VALUES('AUDIO',@audio_url,'audio/mpeg');
+SET @audio_id=LAST_INSERT_ID();
+INSERT INTO media_assets(media_type,file_url,mime_type) VALUES('IMAGE',@image_url,'image/jpeg');
+SET @image_id=LAST_INSERT_ID();
+
+SET @set_id=(SELECT id FROM practice_sets
+  WHERE skill='LISTENING' AND part_no=1 AND instructions LIKE '%[LISTENING_LEVEL:1]%'
+  ORDER BY id LIMIT 1);
+
+INSERT INTO practice_passages(practice_set_id,passage_text,audio_media_id,image_media_id,sort_order)
+VALUES (@set_id,'(A) The passengers are waiting on the platform. (B) A meeting is taking place. (C) A train is flying over the station. (D) The station is empty.',@audio_id,@image_id,1);
+SET @passage_id=LAST_INSERT_ID();
+
+INSERT INTO practice_questions(practice_set_id,passage_id,question_text,explanation,sort_order)
+VALUES (@set_id,@passage_id,'Look at the photograph and select the best statement.',
+  'The passengers are waiting on the platform, which matches the photograph.',1);
+SET @question_id=LAST_INSERT_ID();
+
+-- Check that this option is correct for YOUR uploaded image/audio.
+INSERT INTO practice_options(question_id,option_label,option_text,is_correct) VALUES
+(@question_id,'A','The passengers are waiting on the platform.',1),
+(@question_id,'B','A meeting is taking place.',0),
+(@question_id,'C','A train is flying over the station.',0),
+(@question_id,'D','The station is empty.',0);
+COMMIT;

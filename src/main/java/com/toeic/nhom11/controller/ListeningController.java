@@ -43,6 +43,11 @@ public class ListeningController {
         return listening.startPractice(setId,principal==null?null:principal.getName());
     }
 
+    @PostMapping("/api/sets/{setId}/restart") @ResponseBody
+    public Map<String,Object> restart(@PathVariable long setId,Principal principal) {
+        return listening.restartPractice(setId,principal==null?null:principal.getName());
+    }
+
     public record AnswerRequest(Long questionId,Long optionId) {}
 
     @PostMapping("/api/sets/{setId}/attempts/{attemptId}/check") @ResponseBody
@@ -52,6 +57,17 @@ public class ListeningController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Thiếu câu hỏi hoặc đáp án.");
         return listening.checkAnswer(setId,attemptId,form.questionId(),form.optionId(),
             principal==null?null:principal.getName());
+    }
+
+    @PostMapping("/api/sets/{setId}/attempts/{attemptId}/groups/{questionId}/check") @ResponseBody
+    public Map<String,Object> checkGroup(@PathVariable long setId,@PathVariable long attemptId,
+        @PathVariable long questionId,@RequestBody ListeningSubmission form,Principal principal) {
+        return listening.checkGroup(setId,attemptId,questionId,form,principal==null?null:principal.getName());
+    }
+
+    @GetMapping("/api/sets/{setId}/attempts/{attemptId}") @ResponseBody
+    public Map<String,Object> viewAttempt(@PathVariable long setId,@PathVariable long attemptId,Principal principal) {
+        return listening.viewAttempt(setId,attemptId,principal==null?null:principal.getName());
     }
 
     @PostMapping("/api/sets/{setId}/submit") @ResponseBody

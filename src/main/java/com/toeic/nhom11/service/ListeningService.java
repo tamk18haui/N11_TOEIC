@@ -3,6 +3,10 @@ package com.toeic.nhom11.service;
 import com.toeic.nhom11.dao.ListeningDao;
 import com.toeic.nhom11.model.ListeningSubmission;
 import java.net.URI;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -26,6 +30,32 @@ public class ListeningService {
     private static final String[] PART_NAMES={"", "Hình ảnh", "Hỏi – Đáp", "Hội thoại ngắn", "Độc thoại"};
     private static final String[] LEVEL_NAMES={"", "Rất dễ", "Dễ", "Trung bình", "Khó", "Rất khó"};
     private static final Pattern LEVEL_PATTERN=Pattern.compile("\\[LISTENING_LEVEL:([1-5])\\]");
+    // Ban dich Part 1 kiem duyet theo transcript trong SQL mau (30 cau, 120 phuong an).
+    // Vi Part 2-4 chua co ban dich, server KHONG tu sinh noi dung co the sai.
+    private static final Map<String,String> PART1_TRANSLATIONS = loadPart1Translations();
+
+    private static String normalizeLine(String text) {
+        return text.trim().replace('\u2019', '\'').replaceAll("\\s+", " ");
+    }
+
+    private static Map<String,String> loadPart1Translations() {
+        var result = new LinkedHashMap<String,String>();
+        try (var stream = ListeningService.class.getResourceAsStream("/listening-part1-translations.tsv")) {
+            if (stream == null) throw new IllegalStateException("Missing listening-part1-translations.tsv");
+            try (var reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
+                for (String line; (line = reader.readLine()) != null;) {
+                    if (line.isBlank() || line.startsWith("#")) continue;
+                    String[] cols = line.split("\\t", 2);
+                    if (cols.length != 2 || cols[0].isBlank() || cols[1].isBlank())
+                        throw new IllegalStateException("Invalid transcript translation row: " + line);
+                    result.put(normalizeLine(cols[0]), cols[1].trim());
+                }
+            }
+        } catch (IOException ex) {
+            throw new IllegalStateException("Cannot read Listening translations", ex);
+        }
+        return Map.copyOf(result);
+    }
     private final ListeningDao dao;
     public ListeningService(ListeningDao dao) { this.dao=dao; }
 
@@ -63,6 +93,11 @@ public class ListeningService {
         return "Listening TOEIC · Part "+part+" · Cấp độ "+level;
     }
 
+    private static String groupKey(Map<String,Object> question,int part) {
+        Object passage=question.get("passage_id");
+        return part>=3 && passage!=null ? "p-"+passage : "q-"+question.get("id");
+    }
+
     public Map<String,Object> overview(int part,String email) {
         requirePartLevel(part,1);
         Long uid=currentUser(email,false);
@@ -85,13 +120,27 @@ public class ListeningService {
             List<Map<String,Object>> visibleSets=new ArrayList<>();
             for(int i=0;i<sets.size();i++) {
                 var item=sets.get(i);
-                visibleSets.add(Map.of("id",item.get("id"),"title","Bộ luyện "+(i+1),
-                    "question_count",item.get("question_count")));
+                var summary=new LinkedHashMap<String,Object>();
+                summary.put("id",item.get("id"));
+                summary.put("title","Bộ luyện "+(i+1));
+                summary.put("question_count",item.get("question_count"));
+                if(uid!=null) {
+                    dao.latestAttempt(uid,n(item.get("id"))).ifPresent(attempt -> {
+                        boolean submitted=attempt.get("submitted_at")!=null;
+                        summary.put("attemptId",attempt.get("id"));
+                        summary.put("answered",dao.checkedAnswers(n(attempt.get("id"))).stream()
+                            .filter(a -> a.get("selected_option_id")!=null).count());
+                        summary.put("submitted",submitted);
+                        summary.put("correct",attempt.get("correct_count"));
+                    });
+                }
+                visibleSets.add(summary);
             }
             row.put("setList",visibleSets);
             levels.add(row);
         }
-        return Map.of("part",part,"partName",PART_NAMES[part],"levels",levels,"loggedIn",uid!=null);
+        return Map.of("part",part,"partName",PART_NAMES[part],"levels",levels,
+            "loggedIn",uid!=null,"viewerId",uid==null?0L:uid);
     }
 
     /** Do not return correct choices, explanations or transcripts before a choice. */
@@ -109,8 +158,10 @@ public class ListeningService {
             row.put("text",part==1?"Look at the photograph and select the best statement."
                 :part==2?"Listen and select the best response.":q.get("question_text"));
             row.put("audio",validMedia(q.get("audio_url")));
+            row.put("passageAudio",validMedia(q.get("passage_audio_url")));
             row.put("image",validMedia(q.get("image_url")));
             row.put("passageId",q.get("passage_id"));
+            row.put("groupId",groupKey(q,part));
             List<Map<String,Object>> options=new ArrayList<>();
             for(var o:dao.options(questionId,false)) {
                 Map<String,Object> option=new LinkedHashMap<>();
@@ -142,13 +193,80 @@ public class ListeningService {
                 "Bộ câu hỏi chưa đủ đáp án hợp lệ.");
         }
         dao.lockUser(uid);
-        long attemptId=dao.activeAttempt(uid,setId)
-            .orElseGet(()->dao.createOpenAttempt(uid,setId,questions.size()));
-        var reviews=new ArrayList<Map<String,Object>>();
-        for(var a:dao.checkedAnswers(attemptId)) {
-            reviews.add(feedback(setId,n(a.get("question_id")),n(a.get("selected_option_id")),part));
+        // Mo lai trang sau khi da lam het: giu nguyen luot da hoan thanh de xem lai.
+        // Chi tao luot moi khi bam "Lam lai bo de", khong tu reset luc F5.
+        long attemptId;
+        var active = dao.activeAttempt(uid,setId);
+        if(active.isPresent()) {
+            attemptId=active.get();
+        } else {
+            var latest=dao.latestAttempt(uid,setId);
+            boolean canReview=latest.isPresent()
+                && latest.get().get("submitted_at")!=null
+                && n(latest.get().get("total_questions"))==questions.size();
+            if(canReview) {
+                var answers=dao.checkedAnswers(n(latest.get().get("id")));
+                canReview=answers.size()==questions.size()
+                    && answers.stream().allMatch(row->row.get("selected_option_id")!=null);
+            }
+            attemptId=canReview?n(latest.get().get("id")):
+                dao.createOpenAttempt(uid,setId,questions.size());
         }
-        return Map.of("attemptId",attemptId,"review",reviews,"total",questions.size());
+        return attemptState(setId,attemptId,uid,part,questions);
+    }
+
+    @Transactional
+    public Map<String,Object> viewAttempt(long setId,long attemptId,String email) {
+        long uid=Objects.requireNonNull(currentUser(email,true));
+        int part=(int)n(selected(setId).get("part_no"));
+        return attemptState(setId,attemptId,uid,part,dao.questions(setId));
+    }
+
+    private Map<String,Object> attemptState(long setId,long attemptId,long uid,int part,
+        List<Map<String,Object>> questions) {
+        var attempt=dao.lockedAttempt(attemptId,uid,setId).orElseThrow(ListeningService::notFound);
+        boolean submitted=attempt.get("submitted_at")!=null;
+        var answers=new LinkedHashMap<Long,Long>();
+        for(var answer:dao.checkedAnswers(attemptId)) {
+            if(answer.get("selected_option_id")!=null)
+                answers.put(n(answer.get("question_id")),n(answer.get("selected_option_id")));
+        }
+        var incomplete=new HashSet<String>();
+        for(var question:questions) {
+            if(!answers.containsKey(n(question.get("id")))) incomplete.add(groupKey(question,part));
+        }
+        var reviews=new ArrayList<Map<String,Object>>();
+        for(var question:questions) {
+            long id=n(question.get("id"));
+            Long option=answers.get(id);
+            if(option==null) continue;
+            reviews.add(submitted || !incomplete.contains(groupKey(question,part))
+                ? feedback(setId,id,option,part)
+                : Map.of("questionId",id,"selectedId",option));
+        }
+        return Map.of("attemptId",attemptId,"viewerId",uid,"review",reviews,"total",questions.size(),"submitted",submitted,
+            "completed",incomplete.isEmpty());
+    }
+
+    /** A new attempt is created explicitly; older attempts and their answers stay intact. */
+    @Transactional
+    public Map<String,Object> restartPractice(long setId,String email) {
+        long uid=Objects.requireNonNull(currentUser(email,true));
+        var exam=exercise(setId);
+        var questions=dao.questions(setId);
+        int part=((Number)exam.get("part")).intValue();
+        for(var q:questions) {
+            var options=dao.options(n(q.get("id")),true);
+            bad(options.size()!=(part==2?3:4)||
+                options.stream().filter(o->yes(o.get("is_correct"))).count()!=1,
+                "Bộ câu hỏi chưa đủ đáp án hợp lệ.");
+        }
+        // Chot luot dang lam (neu co), khong xoa bat ky dap an hay lich su nao.
+        // Khoa user bao ve viec tao luot moi neu mo hai tab cung luc.
+        dao.lockUser(uid);
+        dao.closeOpenAttempts(uid,setId);
+        long id=dao.createOpenAttempt(uid,setId,questions.size());
+        return Map.of("attemptId",id,"review",List.of(),"total",questions.size(),"completed",false);
     }
 
     /** Called after each selection; persists the answer and returns this question's feedback only. */
@@ -157,6 +275,7 @@ public class ListeningService {
         long uid=Objects.requireNonNull(currentUser(email,true));
         var set=selected(setId);
         int part=(int)n(set.get("part_no"));
+        bad(part>=3,"Hãy trả lời và kiểm tra cả nhóm câu dùng chung đoạn nghe.");
         var attempt=dao.lockedAttempt(attemptId,uid,setId).orElseThrow(ListeningService::notFound);
         var question=dao.questions(setId).stream().filter(q->n(q.get("id"))==questionId).findFirst()
             .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Câu hỏi không thuộc bộ luyện."));
@@ -185,6 +304,49 @@ public class ListeningService {
         return result;
     }
 
+    @Transactional
+    public Map<String,Object> checkGroup(long setId,long attemptId,long questionId,ListeningSubmission form,String email) {
+        long uid=Objects.requireNonNull(currentUser(email,true));
+        int part=(int)n(selected(setId).get("part_no"));
+        bad(part<3,"Hãy kiểm tra từng câu ở Part này.");
+        var attempt=dao.lockedAttempt(attemptId,uid,setId).orElseThrow(ListeningService::notFound);
+        var questions=dao.questions(setId);
+        var anchor=questions.stream().filter(q->n(q.get("id"))==questionId).findFirst()
+            .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Câu hỏi không thuộc bộ luyện."));
+        String key=groupKey(anchor,part);
+        var group=questions.stream().filter(q->key.equals(groupKey(q,part))).toList();
+        Map<String,Long> input=form==null||form.answers()==null?Map.of():form.answers();
+        var groupIds=new HashSet<String>();
+        for(var question:group) groupIds.add(question.get("id").toString());
+        bad(!groupIds.containsAll(input.keySet()),"Có câu hỏi không thuộc đoạn nghe này.");
+
+        var saved=new LinkedHashMap<Long,Long>();
+        for(var answer:dao.checkedAnswers(attemptId)) {
+            if(answer.get("selected_option_id")!=null)
+                saved.put(n(answer.get("question_id")),n(answer.get("selected_option_id")));
+        }
+        var newAnswers=new ArrayList<Answer>();
+        for(var question:group) {
+            long id=n(question.get("id"));
+            if(saved.containsKey(id)) continue;
+            if(attempt.get("submitted_at")!=null)
+                throw new ResponseStatusException(HttpStatus.CONFLICT,"Lượt luyện đã kết thúc.");
+            Long choice=input.get(Long.toString(id));
+            bad(choice==null,"Hãy chọn đáp án cho tất cả câu trong đoạn nghe.");
+            var options=dao.options(id,true);
+            bad(options.size()!=4 || options.stream().filter(o->yes(o.get("is_correct"))).count()!=1,
+                "Câu hỏi chưa có đủ lựa chọn và đáp án đúng.");
+            var selectedOption=options.stream().filter(o->n(o.get("id"))==choice).findFirst()
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Lựa chọn không thuộc câu hỏi."));
+            newAnswers.add(new Answer(id,choice,yes(selectedOption.get("is_correct"))));
+            saved.put(id,choice);
+        }
+        for(var answer:newAnswers) dao.saveAnswer(attemptId,answer.questionId(),answer.optionId(),answer.correct());
+        if(!newAnswers.isEmpty()) dao.refreshAttempt(attemptId,((Number)attempt.get("total_questions")).intValue());
+        var review=group.stream().map(q->n(q.get("id"))).map(id->feedback(setId,id,saved.get(id),part)).toList();
+        return Map.of("review",review);
+    }
+
     /** Correct answer and transcript are returned for a previously graded question only. */
     private Map<String,Object> feedback(long setId,long questionId,long selectedId,int part) {
         var opts=dao.options(questionId,true);
@@ -207,6 +369,24 @@ public class ListeningService {
         out.put("correctText",correctOption.get("option_text"));
         out.put("correct",selectedId==correctId);
         out.put("explanation",explanation);out.put("transcript",transcript);
+        // Part 1 co 4 cau doc A-D; Part 2 co 3 cau A-C. Khong tach hoi thoai
+        // Part 3-4 thanh dap an, vi transcript do la doan noi lien tuc.
+        if(part<=2 && !transcript.isBlank()) {
+            String[] statements=transcript.split("\\s*\\|\\s*",-1);
+            if(statements.length==opts.size() &&
+                java.util.Arrays.stream(statements).noneMatch(String::isBlank)) {
+                var items=new ArrayList<Map<String,Object>>();
+                for(int i=0;i<statements.length;i++) {
+                    String english=normalizeLine(statements[i]);
+                    var item=new LinkedHashMap<String,Object>();
+                    item.put("label",opts.get(i).get("option_label"));
+                    item.put("text",english);
+                    item.put("translation",part==1?PART1_TRANSLATIONS.getOrDefault(english,""):"");
+                    items.add(item);
+                }
+                out.put("transcriptItems",items);
+            }
+        }
         return out;
     }
 
@@ -274,7 +454,8 @@ public class ListeningService {
         var visible=new ArrayList<Map<String,Object>>();
         for(var row:rows) {
             var clean=new LinkedHashMap<String,Object>(row);
-            clean.put("title","Luyện nghe TOEIC · Part "+n(row.get("part_no")));
+            clean.put("title",visibleTitle((int)n(row.get("part_no")),levelOf(row)));
+            clean.remove("instructions");
             visible.add(clean);
         }
         return visible;

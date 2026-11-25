@@ -1,8 +1,44 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/exam-student.css?v=3.0" />
 <%@ include file="../fragments/header.jspf" %>
-<section class="page-hero"><div class="container container-n11"><div class="section-caption">THI THỬ · TOEIC L&R</div><h1>Làm quen phòng thi TOEIC trực tuyến</h1><p>Chọn đề thi Listening &amp; Reading, làm bài trong giới hạn thời gian và xem kết quả. Đây là khung giao diện; chưa có ngân hàng đề từ cơ sở dữ liệu.</p></div></section>
-<section class="page-section"><div class="container container-n11"><div class="row g-4 mb-4"><div class="col-lg-7"><div class="panel-card"><div class="d-flex justify-content-between mb-3"><span class="pill pill-primary">FULL TEST</span><span class="pill pill-orange">Chưa có dữ liệu đề</span></div><h3 style="font-size:25px">TOEIC Listening &amp; Reading</h3><p class="text-muted-n11">Cấu trúc tham khảo: 100 câu Listening và 100 câu Reading trong 120 phút. Phần này sẽ kết nối đề thi từ Admin.</p><div class="d-flex gap-2 flex-wrap mb-4"><span class="mock-chip"><svg class="icon icon-lg"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#clock"></use></svg> 120 phút</span><span class="mock-chip">200 câu</span><span class="mock-chip">7 Part</span></div><button type="button" class="btn btn-outline-primary" data-demo-action="Chưa có đề Full Test từ CSDL. Hãy thử mini test mẫu phía bên phải.">Bắt đầu Full Test</button></div></div><div class="col-lg-5"><div class="panel-card h-100" style="background:linear-gradient(140deg,#eff1ff,#fff)"><span class="pill pill-green">CHẠY ĐƯỢC NGAY</span><h3 style="font-size:24px" class="mt-3">Mini test giao diện</h3><p class="text-muted-n11">Thử làm 3 câu Reading với đồng hồ đếm ngược và nút nộp bài. Điểm chỉ tính ngay trên trình duyệt.</p><div class="d-flex gap-2 mb-4"><span class="mock-chip">3 câu</span><span class="mock-chip">10 phút</span><span class="mock-chip">Kết quả ngay</span></div><a href="${pageContext.request.contextPath}/exams/sample" class="btn btn-primary">Làm bài thử <svg class="icon icon-sm ms-1"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg></a></div></div></div><div class="demo-hint">Lưu ý: điểm trong mini test chỉ để kiểm tra khung giao diện. Muốn lưu bài thi, chấm điểm thật, xem lịch sử, nhóm cần viết Controller + Service + DAO/JDBC và CSDL.</div>
-</div></section>
+<main class="n11-exam n11-exam-list">
+  <div class="container container-n11 py-4 py-lg-5">
+    <div class="exam-hero">
+      <div><div class="exam-eyebrow">TOEIC · LISTENING &amp; READING</div>
+        <h1>Phòng thi thử TOEIC</h1>
+        <p>Làm bài có giới hạn thời gian, lưu đáp án tự động và xem kết quả sau khi nộp. Mỗi lượt thi được lưu trong lịch sử của bạn.</p>
+        <a class="exam-link-light" href="${pageContext.request.contextPath}/exams/history">Xem lịch sử thi của tôi →</a>
+      </div>
+      <div class="exam-hero-figure" aria-hidden="true"><span>200</span><small>QUESTIONS</small><b>7 PARTS</b></div>
+    </div>
+    <div class="exam-phase-summary">Full Test: 45 phút Listening (100 câu), tiếp theo 75 phút Reading (100 câu). Hết thời gian Listening sẽ không quay lại sửa đáp án được. Đề ngắn dùng tổng thời gian do Admin đặt.</div>
+    <div class="exam-section-heading"><div><span class="exam-overline">ĐỀ THI ĐƯỢC CÔNG BỐ</span><h2>Chọn bài thi</h2></div><span class="exam-subnote">Đề do quản trị viên cung cấp</span></div>
+    <c:choose>
+      <c:when test="${empty papers}">
+        <div class="exam-empty"><div class="exam-empty-symbol">▤</div><h3>Chưa có đề thi được công bố</h3>
+          <p>Trong lúc chờ đề mới, bạn có thể luyện từng dạng câu hỏi.</p>
+          <div class="exam-confirm-actions"><a class="exam-secondary-button exam-button-link" href="${pageContext.request.contextPath}/listening">Luyện Listening</a><a class="exam-secondary-button exam-button-link" href="${pageContext.request.contextPath}/reading">Luyện Reading</a></div>
+        </div>
+      </c:when>
+      <c:otherwise>
+        <div class="exam-paper-grid">
+          <c:forEach var="paper" items="${papers}">
+            <article class="exam-paper-card">
+              <div class="exam-card-head"><span class="exam-tag ${paper.examType eq 'LR_FULL' ? 'exam-tag-full' : 'exam-tag-mini'}">${paper.examType eq 'LR_FULL' ? 'FULL TEST' : 'CUSTOM TEST'}</span><span class="exam-tag-muted">Đã công bố</span></div>
+              <h3><c:out value="${paper.title}" /></h3>
+              <p class="exam-description"><c:out value="${paper.description}" default="Bài thi TOEIC Listening &amp; Reading" /></p>
+              <div class="exam-stats"><div><strong><c:out value="${paper.questionCount}" /></strong><span>Câu hỏi</span></div><div><strong><c:out value="${paper.durationMinutes}" />'</strong><span>Thời gian</span></div><div><strong><c:out value="${paper.listeningCount}" /> / <c:out value="${paper.readingCount}" /></strong><span>Nghe / Đọc</span></div></div>
+              <c:choose><c:when test="${paper.questionCount gt 0}">
+                <a class="exam-primary-button exam-button-link" href="${pageContext.request.contextPath}/exams/${paper.id}/ready">Mở đề thi <span aria-hidden="true">→</span></a>
+              </c:when><c:otherwise><span class="exam-muted">Đề chưa có câu hỏi</span></c:otherwise></c:choose>
+            </article>
+          </c:forEach>
+        </div>
+      </c:otherwise>
+    </c:choose>
+    <div class="exam-rules"><h3>Quy tắc phòng thi</h3><div class="exam-rule-grid"><p><b>01.</b> Đáp án được tự động lưu khi có kết nối.</p><p><b>02.</b> Full Test phát Listening lần lượt theo đề, sau đó chuyển sang Reading.</p><p><b>03.</b> Khi hết giờ, hệ thống chấm các đáp án đã nhận.</p><p><b>04.</b> Đáp án, lời giải và điểm quy đổi (nếu có) hiển thị sau khi nộp.</p></div></div>
+  </div>
+</main>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>
