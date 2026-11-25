@@ -48,8 +48,29 @@ class AccountServiceTest {
         when(dao.find(1)).thenReturn(Optional.of(admin(1)));
         when(dao.count("ADMIN", "ACTIVE")).thenReturn(1L);
         AccountForm form = validForm();
+        form.setPassword(null);
         assertThrows(AccountException.class, () -> service.update(1, form, 2));
         verify(dao, never()).update(anyLong(), anyString(), anyString(), any(), anyString(), any());
+    }
+
+    @Test
+    void cannotChangePasswordThroughAccountEdit() {
+        when(dao.find(3L)).thenReturn(Optional.of(new Account(3L, "student@example.com", "Nguyễn Văn An", null,
+                "STUDENT", "ACTIVE", "01/01/2026 08:00")));
+        AccountForm form = validForm();
+        assertThrows(AccountException.class, () -> service.update(3L, form, 2L));
+        verify(dao, never()).update(anyLong(), anyString(), anyString(), any(), anyString(), any());
+    }
+
+    @Test
+    void editingProfilePreservesPassword() {
+        when(dao.find(3L)).thenReturn(Optional.of(new Account(3L, "student@example.com", "Nguyễn Văn An", null,
+                "STUDENT", "ACTIVE", "01/01/2026 08:00")));
+        AccountForm form = validForm();
+        form.setPassword(null);
+        when(dao.update(eq(3L), eq("test@example.com"), eq("Nguyễn Văn An"), isNull(), eq("STUDENT"), isNull())).thenReturn(1);
+        service.update(3L, form, 2L);
+        verify(dao).update(eq(3L), eq("test@example.com"), eq("Nguyễn Văn An"), isNull(), eq("STUDENT"), isNull());
     }
 
     @Test

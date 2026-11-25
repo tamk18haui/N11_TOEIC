@@ -14,8 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin/listening")
 public class ListeningAdminController {
     private final ListeningAdminService service;
+    private final com.toeic.nhom11.controller.QuestionLevelRouter questionLevels;
 
-    public ListeningAdminController(ListeningAdminService service) { this.service=service; }
+    public ListeningAdminController(ListeningAdminService service, com.toeic.nhom11.controller.QuestionLevelRouter questionLevels) { this.service=service; this.questionLevels=questionLevels; }
 
     @ModelAttribute
     void common(Model m) {
@@ -72,7 +73,11 @@ public class ListeningAdminController {
     }
     @PostMapping("/sets/{id}/publish")
     public String publish(@PathVariable long id,@RequestParam boolean published,RedirectAttributes f) {
-        return run(()->service.publish(id,published),"/admin/listening/sets/"+id,f);
+        return run(()->{ // V20_LEVEL_GUARD
+            if (published && !java.util.regex.Pattern.compile("\\[LISTENING_LEVEL:[1-5]\\]").matcher(java.util.Objects.toString(service.set(id).get("instructions"), "")).find())
+                throw new IllegalArgumentException("Hãy chọn cấp độ 1–5 trước khi công bố Listening.");
+            service.publish(id,published);
+        },"/admin/listening/sets/"+id,f);
     }
     @PostMapping("/sets/{id}/delete")
     public String delete(@PathVariable long id,RedirectAttributes f) {
@@ -126,10 +131,16 @@ public class ListeningAdminController {
                                @RequestParam(defaultValue="") String optionB,
                                @RequestParam(defaultValue="") String optionC,
                                @RequestParam(defaultValue="") String optionD,
-                               @RequestParam(defaultValue="") String correctLabel,RedirectAttributes f) {
+                               @RequestParam(defaultValue="") String correctLabel,@RequestParam(defaultValue="-1") int questionLevel,RedirectAttributes f) {
         var opts=Map.of("A",optionA,"B",optionB,"C",optionC,"D",optionD);
-        return run(()->service.saveQuestion(setId,id,passageId,questionText,explanation,audioId,imageId,
-                sortOrder,opts,correctLabel),"/admin/listening/sets/"+setId,f);
+        try {
+            long destination=questionLevels.save("LISTENING",setId,questionLevel,()->service.saveQuestion(setId,id,passageId,questionText,explanation,audioId,imageId,sortOrder,opts,correctLabel));
+            f.addFlashAttribute("successMessage","Đã lưu câu hỏi.");
+            return "redirect:/admin/listening/sets/"+destination;
+        } catch(IllegalArgumentException|DataIntegrityViolationException ex){
+            f.addFlashAttribute("errorMessage",service.message(ex));
+            return "redirect:/admin/listening/sets/"+setId;
+        }
     }
     @PostMapping("/sets/{setId}/questions/{id}/delete")
     public String deleteQuestion(@PathVariable long setId,@PathVariable long id,RedirectAttributes f) {

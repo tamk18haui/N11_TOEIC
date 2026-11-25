@@ -1,0 +1,81 @@
+/* Màu sắc và phong cách Admin
+   Màu: background/color/border-color. Kích thước: width/height/font-size/padding.
+   Bố cục: display/flex/grid/gap/margin. Bo góc: border-radius. */
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
+/* N11 Admin V18 – fresh mint, lime and orange. Loaded LAST; admin pages only. */
+.admin-shell, .grammar-page.grammar-admin {
+  --n11-fresh-ink: #073d38; --n11-fresh-green:#08bda1; --n11-fresh-orange:#ff9c39;
+  --n11-fresh-line:#c9eee2;
+  background:linear-gradient(135deg,#effff8 0%,#fbfff8 46%,#fff7ed 100%) !important;
+  color:var(--n11-fresh-ink) !important;
+  min-height:100vh;
+}
+/* Sidebar: border là viền, border-radius là bo góc, box-shadow là bóng đổ. */
+.admin-shell .admin-sidebar {
+  border:1px solid #aee9d6 !important;
+  border-radius:22px !important;
+  background:#fff !important;
+  box-shadow:0 14px 40px rgba(0,130,111,.09) !important;
+}
+/* Khối thương hiệu sidebar: background là màu nền, color là màu chữ. */
+.admin-shell .admin-nav-brand {
+  background:linear-gradient(115deg,#008f86 0%,#00bba8 65%,#52df9e 100%) !important;
+  color:#fff !important;
+}
+.admin-shell .admin-nav-brand strong,.admin-shell .admin-nav-brand span {color:#fff !important;}
+.admin-shell .admin-nav-avatar {background:#fff !important;color:#007c75 !important;}
+.admin-shell .admin-link.is-active,
+.admin-shell .admin-link:hover {background:#dcfff0 !important;color:#006c61 !important;}
+.admin-shell .admin-link.is-active {box-shadow:inset 4px 0 0 var(--n11-fresh-green) !important;}
+.admin-shell .section-caption,.admin-shell .reading-admin-hero .section-caption{color:#008d80 !important;}
+.admin-shell .account-title,.admin-shell .reading-admin-hero h1 {color:#063e39 !important;font-weight:850 !important;}
+.admin-shell .admin-stat,
+.admin-shell .panel-card,
+.admin-shell .account-panel,
+.admin-shell .admin-module-card{
+  background:#fff !important;
+  border:1px solid var(--n11-fresh-line) !important;
+  border-radius:19px !important;
+  box-shadow:0 14px 36px rgba(0,131,103,.07) !important;
+}
+.admin-shell .admin-stat:nth-child(odd) {background:linear-gradient(150deg,#ffffff 40%,#e8fff3 100%) !important;}
+/* Ô thống kê: background là nền, border là viền, padding là lề trong, height là chiều cao. */
+.admin-shell .admin-stat {border-top:4px solid #09cfaf !important;}
+.admin-shell .admin-stat .num {color:#007e70 !important;}
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
+.admin-shell .btn-primary,
+.admin-shell a.btn-primary,
+.admin-shell button.btn-primary {
+  background:linear-gradient(115deg,#06aa98,#00c7a4) !important;
+  border-color:#009f88 !important;
+  color:#fff !important;
+  box-shadow:0 7px 18px rgba(7,174,150,.18) !important;
+}
+.admin-shell .btn-primary:hover,
+.admin-shell a.btn-primary:hover {background:linear-gradient(115deg,#009f8b,#06d1ab) !important;transform:translateY(-1px);}
+/* Nút phụ: background/color là màu, border là viền. */
+.admin-shell .btn-outline-primary,.admin-shell .btn-soft {
+  background:#fff8ed !important;
+  border:1px solid #ffd5a2 !important;
+  color:#925009 !important;
+}
+.admin-shell .btn-outline-primary:hover,.admin-shell .btn-soft:hover {
+  background:#ffebcc !important;border-color:#ffae4e !important;color:#854400 !important;
+}
+.admin-shell .account-table thead th,.admin-shell .reading-admin-table thead th{
+  background:#ddfaec !important;color:#005d50 !important;
+}
+.admin-shell .table tbody tr:hover {background:#f4fff9 !important;}
+.admin-shell .form-control:focus,.admin-shell .form-select:focus{border-color:#18cbb3 !important;box-shadow:0 0 0 .2rem rgba(0,192,158,.12) !important;}
+.admin-shell .badge-status.good{background:#d7fbe8 !important;color:#007a54 !important;}
+.admin-shell .badge-status.warn{background:#fff0d7 !important;color:#9b5800 !important;}
+.admin-shell .alert-success{background:#d8ffed !important;color:#065a42 !important;border-color:#9ce9ca !important;}
+.admin-shell .alert-danger{background:#fff1ec !important;color:#a04024 !important;border-color:#ffc9ad !important;}
+/* Tiêu đề Reading: display/flex/gap căn bố cục, padding là lề trong; background và border tạo màu. */

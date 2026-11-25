@@ -1,3 +1,11 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
 /*
  * File: admin-shell.css
  * Mục đích: Giao diện chung của khu vực Admin: màu sắc, banner, menu, thẻ, bảng, nút.
@@ -31,6 +39,7 @@
 .admin-shell h4, .admin-shell h5, .admin-shell h6 { color: var(--adm-ink); }
 .admin-shell .section-caption { color: #048faa; font-size: 11px; font-weight: 850; letter-spacing: .13em; }
 .admin-shell .small-meta, .admin-shell .text-muted-n11 { color: var(--adm-muted) !important; }
+/* Tiêu đề: font-size là cỡ chữ, font-weight là độ đậm, margin là lề ngoài. */
 .admin-shell .account-title { color: var(--adm-ink); font-weight: 850; letter-spacing: -.045em; font-size: clamp(26px, 2.8vw, 36px); margin: 7px 0 9px; }
 .admin-shell .account-section-title { color: var(--adm-ink); font-size: 19px; font-weight: 820; }
 .admin-shell .account-back, .admin-toolbar-link { color: #008eb3; font-weight: 800; }
@@ -105,6 +114,7 @@
   border-radius: 23px;
   box-shadow: var(--adm-shadow);
 }
+/* Khối thương hiệu sidebar: background là màu nền, color là màu chữ. */
 .admin-nav-brand { display: flex; align-items: center; gap: 11px; margin: 0 5px 11px; padding: 5px 5px 17px; border-bottom: 1px solid #edf3f6; }
 .admin-nav-avatar {
   display: grid;
@@ -165,6 +175,7 @@
 .admin-shell .panel-card,
 .admin-shell .account-panel,
 .admin-shell .account-form-card { padding: 23px; }
+/* Ô thống kê: background là nền, border là viền, padding là lề trong, height là chiều cao. */
 .admin-shell .admin-stat { position: relative; overflow: hidden; padding: 22px; height: 100%; }
 .admin-shell .admin-stat::before {
   content: "";
@@ -241,6 +252,7 @@
 
 /* Chỉ các nút và form của trang Admin. */
 .admin-shell .btn { border-radius: 12px; font-weight: 750; transition: filter .18s, transform .18s, box-shadow .18s; }
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
 .admin-shell .btn-primary {
   border: 1px solid #009ec8;
   color: #fff;
@@ -248,10 +260,12 @@
   box-shadow: 0 8px 18px rgba(5, 165, 202, .18);
 }
 .admin-shell .btn-primary:hover, .admin-shell .btn-primary:focus { background: linear-gradient(100deg, #009dc2, #007faa); border-color: #0089b5; color: #fff; }
+/* Nút phụ: background/color là màu, border là viền. */
 .admin-shell .btn-soft { background: #e5f8fc; color: #027e9b; border: 1px solid #c8edf3; }
 .admin-shell .btn-soft:hover { color: #006884; background: #d5f2f8; }
 .admin-shell .btn-outline-primary { border-color: #9ed8e9; color: #008eae; }
 .admin-shell .btn-outline-primary:hover { border-color: #008bab; background: #008eae; color: #fff; }
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
 .admin-shell .form-control, .admin-shell .form-select, .admin-shell .input-search {
   border: 1px solid #d8e8ef;
   color: #28445a;
@@ -267,6 +281,7 @@
 /* Bảng tài khoản, nhãn trạng thái và thông báo. */
 .admin-shell .admin-table-wrap { overflow-x: auto; border-radius: 14px; }
 .admin-shell .table { margin-bottom: 0; color: #27465b; }
+/* Đầu bảng: background là nền, color là màu chữ; padding là khoảng cách bên trong ô. */
 .admin-shell .table thead th { background: #edf8fb; border-bottom: 1px solid #d7eaf0; color: #597f8d; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; padding: 15px 13px; }
 .admin-shell .table td { background: #fff; border-color: #eaf2f5; padding: 15px 13px; vertical-align: middle; font-size: 13px; }
 .admin-shell .table tbody tr:hover td { background: #f4fcfe; }

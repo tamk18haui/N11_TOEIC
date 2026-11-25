@@ -1,0 +1,22 @@
+<%-- N11 SOURCE NOTES V24: JSP dựng bố cục và hiển thị dữ liệu từ Controller. class="..." nối CSS; form action/method xác định endpoint và phương thức gửi. c:forEach lặp dữ liệu; c:if kiểm tra điều kiện; c:out hiển thị văn bản an toàn. Không đặt nghiệp vụ ở JSP. --%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ include file="../../fragments/head.jspf" %>
+<main data-n11-src="admin/reading/set-form.jsp|1" class="admin-shell admin-reading-page"><div data-n11-src="admin/reading/set-form.jsp|2" class="container container-n11"><div data-n11-src="admin/reading/set-form.jsp|3" class="row g-4">
+<div data-n11-src="admin/reading/set-form.jsp|4" class="col-lg-3"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
+<div data-n11-src="admin/reading/set-form.jsp|5" class="col-lg-9"><a data-n11-src="admin/reading/set-form.jsp|6" class="account-back" href="${pageContext.request.contextPath}/admin/reading">← Danh sách Reading</a>
+ <h1 data-n11-src="admin/reading/set-form.jsp|7" class="account-title mt-2">${empty setForm.id ? 'Tạo bộ Reading mới' : 'Sửa bộ Reading'}</h1>
+ <c:if test="${not empty errorMessage}"><div data-n11-src="admin/reading/set-form.jsp|8" class="alert alert-danger"><c:out value="${errorMessage}"/></div></c:if>
+ <%-- Khối nội dung: CSS panel-card điều chỉnh nền, viền và khoảng cách. --%><section data-n11-src="admin/reading/set-form.jsp|9" class="panel-card"><form data-n11-src="admin/reading/set-form.jsp|10" action="${pageContext.request.contextPath}/admin/reading/sets/save" method="post" class="row g-3">
+ <%-- CSRF token bảo vệ yêu cầu POST. --%><input data-n11-src="admin/reading/set-form.jsp|11" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+ <c:if test="${not empty setForm.id}"><input data-n11-src="admin/reading/set-form.jsp|12" type="hidden" name="id" value="${setForm.id}"/></c:if>
+ <div data-n11-src="admin/reading/set-form.jsp|13" class="col-12"><label data-n11-src="admin/reading/set-form.jsp|14" class="form-label" for="readingTitle">Tên bộ Reading</label><input data-n11-src="admin/reading/set-form.jsp|15" class="form-control" id="readingTitle" name="title" maxlength="200" required value="<c:out value='${setForm.title}' />"/></div>
+ <div data-n11-src="admin/reading/set-form.jsp|16" class="col-md-4"><label data-n11-src="admin/reading/set-form.jsp|17" class="form-label" for="part">Part</label><select data-n11-src="admin/reading/set-form.jsp|18" class="form-select" name="part" id="part"><option value="5" ${setForm.part_no eq 5 ? 'selected' : ''}>Part 5</option><option value="6" ${setForm.part_no eq 6 ? 'selected' : ''}>Part 6</option><option value="7" ${setForm.part_no eq 7 ? 'selected' : ''}>Part 7</option></select></div>
+ <div data-n11-src="admin/reading/set-form.jsp|19" class="col-md-4"><label data-n11-src="admin/reading/set-form.jsp|20" class="form-label" for="level">Cấp độ học viên</label><select data-n11-src="admin/reading/set-form.jsp|21" class="form-select" name="level" id="level">
+  <option value="0" ${setForm.level eq 0 ? 'selected' : ''}>Chưa phân loại (bản nháp)</option><c:forEach begin="1" end="5" var="n"><option value="${n}" ${setForm.level eq n ? 'selected' : ''}>Cấp ${n}</option></c:forEach></select></div>
+ <div data-n11-src="admin/reading/set-form.jsp|22" class="col-md-4"><label data-n11-src="admin/reading/set-form.jsp|23" class="form-label" for="difficulty">Độ khó</label><select data-n11-src="admin/reading/set-form.jsp|24" class="form-select" name="difficulty" id="difficulty"><option value="EASY" ${setForm.difficulty eq 'EASY' ? 'selected' : ''}>Dễ</option><option value="MEDIUM" ${setForm.difficulty eq 'MEDIUM' ? 'selected' : ''}>Trung bình</option><option value="HARD" ${setForm.difficulty eq 'HARD' ? 'selected' : ''}>Khó</option></select></div>
+ <div data-n11-src="admin/reading/set-form.jsp|25" class="col-12"><label data-n11-src="admin/reading/set-form.jsp|26" class="form-label" for="instructions">Hướng dẫn</label><textarea data-n11-src="admin/reading/set-form.jsp|27" class="form-control" rows="4" name="instructions" id="instructions" maxlength="3000"><c:out value="${setForm.instructions_clean}"/></textarea></div>
+ <div data-n11-src="admin/reading/set-form.jsp|28" class="col-12"><button data-n11-src="admin/reading/set-form.jsp|29" class="btn btn-primary" type="submit">Lưu bộ Reading</button></div>
+ </form></section>
+ </div></div></div></main>
+<%@ include file="../../fragments/scripts.jspf" %>

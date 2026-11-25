@@ -1,3 +1,11 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
 /*
  * File: admin-accounts.css
  * Mục đích: Định dạng riêng cho danh sách tài khoản, vai trò, thao tác và form thêm/sửa.
@@ -5,6 +13,7 @@
  */
 
 /* Tiêu đề và điều hướng tài khoản. */
+/* Tiêu đề: font-size là cỡ chữ, font-weight là độ đậm, margin là lề ngoài. */
 .admin-shell .account-title { font-size: clamp(26px, 2.8vw, 36px); margin: 6px 0 9px; }
 .admin-shell .account-section-title { font-size: 19px; }
 .admin-shell .account-back { color: #008fa8; font-weight: 800; }
@@ -15,6 +24,7 @@
 .admin-shell .account-table td { vertical-align: middle; }
 .admin-shell .account-role { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; background: #e2f8ff; color: #047b9c; }
 .admin-shell .account-role-admin { background: #fff0db; color: #b65b03; }
+/* Cụm thao tác tài khoản: gap là khoảng cách giữa các nút; white-space ngăn xuống dòng. */
 .admin-shell .account-actions { white-space: nowrap; }
 .admin-shell .account-actions form { margin: 0; }
 

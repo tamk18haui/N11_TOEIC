@@ -1,0 +1,75 @@
+/* Bố cục, màu và form Admin Từ vựng / Ngữ pháp / Đề thi
+   Màu: background/color/border-color. Kích thước: width/height/font-size/padding.
+   Bố cục: display/flex/grid/gap/margin. Bo góc: border-radius. */
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
+/* N11 V19 – ADMIN ONLY. Edit this file for colour, spacing, sizes and layout.
+   JSP = page structure and server data; CSS = appearance; JS = interactions. */
+.admin-shell.n11-admin-content { /* MÀU NỀN & FONT */
+  --n11-ink:#103c46; --n11-accent:#00a993; --n11-orange:#f59d38;
+  --n11-border:#ccece3; --n11-radius:20px; --n11-pad:24px;
+  background:linear-gradient(135deg,#effff8,#f9fdf6 55%,#fff5e9) !important;
+  color:var(--n11-ink) !important;
+  min-height:100vh; padding:24px 0 40px !important;
+}
+.admin-shell.n11-admin-content .container-n11 {max-width:1380px !important;}
+.admin-shell.n11-admin-content .n11-content-main {min-width:0;}
+/* Tiêu đề: màu chữ, kích thước chữ, khoảng cách và khung. */
+.admin-shell.n11-admin-content .n11-content-hero {
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  padding:24px 27px; margin-bottom:24px; border:1px solid #aee9d7; border-radius:var(--n11-radius);
+  background:linear-gradient(105deg,#ffffff,#e0fff0 68%,#fff2df);
+  box-shadow:0 10px 28px #007b6410;
+}
+.admin-shell.n11-admin-content .n11-content-hero h1,
+.admin-shell.n11-admin-content .n11-content-main>h1 {
+  font-size:clamp(26px,3vw,36px) !important; font-weight:800 !important;
+  color:#07564d !important; line-height:1.18; margin:6px 0 10px;
+}
+.admin-shell.n11-admin-content .n11-content-hero p {margin:0; color:#52766f !important;}
+/* Nút chính: màu nền, màu chữ, chiều cao, padding, bo góc. */
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
+.admin-shell.n11-admin-content .n11-content-main .btn.btn-primary {
+  display:inline-flex; align-items:center; justify-content:center; align-self:center;
+  min-height:42px; height:auto; padding:10px 18px !important; font-size:13px !important;
+  border-radius:12px !important; border:1px solid #009d89 !important;
+  background:linear-gradient(115deg,#009c87,#00b99b) !important; color:#fff !important;
+  box-shadow:0 6px 15px #00a38d24 !important; text-decoration:none;
+}
+.admin-shell.n11-admin-content .n11-content-main .btn.btn-primary:hover {background:#008875 !important;}
+/* Nút phụ: background/color là màu, border là viền. */
+.admin-shell.n11-admin-content .n11-content-main .btn.btn-soft {background:#fff0dc !important;color:#8a4908 !important;border:1px solid #ffd5a0 !important;}
+.admin-shell.n11-admin-content .n11-content-main .btn.btn-outline-danger {background:#fff2ef !important;color:#a63735 !important;border:1px solid #f2bcb8 !important;}
+/* Ô thống kê: màu riêng cho từng ô, kích thước và khoảng cách. */
+.admin-shell.n11-admin-content .n11-content-stat {min-height:120px; padding:20px !important; border-radius:18px !important;}
+.admin-shell.n11-admin-content .n11-content-stat span {font-size:12px;color:#54716d !important;font-weight:650;}
+.admin-shell.n11-admin-content .n11-content-stat h2 {font-size:30px !important;line-height:1.2;font-weight:850 !important;color:#087f71 !important;margin:8px 0 0;}
+.admin-shell.n11-admin-content .row>div:nth-child(2)>.n11-content-stat {border-top:4px solid #4e9bea !important;background:linear-gradient(145deg,#fff,#edf7ff) !important;}
+.admin-shell.n11-admin-content .row>div:nth-child(3)>.n11-content-stat {border-top:4px solid #f5a34b !important;background:linear-gradient(145deg,#fff,#fff4e6) !important;}
+.admin-shell.n11-admin-content .row>div:nth-child(4)>.n11-content-stat {border-top:4px solid #9b87ef !important;background:linear-gradient(145deg,#fff,#f5efff) !important;}
+/* Panel và bảng: tránh bóp cột nội dung, cho phép cuộn ngang trên điện thoại. */
+.admin-shell.n11-admin-content .n11-content-main .panel-card {padding:var(--n11-pad) !important;margin-bottom:20px;background:#fff !important;border:1px solid var(--n11-border) !important;border-radius:var(--n11-radius) !important;}
+.admin-shell.n11-admin-content .n11-content-main .panel-card h2 {font-size:20px !important;font-weight:800 !important;margin-bottom:16px !important;}
+.admin-shell.n11-admin-content .n11-content-main .admin-table-wrap {overflow-x:auto;}
+.admin-shell.n11-admin-content .n11-content-main .table {min-width:580px;margin-bottom:0;}
+/* Đầu bảng: background là nền, color là màu chữ; padding là khoảng cách bên trong ô. */
+.admin-shell.n11-admin-content .n11-content-main .table thead th {background:#ddf9ed !important;color:#075c50 !important;white-space:nowrap;}
+.admin-shell.n11-admin-content .n11-content-main .table td {padding:14px 12px !important;vertical-align:middle;}
+.admin-shell.n11-admin-content .n11-content-main .table td a:not(.btn) {color:#087e70 !important;text-decoration:none;}
+.admin-shell.n11-admin-content .n11-content-main .table td a:not(.btn):hover {text-decoration:underline;}
+.admin-shell.n11-admin-content .n11-content-main .table td.n11-empty {text-align:center;padding:32px 16px !important;color:#668079 !important;}
+/* Form: kích thước input, textarea, label; không áp dụng trang học viên. */
+.admin-shell.n11-admin-content .n11-content-main .form-label {display:block;width:100%;font-size:13px !important;font-weight:700 !important;}
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
+.admin-shell.n11-admin-content .n11-content-main .form-control,.admin-shell.n11-admin-content .n11-content-main .form-select {width:100%;min-height:42px;border:1px solid #c6e4db !important;border-radius:10px !important;}
+.admin-shell.n11-admin-content .n11-content-main textarea.form-control {height:auto;min-height:90px;}
+.admin-shell.n11-admin-content .n11-content-main .form-control:focus,.admin-shell.n11-admin-content .n11-content-main .form-select:focus {border-color:#00af98 !important;box-shadow:0 0 0 3px #00af981c !important;}
+.admin-shell.n11-admin-content .n11-content-main .example-card {border:1px solid #ccebe0 !important;background:#f5fffa !important;padding:15px;border-radius:14px;margin-bottom:12px;}
+.admin-shell.n11-admin-content .n11-content-main .grammar-back {display:inline-block;margin-bottom:14px;color:#007e70 !important;font-weight:700;}
+@media(max-width:767px){.admin-shell.n11-admin-content{padding:16px 0 !important;--n11-pad:16px}.admin-shell.n11-admin-content .n11-content-hero{padding:18px;}.admin-shell.n11-admin-content .n11-content-stat{min-height:100px;padding:14px !important;}}

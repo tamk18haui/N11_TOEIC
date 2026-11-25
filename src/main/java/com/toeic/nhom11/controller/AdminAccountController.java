@@ -5,6 +5,11 @@ import com.toeic.nhom11.model.AccountForm;
 import com.toeic.nhom11.service.AccountException;
 import com.toeic.nhom11.service.AccountService;
 import java.security.Principal;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -110,6 +115,21 @@ public class AdminAccountController {
             redirect.addFlashAttribute("errorMessage", ex.getMessage());
         }
         return "redirect:/admin/accounts";
+    }
+
+    /** AJAX alternative; same service validations as the existing POST /status. */
+    @PostMapping("/{id}/status-ajax")
+    @ResponseBody
+    public ResponseEntity<Map<String,Object>> statusAjax(@PathVariable long id,
+            @RequestParam String status, Principal principal) {
+        try {
+            accounts.changeStatus(id,status,accounts.currentAdminId(principal.getName()));
+            return ResponseEntity.ok(Map.of("status",status,
+                "message","Đã cập nhật trạng thái tài khoản."));
+        } catch (AccountException ex) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(Map.of("message",ex.getMessage()));
+        }
     }
 
     private void common(Model model) {

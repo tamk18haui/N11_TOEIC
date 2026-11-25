@@ -1,18 +1,23 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ include file="../../fragments/head.jspf" %><%@ include file="../../fragments/header.jspf" %>
-<main class="grammar-page grammar-admin"><div class="container grammar-wrap">
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="activePage" value="admin-vocabulary" scope="request" />
+<%@ include file="../../fragments/head.jspf" %>
+<%-- Bố cục JSP: sidebar, lưới 3/9 và nội dung. Màu/kích thước: admin-content-v19.css. --%>
+<main data-n11-src="vocabulary/admin/term.jsp|1" class="admin-shell grammar-page grammar-admin n11-admin-content"><div data-n11-src="vocabulary/admin/term.jsp|2" class="container container-n11"><div data-n11-src="vocabulary/admin/term.jsp|3" class="row g-4">
+<div data-n11-src="vocabulary/admin/term.jsp|4" class="col-lg-3"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
+<div data-n11-src="vocabulary/admin/term.jsp|5" class="col-lg-9 n11-content-main">
 <%@ include file="../../grammar/alerts.jspf" %>
-<a class="grammar-back" href="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}">← Quay lại <c:out value="${topic.title}"/></a>
-<h1 class="h2 mb-4">${empty term.id ? 'Thêm từ vựng' : 'Chỉnh sửa từ vựng'}</h1>
-<section class="panel-card"><form method="post" action="${pageContext.request.contextPath}/admin/vocabulary/terms/save">
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><input type="hidden" name="id" value="${term.id}"><input type="hidden" name="topicId" value="${term.topicId}">
-  <div class="row"><div class="col-md-5 mb-3"><label class="form-label w-100">Từ tiếng Anh<input class="form-control" type="text" name="word" value="<c:out value='${term.word}'/>" required maxlength="160"></label></div><div class="col-md-4 mb-3"><label class="form-label w-100">Phiên âm IPA<input class="form-control" type="text" name="ipa" value="<c:out value='${term.ipa}'/>" maxlength="160"></label></div><div class="col-md-3 mb-3"><label class="form-label w-100">Audio media ID<input class="form-control" type="number" name="audioMediaId" value="${term.audioMediaId}" min="1"></label></div></div>
-  <div class="mb-3"><label class="form-label w-100">Nghĩa tiếng Việt<input class="form-control" type="text" name="meaningVi" value="<c:out value='${term.meaningVi}'/>" required maxlength="500"></label></div>
-  <div class="mb-3"><label class="form-label w-100">Định nghĩa tiếng Anh<textarea class="form-control" name="definitionEn" rows="3" maxlength="4000"><c:out value="${term.definitionEn}"/></textarea></label></div>
-  <div class="mb-3"><label class="form-label w-100">Ví dụ tiếng Anh<textarea class="form-control" name="exampleEn" rows="3" maxlength="4000"><c:out value="${term.exampleEn}"/></textarea></label></div>
-  <div class="mb-3"><label class="form-label w-100">Dịch ví dụ tiếng Việt<textarea class="form-control" name="exampleVi" rows="3" maxlength="4000"><c:out value="${term.exampleVi}"/></textarea></label></div>
-  <button class="btn grammar-btn" type="submit">Lưu từ vựng</button>
+<a data-n11-src="vocabulary/admin/term.jsp|6" class="grammar-back" href="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}">← Quay lại <c:out value="${topic.title}"/></a>
+<h1 data-n11-src="vocabulary/admin/term.jsp|7" class="h2 mb-4">${empty term.id ? 'Thêm từ vựng' : 'Chỉnh sửa từ vựng'}</h1>
+<section data-n11-src="vocabulary/admin/term.jsp|8" class="panel-card"><form data-n11-src="vocabulary/admin/term.jsp|9" method="post" action="${pageContext.request.contextPath}/admin/vocabulary/terms/save">
+  <input data-n11-src="vocabulary/admin/term.jsp|10" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><input data-n11-src="vocabulary/admin/term.jsp|11" type="hidden" name="id" value="${term.id}"><input data-n11-src="vocabulary/admin/term.jsp|12" type="hidden" name="topicId" value="${term.topicId}">
+  <div data-n11-src="vocabulary/admin/term.jsp|13" class="row"><div data-n11-src="vocabulary/admin/term.jsp|14" class="col-md-5 mb-3"><label data-n11-src="vocabulary/admin/term.jsp|15" class="form-label w-100">Từ tiếng Anh<input data-n11-src="vocabulary/admin/term.jsp|16" class="form-control" type="text" name="word" value="<c:out value='${term.word}'/>" required maxlength="160"></label></div><div data-n11-src="vocabulary/admin/term.jsp|17" class="col-md-4 mb-3"><label data-n11-src="vocabulary/admin/term.jsp|18" class="form-label w-100">Phiên âm IPA<input data-n11-src="vocabulary/admin/term.jsp|19" class="form-control" type="text" name="ipa" value="<c:out value='${term.ipa}'/>" maxlength="160"></label></div><div data-n11-src="vocabulary/admin/term.jsp|20" class="col-md-3 mb-3"><label data-n11-src="vocabulary/admin/term.jsp|21" class="form-label w-100">Audio media ID<input data-n11-src="vocabulary/admin/term.jsp|22" class="form-control" type="number" name="audioMediaId" value="${term.audioMediaId}" min="1"></label></div></div>
+  <div data-n11-src="vocabulary/admin/term.jsp|23" class="mb-3"><label data-n11-src="vocabulary/admin/term.jsp|24" class="form-label w-100">Nghĩa tiếng Việt<input data-n11-src="vocabulary/admin/term.jsp|25" class="form-control" type="text" name="meaningVi" value="<c:out value='${term.meaningVi}'/>" required maxlength="500"></label></div>
+  <div data-n11-src="vocabulary/admin/term.jsp|26" class="mb-3"><label data-n11-src="vocabulary/admin/term.jsp|27" class="form-label w-100">Định nghĩa tiếng Anh<textarea data-n11-src="vocabulary/admin/term.jsp|28" class="form-control" name="definitionEn" rows="3" maxlength="4000"><c:out value="${term.definitionEn}"/></textarea></label></div>
+  <div data-n11-src="vocabulary/admin/term.jsp|29" class="mb-3"><label data-n11-src="vocabulary/admin/term.jsp|30" class="form-label w-100">Ví dụ tiếng Anh<textarea data-n11-src="vocabulary/admin/term.jsp|31" class="form-control" name="exampleEn" rows="3" maxlength="4000"><c:out value="${term.exampleEn}"/></textarea></label></div>
+  <div data-n11-src="vocabulary/admin/term.jsp|32" class="mb-3"><label data-n11-src="vocabulary/admin/term.jsp|33" class="form-label w-100">Dịch ví dụ tiếng Việt<textarea data-n11-src="vocabulary/admin/term.jsp|34" class="form-control" name="exampleVi" rows="3" maxlength="4000"><c:out value="${term.exampleVi}"/></textarea></label></div>
+  <button data-n11-src="vocabulary/admin/term.jsp|35" class="btn btn-primary" type="submit">Lưu từ vựng</button>
 </form></section>
-<c:if test="${not empty term.id}"><form method="post" action="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}/terms/${term.id}/delete" onsubmit="return confirm('Xóa từ vựng này?');"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><button class="btn btn-outline-danger" type="submit">Xóa từ vựng</button></form></c:if>
-</div></main>
-<%@ include file="../../fragments/footer.jspf" %><%@ include file="../../fragments/scripts.jspf" %>
+<c:if test="${not empty term.id}"><form data-n11-src="vocabulary/admin/term.jsp|36" method="post" action="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}/terms/${term.id}/delete" onsubmit="return confirm('Xóa từ vựng này?');"><input data-n11-src="vocabulary/admin/term.jsp|37" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><button data-n11-src="vocabulary/admin/term.jsp|38" class="btn btn-outline-danger" type="submit">Xóa từ vựng</button></form></c:if>
+</div></div></div></main>
+<%@ include file="../../fragments/scripts.jspf" %>

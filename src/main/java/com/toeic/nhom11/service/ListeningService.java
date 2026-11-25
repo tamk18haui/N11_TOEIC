@@ -213,6 +213,9 @@ public class ListeningService {
     private static String validMedia(Object raw) {
         if(raw==null) return null;
         String value=raw.toString().trim();
+        // N11_MEDIA_LOCAL_V27: duong dan tai nguyen noi bo do ListeningMediaStore tao.
+        // Chi chap nhan ten UUID va phan mo rong duoc may chu ho tro.
+        if (value.matches("/listening-media/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}[.](mp3|wav|ogg|png|jpg|jpeg|webp)")) return value;
         try {
             URI u=URI.create(value);
             if(!"https".equalsIgnoreCase(u.getScheme())||u.getHost()==null||u.getUserInfo()!=null) return null;
