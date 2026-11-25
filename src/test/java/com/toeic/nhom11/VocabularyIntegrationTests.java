@@ -58,6 +58,7 @@ class VocabularyIntegrationTests {
     }
 
     @Test
+    @WithMockUser(username = "student@n11.local", roles = "STUDENT")
     void lessonUsesOnlyWordsAssignedToItsTopic() throws Exception {
         Long lessonId = jdbc.queryForObject("""
             SELECT id FROM vocabulary_lessons WHERE topic_id=4 AND sort_order=1
@@ -297,13 +298,30 @@ class VocabularyIntegrationTests {
 
     @Test
     void guestCannotStartPlacementTest() throws Exception {
+        // N11_V45_GUEST_TESTS
+        mvc.perform(get("/vocabulary/1/lessons/1")).andExpect(status().is3xxRedirection());
+        mvc.perform(get("/vocabulary/1/lessons/1/quiz/exercise")).andExpect(status().is3xxRedirection());
+        mvc.perform(get("/vocabulary/history")).andExpect(status().is3xxRedirection());
         mvc.perform(get("/vocabulary/1/placement"))
             .andExpect(status().is3xxRedirection());
     }
 
+    // N11_V46_FREE_STUDY
     @Test
     @WithMockUser(username = "student@n11.local", roles = "STUDENT")
-    void placementTestRequires25Of30ToUnlockAllLessons() throws Exception {
+    void publishedLessonsCanBeStudiedInAnyOrder() throws Exception {
+        Long lastLesson = jdbc.queryForObject("SELECT id FROM vocabulary_lessons WHERE topic_id=1 AND sort_order=3", Long.class);
+        MvcResult topic = mvc.perform(get("/vocabulary/1")).andExpect(status().isOk()).andReturn();
+        @SuppressWarnings("unchecked")
+        List<VocabularyLessonSummary> lessons = (List<VocabularyLessonSummary>) topic.getModelAndView().getModel().get("lessons");
+        assertEquals(false, lessons.stream().anyMatch(lesson -> "LOCKED".equals(lesson.getState())));
+        mvc.perform(get("/vocabulary/1/lessons/" + lastLesson)).andExpect(status().isOk());
+        mvc.perform(get("/vocabulary/1/lessons/" + lastLesson + "/quiz/exercise")).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "student@n11.local", roles = "STUDENT")
+    void placementTestRequires25Of30ToPass() throws Exception {
         MvcResult failedTest = startPlacementTest();
         VocabularyQuiz quiz = (VocabularyQuiz) failedTest.getModelAndView()
             .getModel().get("quiz");

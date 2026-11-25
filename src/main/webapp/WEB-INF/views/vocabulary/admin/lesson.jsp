@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:set var="activePage" value="admin-vocabulary" scope="request" />
 <%@ include file="../../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
 <%-- Bố cục JSP: sidebar, lưới 3/9 và nội dung. Màu/kích thước: admin-content-v19.css. --%>
-<main data-n11-src="vocabulary/admin/lesson.jsp|1" class="admin-shell grammar-page grammar-admin n11-admin-content"><div data-n11-src="vocabulary/admin/lesson.jsp|2" class="container container-n11"><div data-n11-src="vocabulary/admin/lesson.jsp|3" class="row g-4">
+<main data-n11-src="vocabulary/admin/lesson.jsp|1" class="v44-admin admin-shell grammar-page grammar-admin n11-admin-content"><div data-n11-src="vocabulary/admin/lesson.jsp|2" class="container container-n11"><div data-n11-src="vocabulary/admin/lesson.jsp|3" class="row g-4">
 <div data-n11-src="vocabulary/admin/lesson.jsp|4" class="col-lg-3"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
 <div data-n11-src="vocabulary/admin/lesson.jsp|5" class="col-lg-9 n11-content-main">
 <%@ include file="../../grammar/alerts.jspf" %>

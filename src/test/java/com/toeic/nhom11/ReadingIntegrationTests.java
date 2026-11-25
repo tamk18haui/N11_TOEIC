@@ -121,7 +121,11 @@ class ReadingIntegrationTests {
         mvc.perform(get("/reading/part5/9")).andExpect(status().isNotFound());
     }
     @Test void readingPagesAndPracticeRequireLogin() throws Exception {
-        mvc.perform(get("/reading")).andExpect(status().is3xxRedirection());
+        // N11_V45_GUEST_TESTS
+        mvc.perform(get("/reading")).andExpect(status().isOk());
+        mvc.perform(get("/reading/part5")).andExpect(status().isOk());
+        mvc.perform(get("/reading/part6")).andExpect(status().isOk());
+        mvc.perform(get("/reading/part7")).andExpect(status().isOk());
         mvc.perform(get("/reading/part5/2")).andExpect(status().is3xxRedirection());
         mvc.perform(get("/reading/api/attempts/1")).andExpect(status().is3xxRedirection());
         mvc.perform(post("/reading/part5/1/start").with(csrf())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/login"));

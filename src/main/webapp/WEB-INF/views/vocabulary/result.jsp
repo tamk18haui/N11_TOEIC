@@ -1,16 +1,16 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
 <%@ include file="../fragments/header.jspf" %>
 
 <main class="vocabulary-page">
   <section class="page-section">
     <div class="container container-n11 vocab-wrap">
       <%@ include file="../fragments/vocabulary-settings.jspf" %>
-      <%@ include file="../fragments/vocabulary-settings.jspf" %>
       <a class="vocab-back-link" href="${pageContext.request.contextPath}/vocabulary" data-i18n="backAllTopics">← All topics</a>
 
       <div class="grammar-result">
-        <h1><c:choose><c:when test="${attempt.quizType eq 'PLACEMENT'}"><span data-i18n="resultPlacementTitle">Placement test results</span></c:when><c:otherwise><span data-i18n="resultPracticeTitle">Practice results</span></c:otherwise></c:choose></h1>
+        <h1><c:choose><c:when test="${attempt.quizType eq 'PLACEMENT'}"><span data-i18n="resultPlacementTitle">Assessment results</span></c:when><c:otherwise><span data-i18n="resultPracticeTitle">Practice results</span></c:otherwise></c:choose></h1>
         <div class="result-score">
           <div class="result-circle">
             <strong>${attempt.scorePercent}%</strong>
@@ -21,7 +21,7 @@
             <c:if test="${attempt.quizType eq 'PLACEMENT'}">
               <p class="vocab-placement-result ${attempt.passed ? 'passed' : 'not-passed'}">
                 <c:choose>
-                  <c:when test="${attempt.passed}"><span data-i18n="placementPassedResult">Passed — every lesson is now unlocked.</span></c:when>
+                  <c:when test="${attempt.passed}"><span data-i18n="placementPassedResult">Passed the optional assessment. All published lessons are available.</span></c:when>
                   <c:otherwise><span data-i18n="placementFailedResult">You need 25 correct answers. Review and try again.</span></c:otherwise>
                 </c:choose>
               </p>
@@ -30,7 +30,7 @@
               <p class="vocab-placement-result">
                 <c:choose>
                   <c:when test="${attempt.passed}"><span data-i18n="lessonCompletedResult">Lesson completed ·</span> ${attempt.correctCount * 100 / attempt.questionCount}%</c:when>
-                  <c:otherwise><span data-i18n="lessonPassHint">Score 70% to complete this lesson and unlock the next one.</span></c:otherwise>
+                  <c:otherwise><span data-i18n="lessonPassHint">Score 70% to mark this lesson completed.</span></c:otherwise>
                 </c:choose>
               </p>
             </c:if>
@@ -64,6 +64,6 @@
   </section>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js?v=46"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

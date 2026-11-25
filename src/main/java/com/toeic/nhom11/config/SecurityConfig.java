@@ -30,31 +30,39 @@ public class SecurityConfig {
                 "/assets/**", "/css/**", "/js/**",
                 "/images/**", "/webjars/**", "/favicon.ico").permitAll()
             .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
-            .requestMatchers("/vocabulary/preferences", "/vocabulary/*/placement/**",
-                "/vocabulary/*/lessons/*/quiz/**").authenticated()
-            .requestMatchers("/vocabulary/flashcard/*/bookmark").authenticated()
-            .requestMatchers("/vocabulary", "/vocabulary/*", "/vocabulary/flashcard/next").permitAll()
-            .requestMatchers("/vocabulary/*/submit", "/vocabulary/*/progress", "/vocabulary/*/favorite",
-                "/vocabulary/attempts/**", "/vocabulary/history").authenticated()
-            .requestMatchers("/listening/**", "/reading/**", "/exams/**",
-                "/roadmap/**", "/progress/**", "/profile", "/grammar/*/submit",
-                "/grammar/*/practice/check", "/grammar/attempts/**", "/grammar/history").authenticated()
+            
+            // N11_V45_GUEST_ACCESS: public catalog GET only; learning and account data require login.
+            .requestMatchers("/vocabulary/history", "/vocabulary/preferences", "/vocabulary/attempts/**").authenticated()
+            .requestMatchers(org.springframework.http.HttpMethod.GET,
+                "/grammar", "/grammar/", "/vocabulary", "/vocabulary/", "/vocabulary/*",
+                "/listening", "/listening/", "/listening/api/overview",
+                "/reading", "/reading/", "/reading/part5", "/reading/part6", "/reading/part7",
+                "/exams", "/exams/").permitAll()
+            .requestMatchers("/grammar/**", "/vocabulary/**", "/listening/**", "/reading/**",
+                "/exams/**", "/speaking/**", "/roadmap/**", "/progress/**", "/profile").authenticated()
             .anyRequest().permitAll())
             .requestCache(cache -> cache.requestCache(requestCache))
             .formLogin(login -> login.loginPage("/login").usernameParameter("email")
                 .successHandler((request, response, authentication) -> {
                     boolean admin = authentication.getAuthorities().stream()
                             .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
-                    String destination = admin ? "/admin/accounts" : "/grammar";
+                    String destination = admin ? "/admin/accounts" : "/";
                     if (!admin && requestCache.getRequest(request, response) instanceof DefaultSavedRequest saved
                             && "GET".equals(saved.getMethod())) {
                         String path = saved.getRequestURI();
                         String context = request.getContextPath();
                         if (path.startsWith(context)) {
                             String relative = path.substring(context.length());
-                            if (relative.matches("/reading(?:/part[5-7](?:/[1-5](?:/ready)?)?)?")
+                            if (relative.matches("/grammar/[0-9]+/?")
+                                    || relative.matches("/vocabulary/[0-9]+/(?:lessons/[0-9]+(?:/quiz/(?:exercise|dictation))?|placement)/?")
+                                    || relative.matches("/listening/practice/[0-9]+/?")
+                                    || relative.matches("/reading(?:/part[5-7](?:/[1-5](?:/ready)?)?)?")
                                     || relative.matches("/exams(?:/[0-9]+/ready|/attempts/[0-9]+(?:/result)?|/history)?/?")) {
                                 destination = relative;
+                                String query = saved.getQueryString();
+                                if (query != null && !query.isBlank() && query.indexOf('\r') < 0 && query.indexOf('\n') < 0) {
+                                    destination += "?" + query;
+                                }
                                 requestCache.removeRequest(request, response);
                             }
                         }

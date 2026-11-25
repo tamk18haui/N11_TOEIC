@@ -1,0 +1,30 @@
+/* N11_V46: scoped flashcard interface; preserve V44 theme */
+.vocabulary-page .v46-toolbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin:12px 0 18px}
+.vocabulary-page .v46-pick-label{display:grid;gap:4px;flex:1 1 180px;font-size:13px;font-weight:700;min-width:0}
+.vocabulary-page .v46-pick-label select{min-height:44px;border-radius:10px}
+.vocabulary-page .v46-auto{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 8px;font-size:14px;cursor:pointer}
+.vocabulary-page .v46-progress-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:650;margin-bottom:6px}
+.vocabulary-page #v46-progress{display:block;width:100%;height:10px;accent-color:#079b9c;margin-bottom:16px}
+.vocabulary-page .vocab-study-card.v46-flip{position:relative;display:block!important;min-height:0!important;height:auto!important;max-width:none;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;perspective:1200px;cursor:pointer;text-align:center;outline-offset:5px}
+.vocabulary-page .v46-flip-inner{display:grid;grid-template-columns:minmax(0,1fr);transform-style:preserve-3d;transition:transform .52s cubic-bezier(.2,.75,.25,1);border-radius:20px}
+.vocabulary-page .v46-flip.is-flipped .v46-flip-inner{transform:rotateY(180deg)}
+.vocabulary-page .v46-face{grid-area:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:345px;padding:42px clamp(16px,4vw,52px) 28px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;border:1px solid #c9e4eb;background:linear-gradient(135deg,#e9faff,#fff 70%);box-shadow:0 8px 24px #17314910;overflow-wrap:anywhere;min-width:0}
+.vocabulary-page .v46-back{transform:rotateY(180deg);background:linear-gradient(140deg,#fff7e6,#fff 75%);border-color:#ead9b7}
+.vocabulary-page .v46-flip:not(.is-flipped) .v46-back,.vocabulary-page .v46-flip.is-flipped .v46-front{pointer-events:none}
+.vocabulary-page .v46-face-label{font-size:12px;font-weight:800;letter-spacing:.12em;color:#087f99}
+.vocabulary-page .v46-back .v46-face-label{color:#a96513}
+.vocabulary-page .v46-flip .vocab-study-counter{position:absolute;top:12px;right:16px;z-index:2;color:#547487;font-size:13px;font-weight:700}
+.vocabulary-page .v46-face .vocab-study-word{font-size:clamp(30px,5vw,52px);line-height:1.2;margin:5px 0}
+.vocabulary-page .v46-face .vocab-study-meaning{font-size:clamp(22px,3vw,32px);line-height:1.4;display:block;color:#15354a;opacity:1;visibility:visible}
+.vocabulary-page .v46-face :is(.vocab-study-example,.vocab-study-example-meaning){display:block!important;visibility:visible!important;opacity:1!important;font-size:16px;line-height:1.6;max-width:680px;margin:0}
+.vocabulary-page #v46-back-word{font-size:16px;color:#64788b;font-weight:700}
+.vocabulary-page .v46-face .vocab-study-hint{position:static;display:block;font-size:13px;margin-top:14px}
+.vocabulary-page .v46-marked{outline:2px solid #0b8e92;outline-offset:2px}
+.vocabulary-page .v46-key-hint{text-align:center;color:#61798a;font-size:13px;margin:12px 0}
+.vocabulary-page .v46-free-note{border:1px solid #b8e2e9;background:#edfafd;color:#126d81;border-radius:12px;padding:13px 16px;margin-bottom:18px}
+:root[data-vocab-theme="dark"] .vocabulary-page .v46-front{background:#192e37;border-color:#345565}
+:root[data-vocab-theme="dark"] .vocabulary-page .v46-back{background:#392f22;border-color:#675136}
+:root[data-vocab-theme="dark"] .vocabulary-page .v46-free-note{background:#193b42;color:#d8edf0;border-color:#345565}
+:root[data-vocab-theme="dark"] .vocabulary-page .v46-face .vocab-study-meaning{color:#edf7f7}
+@media(max-width:640px){.vocabulary-page .v46-face{min-height:310px;padding:40px 16px 24px}.vocabulary-page .v46-toolbar{gap:7px}.vocabulary-page .v46-toolbar button{flex:1 1 auto}.vocabulary-page .vocab-study-controls{flex-wrap:wrap;justify-content:center;gap:9px}.vocabulary-page .v46-progress-line{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.vocabulary-page .v46-flip-inner{transition:none}}

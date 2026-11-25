@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
 <%@ include file="../fragments/header.jspf" %>
 
 <main class="vocabulary-page">
@@ -10,18 +11,18 @@
     <header class="vocab-detail-heading">
       <span class="vocab-eyebrow">
         <c:choose>
-          <c:when test="${quiz.type eq 'PLACEMENT'}"><span data-i18n="placementTestTitle">PLACEMENT TEST</span></c:when>
+          <c:when test="${quiz.type eq 'PLACEMENT'}"><span data-i18n="placementTestTitle">OPTIONAL ASSESSMENT</span></c:when>
           <c:otherwise><span data-i18n="lessonQuizTitle">LESSON QUIZ</span></c:otherwise>
         </c:choose>
       </span>
       <h1><c:choose><c:when test="${quiz.type eq 'PLACEMENT'}"><span data-i18n="placementTestTitle">Placement Test</span></c:when><c:otherwise><span data-i18n="lessonQuizTitle">Lesson Quiz</span></c:otherwise></c:choose></h1>
       <c:choose>
         <c:when test="${quiz.type eq 'PLACEMENT'}">
-          <p data-i18n="placementInstructions">Bài kiểm tra gồm 25 câu trắc nghiệm và 5 câu nghe viết. Đạt ít nhất 25/30 để mở khóa toàn bộ bài học.</p>
+          <p data-i18n="placementInstructions">Bài kiểm tra gồm 25 câu trắc nghiệm và 5 câu nghe viết. Đạt ít nhất 25/30 để ghi nhận kết quả đạt.</p>
           <div class="vocab-quiz-rule"><strong>25</strong> <span data-i18n="multipleChoice">multiple choice</span> <span>+</span> <strong>5</strong> <span data-i18n="dictationLabel">dictation</span> · <span data-i18n="passAt">pass at</span> <strong>25/30</strong></div>
         </c:when>
         <c:otherwise>
-          <p data-i18n="lessonQuizInstructions">Hoàn thành bài tập để lưu điểm, nhận sao và mở khóa bài học tiếp theo.</p>
+          <p data-i18n="lessonQuizInstructions">Hoàn thành bài tập để lưu điểm và nhận sao. Không bắt buộc học theo thứ tự.</p>
         </c:otherwise>
       </c:choose>
     </header>
@@ -47,7 +48,7 @@
                             data-audio-url="<c:out value='${question.term.audioUrl}'/>" data-i18n="playAudio">🔊 Play audio</button>
                   </c:when>
                   <c:otherwise>
-                    <button class="vocab-soft-btn" type="button" disabled data-i18n="audioUnavailable">Audio is not available for this question</button>
+                    <button class="vocab-soft-btn vocab-speak-prompt" type="button" data-v44-tts="true" data-word="<c:out value='${question.term.word}'/>" data-i18n="playAudio">🔊 Nghe từ</button>
                   </c:otherwise>
                 </c:choose>
                 <input class="form-control" type="text" name="dictation_${question.number}"
@@ -77,6 +78,6 @@
   </div>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js?v=46"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

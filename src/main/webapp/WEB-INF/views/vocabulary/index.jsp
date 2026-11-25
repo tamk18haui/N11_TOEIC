@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../fragments/head.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vocabulary-v44.css?v=44" />
 <%@ include file="../fragments/header.jspf" %>
 
 <main class="vocabulary-page">
@@ -13,9 +14,9 @@
     <section class="vocab-hero">
       <div class="vocab-hero-shell">
         <div class="vocab-hero-copy">
-          <span class="vocab-eyebrow" data-i18n="heroEyebrow">✧ IELTS VOCABULARY ROADMAP</span>
+          <span class="vocab-eyebrow" data-i18n="heroEyebrow">✧ TOEIC VOCABULARY ROADMAP</span>
           <h1><span class="vocab-hero-title-first" data-i18n="heroTitleFirst">Build your vocabulary,</span><br><span data-i18n="heroTitleSecond">one topic at a time.</span></h1>
-          <p data-i18n="heroDescription">Explore 25 IELTS topics, learn in short lessons, and track your progress from the first word to mastery.</p>
+          <p data-i18n="heroDescription">Explore TOEIC topics, learn in short lessons, and track your progress from the first word to mastery.</p>
           <div class="vocab-hero-note" data-i18n="heroNote">Small steps. Strong vocabulary. Confident answers.</div>
         </div>
 
@@ -58,7 +59,7 @@
           <div>
             <span class="vocab-guest-label" data-i18n="guestEyebrow">GUEST PREVIEW</span>
             <h2 data-i18n="guestHeading">Explore the topics before you begin</h2>
-            <p data-i18n="guestDescription">Browse lessons and flashcards as a guest. Sign in to take tests and sync your learning progress.</p>
+            <p data-i18n="guestDescription">Browse topics and learning paths. Sign in to study flashcards, take tests and save progress.</p>
           </div>
           <a class="btn grammar-btn" href="${pageContext.request.contextPath}/login" data-i18n="signIn">Sign in to sync progress →</a>
         </section>
@@ -69,9 +70,9 @@
       <div class="vocab-topic-section">
         <div class="vocab-section-heading">
           <div>
-            <span class="vocab-eyebrow" data-i18n="curriculumEyebrow">YOUR IELTS CURRICULUM</span>
+            <span class="vocab-eyebrow" data-i18n="curriculumEyebrow">YOUR TOEIC CURRICULUM</span>
             <h2 id="vocab-topics-title" data-i18n="topicHeading">Choose a topic to start</h2>
-            <p data-i18n="topicDescription">Each topic includes three lessons, a placement test, and focused practice modes.</p>
+            <p data-i18n="topicDescription">Learn with flashcards, short lessons and practice tests.</p>
           </div>
           <span class="vocab-count"><strong>${topics.size()}</strong> <span data-i18n="topics">topics</span></span>
         </div>
@@ -101,9 +102,9 @@
                        aria-valuenow="${topic.progressPercent}" aria-valuemin="0" aria-valuemax="100">
                     <span style="width: ${topic.progressPercent}%"></span>
                   </div>
-                  <span class="vocab-topic-caption"><c:out value="${topic.progressPercent}"/>% <span data-i18n="complete">complete</span> · <span data-i18n="${topic.placementPassed ? 'placementPassedShort' : 'placementAvailable'}">${topic.placementPassed ? 'Placement test passed' : 'Placement test available'}</span></span>
+                  <span class="vocab-topic-caption"><c:out value="${topic.progressPercent}"/>% <span data-i18n="complete">complete</span> · <span data-i18n="${topic.placementPassed ? 'placementPassedShort' : 'placementAvailable'}">${topic.placementPassed ? 'Assessment passed' : 'Optional assessment available'}</span></span>
                 </div>
-                <span class="vocab-word-count mb-3"><c:out value="${topic.totalWords}"/> từ vựng · tối thiểu 30 từ</span>
+                <span class="vocab-word-count mb-3"><c:out value="${topic.totalWords}"/> từ vựng</span>
 
                 <a class="btn grammar-btn w-100" href="${pageContext.request.contextPath}/vocabulary/${topic.id}">
                   <span data-i18n="openRoadmap">Open roadmap →</span>
@@ -157,7 +158,7 @@
           <ol>
             <li><span>01</span> <span data-i18n="stepFlashcards">Flashcards with examples</span></li>
             <li><span>02</span> <span data-i18n="stepPractice">Exercises and dictation</span></li>
-            <li><span>03</span> <span data-i18n="stepPlacement">Placement test and progress</span></li>
+            <li><span>03</span> <span data-i18n="stepPlacement">Assessment and progress</span></li>
           </ol>
         </div>
       </aside>
@@ -165,6 +166,7 @@
   </div>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary.js?v=46"></script>
 <%@ include file="../fragments/footer.jspf" %>
+<script src="${pageContext.request.contextPath}/assets/js/vocabulary-v44.js?v=44"></script>
 <%@ include file="../fragments/scripts.jspf" %>

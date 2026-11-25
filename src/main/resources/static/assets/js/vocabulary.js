@@ -30,10 +30,10 @@
 
   const translations = {
     VI: {
-      heroEyebrow: '✧ LỘ TRÌNH TỪ VỰNG IELTS',
+      heroEyebrow: '✧ LỘ TRÌNH TỪ VỰNG TOEIC',
       heroTitleFirst: 'Xây dựng vốn từ vựng,',
       heroTitleSecond: 'từng chủ đề một.',
-      heroDescription: 'Khám phá 25 chủ đề IELTS, học qua các bài ngắn và theo dõi tiến độ từ từ đầu tiên đến khi thành thạo.',
+      heroDescription: 'Khám phá các chủ đề TOEIC, học qua các bài ngắn và theo dõi tiến độ từ từ đầu tiên đến khi thành thạo.',
       heroNote: 'Tiến bộ từng bước. Vốn từ vững chắc. Tự tin trả lời.',
       topicStat: 'Chủ đề học',
       levelStat: 'Chủ đề từ cơ bản đến nâng cao',
@@ -44,19 +44,19 @@
       viewHistory: 'Xem lịch sử →',
       guestEyebrow: 'HỌC THỬ',
       guestHeading: 'Khám phá các chủ đề trước khi bắt đầu',
-      guestDescription: 'Xem bài học và thẻ từ vựng với tư cách khách. Đăng nhập để làm bài kiểm tra và đồng bộ tiến độ học tập.',
+      guestDescription: 'Xem danh sách chủ đề và lộ trình. Đăng nhập để học thẻ từ, làm bài và lưu tiến độ.',
       signIn: 'Đăng nhập để đồng bộ tiến độ →',
-      curriculumEyebrow: 'CHƯƠNG TRÌNH IELTS CỦA BẠN',
+      curriculumEyebrow: 'CHƯƠNG TRÌNH TOEIC CỦA BẠN',
       topicHeading: 'Chọn chủ đề để bắt đầu',
-      topicDescription: 'Mỗi chủ đề có ba bài học, bài kiểm tra đầu vào và các chế độ luyện tập tập trung.',
+      topicDescription: 'Học theo chủ đề với thẻ từ, bài luyện và bài kiểm tra.',
       topics: 'chủ đề',
       levelBasic: 'Cơ bản',
       levelIntermediate: 'Trung cấp',
       levelAdvanced: 'Nâng cao',
       lessons: 'bài học',
       complete: 'hoàn thành',
-      placementPassedShort: 'Đã vượt qua bài kiểm tra',
-      placementAvailable: 'Có bài kiểm tra đầu vào',
+      placementPassedShort: 'Đã đạt bài kiểm tra',
+      placementAvailable: 'Có bài kiểm tra tổng hợp',
       openRoadmap: 'Mở lộ trình →',
       emptyTopics: 'Chưa có chủ đề từ vựng',
       emptyTopicsText: 'Các chặng học sẽ xuất hiện tại đây khi nội dung được cập nhật.',
@@ -69,7 +69,7 @@
       topicIncludes: 'Mỗi chủ đề bao gồm',
       stepFlashcards: 'Thẻ từ vựng có ví dụ',
       stepPractice: 'Bài tập và nghe viết',
-      stepPlacement: 'Bài kiểm tra đầu vào và tiến độ',
+      stepPlacement: 'Bài kiểm tra tổng hợp và tiến độ',
       settings: '⚙ Cài đặt hiển thị',
       theme: 'Giao diện',
       fontSize: 'Cỡ chữ',
@@ -93,14 +93,14 @@
       quizScore: 'Bạn trả lời đúng',
       quizQuestions: 'câu.',
       backAllTopics: '← Tất cả chủ đề',
-      resultPlacementTitle: 'Kết quả bài kiểm tra đầu vào',
+      resultPlacementTitle: 'Kết quả bài kiểm tra tổng hợp',
       resultPracticeTitle: 'Kết quả luyện tập',
       answeredCorrectly: 'Trả lời đúng',
       questions: 'câu',
-      placementPassedResult: 'Đạt yêu cầu — toàn bộ bài học đã được mở khóa.',
+      placementPassedResult: 'Đạt yêu cầu bài kiểm tra tổng hợp. Bạn có thể học bất kỳ bài nào.',
       placementFailedResult: 'Chưa đạt 25 câu đúng. Bạn có thể ôn tập và làm lại.',
       lessonCompletedResult: 'Bài học đã hoàn thành ·',
-      lessonPassHint: 'Đạt 70% để hoàn thành bài và mở khóa bài tiếp theo.',
+      lessonPassHint: 'Đạt 70% để ghi nhận hoàn thành bài học.',
       returnToTopics: 'Quay về',
       viewHistoryLabel: 'Xem lịch sử',
       answerDetails: 'Chi tiết câu trả lời',
@@ -117,7 +117,7 @@
       adminRole: 'Quản trị viên',
       learnerRole: 'Học viên',
       signInSync: 'Đăng nhập để đồng bộ tiến độ',
-      placementTestTitle: 'BÀI KIỂM TRA ĐẦU VÀO',
+      placementTestTitle: 'BÀI KIỂM TRA TỔNG HỢP',
       lessonQuizTitle: 'BÀI KIỂM TRA BÀI HỌC',
       multipleChoice: 'trắc nghiệm',
       dictationLabel: 'nghe viết',
@@ -129,10 +129,10 @@
       lessonsCompleted: 'bài học hoàn thành',
       starsEarned: 'số sao đạt được',
       wordsAvailable: 'từ hiện có',
-      placementPassed: '✓ Đã vượt qua bài kiểm tra đầu vào',
-      takePlacement: 'Làm bài kiểm tra vượt cấp (30 câu)',
-      signInPlacement: 'Đăng nhập để làm bài kiểm tra vượt cấp',
-      placementHint: 'Đạt từ 25/30 câu sẽ mở khóa toàn bộ bài học.',
+      placementPassed: '✓ Đã đạt bài kiểm tra tổng hợp',
+      takePlacement: 'Làm bài kiểm tra tổng hợp (30 câu)',
+      signInPlacement: 'Đăng nhập để làm bài kiểm tra tổng hợp',
+      placementHint: 'Bài kiểm tra tự đánh giá (đạt từ 25/30). Mọi bài học đều học tự do.',
       learningPath: 'LỘ TRÌNH HỌC',
       lessonsInTopic: 'Bài học trong chủ đề',
       locked: 'Khóa',
@@ -162,8 +162,8 @@
       pronunciationTitle: 'Luyện phát âm bằng giọng nói',
       pronunciationDescription: 'Nghe từ mẫu, nhấn nút micro và đọc lại. Trình duyệt sẽ so sánh câu nhận diện được.',
       startSpeaking: '🎙 Luyện từ hiện tại',
-      placementInstructions: 'Bài kiểm tra gồm 25 câu trắc nghiệm và 5 câu nghe viết. Đạt ít nhất 25/30 để mở khóa toàn bộ bài học.',
-      lessonQuizInstructions: 'Hoàn thành bài tập để lưu điểm, nhận sao và mở khóa bài học tiếp theo.',
+      placementInstructions: 'Bài kiểm tra gồm 25 câu trắc nghiệm và 5 câu nghe viết. Đạt ít nhất 25/30 để ghi nhận kết quả đạt.',
+      lessonQuizInstructions: 'Hoàn thành bài tập để lưu điểm và nhận sao. Không bắt buộc học theo thứ tự.',
       dictationQuestion: 'Nghe và viết từ bạn nghe được',
       meaningPrompt: 'Chọn từ tiếng Anh tương ứng với nghĩa:',
       playAudio: '🔊 Phát âm thanh',
@@ -171,10 +171,10 @@
       quizAnswerNotice: 'Kết quả được chấm và lưu trên máy chủ.'
     },
     EN: {
-      heroEyebrow: '✧ IELTS VOCABULARY ROADMAP',
+      heroEyebrow: '✧ TOEIC VOCABULARY ROADMAP',
       heroTitleFirst: 'Build your vocabulary,',
       heroTitleSecond: 'one topic at a time.',
-      heroDescription: 'Explore 25 IELTS topics, learn in short lessons, and track your progress from the first word to mastery.',
+      heroDescription: 'Explore TOEIC topics, learn in short lessons, and track your progress from the first word to mastery.',
       heroNote: 'Small steps. Strong vocabulary. Confident answers.',
       topicStat: 'Topics',
       levelStat: 'Topics from foundation to advanced',
@@ -186,19 +186,19 @@
       viewHistoryLabel: 'View history',
       guestEyebrow: 'GUEST PREVIEW',
       guestHeading: 'Explore the topics before you begin',
-      guestDescription: 'Browse lessons and flashcards as a guest. Sign in to take tests and sync your learning progress.',
+      guestDescription: 'Browse topics and learning paths. Sign in to study flashcards, take tests and save progress.',
       signIn: 'Sign in to sync progress →',
-      curriculumEyebrow: 'YOUR IELTS CURRICULUM',
+      curriculumEyebrow: 'YOUR TOEIC CURRICULUM',
       topicHeading: 'Choose a topic to start',
-      topicDescription: 'Each topic includes three lessons, a placement test, and focused practice modes.',
+      topicDescription: 'Learn with flashcards, short lessons and practice tests.',
       topics: 'topics',
       levelBasic: 'Foundation',
       levelIntermediate: 'Intermediate',
       levelAdvanced: 'Advanced',
       lessons: 'lessons',
       complete: 'complete',
-      placementPassedShort: 'Placement test passed',
-      placementAvailable: 'Placement test available',
+      placementPassedShort: 'Assessment passed',
+      placementAvailable: 'Optional assessment available',
       openRoadmap: 'Open roadmap →',
       emptyTopics: 'No vocabulary topics yet',
       emptyTopicsText: 'Learning paths will appear here when the content is published.',
@@ -211,7 +211,7 @@
       topicIncludes: 'Every topic includes',
       stepFlashcards: 'Flashcards with examples',
       stepPractice: 'Exercises and dictation',
-      stepPlacement: 'Placement test and progress',
+      stepPlacement: 'Assessment and progress',
       settingsSaved: 'Settings saved.',
       settingsSaveFailed: 'Could not save settings. Please try again.',
       signInPrompt: 'Sign in to save your learning progress.',
@@ -230,14 +230,14 @@
       quizScore: 'You got',
       quizQuestions: 'questions correct.',
       backAllTopics: '← All topics',
-      resultPlacementTitle: 'Placement test results',
+      resultPlacementTitle: 'Assessment results',
       resultPracticeTitle: 'Practice results',
       answeredCorrectly: 'Correct answers:',
       questions: 'questions',
-      placementPassedResult: 'Passed — every lesson is now unlocked.',
+      placementPassedResult: 'Passed the optional assessment. All published lessons are available.',
       placementFailedResult: 'You need 25 correct answers. Review and try again.',
       lessonCompletedResult: 'Lesson completed ·',
-      lessonPassHint: 'Score 70% to complete this lesson and unlock the next one.',
+      lessonPassHint: 'Score 70% to mark this lesson completed.',
       returnToTopics: 'Back to topics',
       answerDetails: 'Answer details',
       question: 'Question',
@@ -253,7 +253,7 @@
       adminRole: 'Administrator',
       learnerRole: 'Learner',
       signInSync: 'Sign in to sync your progress',
-      placementTestTitle: 'PLACEMENT TEST',
+      placementTestTitle: 'OPTIONAL ASSESSMENT',
       lessonQuizTitle: 'LESSON QUIZ',
       multipleChoice: 'multiple choice',
       dictationLabel: 'dictation',
@@ -270,10 +270,10 @@
       lessonsCompleted: 'lessons completed',
       starsEarned: 'stars earned',
       wordsAvailable: 'available words',
-      placementPassed: '✓ Placement test passed',
-      takePlacement: 'Take placement test (30 questions)',
+      placementPassed: '✓ Assessment passed',
+      takePlacement: 'Take optional assessment (30 questions)',
       signInPlacement: 'Sign in to take the placement test',
-      placementHint: 'Score at least 25/30 to unlock every lesson.',
+      placementHint: 'Optional assessment: pass at 25/30. Study any lesson in any order.',
       learningPath: 'YOUR LEARNING PATH',
       lessonsInTopic: 'Lessons in this topic',
       locked: 'Locked',
@@ -303,8 +303,8 @@
       pronunciationTitle: 'Practise pronunciation with your voice',
       pronunciationDescription: 'Listen to the sample, tap the microphone, and repeat. Your browser will compare the recognized speech.',
       startSpeaking: '🎙 Practise current word',
-      placementInstructions: 'The test has 25 multiple-choice questions and 5 dictation questions. Score at least 25/30 to unlock every lesson.',
-      lessonQuizInstructions: 'Complete the exercise to save your score, earn stars, and unlock the next lesson.',
+      placementInstructions: 'The test has 25 multiple-choice questions and 5 dictation questions. Optional assessment: pass at 25/30. Study any lesson in any order.',
+      lessonQuizInstructions: 'Complete the exercise to save your score and earn stars. Study in any order.',
       dictationQuestion: 'Listen and write the word you hear',
       meaningPrompt: 'Choose the English word matching this meaning:',
       playAudio: '🔊 Play audio',
@@ -544,70 +544,97 @@
     const studyCard = document.getElementById('vocab-study-card');
     if (!studyCard) return;
 
-    function renderStudyCard() {
-      if (!studyCard || !wordCards.length) return;
-      const item = wordCards[currentIndex];
-      studyCard.classList.toggle('is-flipped', studyFlipped);
-      studyCard.dataset.id = item.id;
-      studyCard.dataset.word = item.word;
-      studyCard.querySelector('.vocab-study-counter').textContent = (currentIndex + 1) + ' / ' + wordCards.length;
-      studyCard.querySelector('.vocab-study-word').textContent = item.word;
-      studyCard.querySelector('.vocab-study-phonetic').textContent = item.phonetic;
-      studyCard.querySelector('.vocab-study-meaning').textContent = studyFlipped ? item.meaning : '';
-      studyCard.querySelector('.vocab-study-example').textContent = studyFlipped ? item.example : '';
-      studyCard.querySelector('.vocab-study-example-meaning').textContent = studyFlipped ? item.exampleMeaning : '';
-    }
-
-    studyCard.addEventListener('click', function () {
-      studyFlipped = !studyFlipped;
-      renderStudyCard();
-    });
-    studyCard.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        studyFlipped = !studyFlipped;
-        renderStudyCard();
-      }
-    });
-    document.getElementById('vocab-study-prev').addEventListener('click', function () {
-      currentIndex = (currentIndex - 1 + wordCards.length) % wordCards.length;
-      studyFlipped = false;
-      renderStudyCard();
-    });
-    document.getElementById('vocab-study-next').addEventListener('click', function () {
-      currentIndex = (currentIndex + 1) % wordCards.length;
-      studyFlipped = false;
-      renderStudyCard();
-    });
-    document.getElementById('vocab-study-speak').addEventListener('click', function () {
-      speak(wordCards[currentIndex].word, wordCards[currentIndex].audioUrl);
-    });
-    const masteredButton = document.getElementById('vocab-mark-mastered');
-    if (masteredButton) {
-      masteredButton.addEventListener('click', function () {
-        const status = document.getElementById('vocab-flashcard-status');
-        if (masteredButton.dataset.signedIn !== 'true') {
-          status.textContent = translate('signInPrompt');
-          return;
-        }
-        const url = masteredButton.dataset.progressUrl.replace('__TERM_ID__', studyCard.dataset.id);
-        const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-        if (masteredButton.dataset.csrfHeader && masteredButton.dataset.csrfToken) {
-          headers[masteredButton.dataset.csrfHeader] = masteredButton.dataset.csrfToken;
-        }
-        fetch(url, {
-          method: 'POST',
-          headers: headers,
-          body: 'status=MASTERED',
-          credentials: 'same-origin'
-        }).then(function (response) {
-          if (!response.ok) throw new Error(translate('saveWordFailed'));
-          status.textContent = translate('wordMastered');
-        }).catch(function (error) {
-          status.textContent = error.message;
-        });
+    // N11_V46_FREE_STUDY: two-sided flashcard, independent review state.
+    const originalCards = wordCards.slice();
+    const masteredThisVisit = new Set();
+    const reviewThisVisit = new Set();
+    const byId = id => document.getElementById(id);
+    const status = byId('vocab-flashcard-status');
+    const masteredButton = byId('vocab-mark-mastered');
+    const reviewButton = byId('v46-review');
+    const picker = byId('v46-picker');
+    let saving = false;
+    function updatePicker() {
+      picker.replaceChildren();
+      wordCards.forEach((item,i) => {
+        const option = document.createElement('option');
+        option.value = String(i); option.textContent = `${i+1}. ${item.word}`;
+        picker.append(option);
       });
     }
+    function renderStudyCard() {
+      const item = wordCards[currentIndex];
+      if (!item) return;
+      studyCard.classList.toggle('is-flipped',studyFlipped);
+      studyCard.setAttribute('aria-pressed',String(studyFlipped));
+      studyCard.setAttribute('aria-label',studyFlipped?'Lật về mặt tiếng Anh':'Lật thẻ để xem nghĩa');
+      studyCard.dataset.id=item.id; studyCard.dataset.word=item.word;
+      byId('v46-front').setAttribute('aria-hidden',String(studyFlipped));
+      byId('v46-back').setAttribute('aria-hidden',String(!studyFlipped));
+      studyCard.querySelector('.vocab-study-counter').textContent=`${currentIndex+1} / ${wordCards.length}`;
+      studyCard.querySelector('.vocab-study-word').textContent=item.word;
+      studyCard.querySelector('.vocab-study-phonetic').textContent=item.phonetic || '';
+      byId('v46-back-word').textContent=item.word;
+      studyCard.querySelector('.vocab-study-meaning').textContent=item.meaning || 'Chưa có nghĩa';
+      studyCard.querySelector('.vocab-study-example').textContent=item.example || '';
+      studyCard.querySelector('.vocab-study-example-meaning').textContent=item.exampleMeaning || '';
+      picker.value=String(currentIndex);
+      byId('v46-known-count').textContent=`${masteredThisVisit.size}/${originalCards.length} đã thuộc trong phiên này`;
+      byId('v46-review-count').textContent=`${reviewThisVisit.size} cần ôn`;
+      const pct=100*masteredThisVisit.size/originalCards.length;
+      byId('v46-progress').value=pct;
+      masteredButton.classList.toggle('v46-marked',masteredThisVisit.has(item.id));
+      reviewButton.classList.toggle('v46-marked',reviewThisVisit.has(item.id));
+      masteredButton.setAttribute('aria-pressed',String(masteredThisVisit.has(item.id)));
+      reviewButton.setAttribute('aria-pressed',String(reviewThisVisit.has(item.id)));
+      masteredButton.disabled=saving;reviewButton.disabled=saving;
+      byId('v46-only-review').disabled=!reviewThisVisit.size;
+    }
+    function flip() {studyFlipped=!studyFlipped;renderStudyCard();}
+    function go(index) {
+      currentIndex=(index+wordCards.length)%wordCards.length;studyFlipped=false;
+      if(status)status.textContent='';renderStudyCard();
+      if(byId('v46-auto-audio').checked)play();
+    }
+    function play() {
+      const item=wordCards[currentIndex];
+      if(!item.audioUrl && !window.speechSynthesis){status.textContent='Trình duyệt không hỗ trợ đọc từ.';return;}
+      speak(item.word,item.audioUrl).catch(()=>{status.textContent='Không phát được âm thanh. Hãy thử lại.';});
+    }
+    function setDeck(items){if(!items.length)return;wordCards.splice(0,wordCards.length,...items);updatePicker();go(0);}
+    studyCard.addEventListener('click',flip);
+    studyCard.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){event.preventDefault();flip();}
+      else if(event.key==='ArrowLeft'){event.preventDefault();go(currentIndex-1);}
+      else if(event.key==='ArrowRight'){event.preventDefault();go(currentIndex+1);}
+      else if(event.key.toLowerCase()==='s'){event.preventDefault();play();}
+    });
+    byId('vocab-study-prev').addEventListener('click',()=>go(currentIndex-1));
+    byId('vocab-study-next').addEventListener('click',()=>go(currentIndex+1));
+    byId('vocab-study-speak').addEventListener('click',play);
+    picker.addEventListener('change',()=>go(Number(picker.value)));
+    byId('v46-shuffle').addEventListener('click',()=>setDeck(shuffle(wordCards)));
+    byId('v46-reset').addEventListener('click',()=>setDeck(originalCards));
+    byId('v46-only-review').addEventListener('click',()=>setDeck(originalCards.filter(item=>reviewThisVisit.has(item.id))));
+    async function mark(value){
+      if(saving)return;
+      if(masteredButton.dataset.signedIn!=='true'){status.textContent=translate('signInPrompt');return;}
+      const item=wordCards[currentIndex];saving=true;renderStudyCard();
+      const headers={'Content-Type':'application/x-www-form-urlencoded'};
+      if(masteredButton.dataset.csrfHeader&&masteredButton.dataset.csrfToken)headers[masteredButton.dataset.csrfHeader]=masteredButton.dataset.csrfToken;
+      try{
+        const response=await fetch(masteredButton.dataset.progressUrl.replace('__TERM_ID__',encodeURIComponent(item.id)),{method:'POST',headers,body:'status='+value,credentials:'same-origin'});
+        if(!response.ok||response.redirected||!(response.headers.get('content-type')||'').includes('json'))throw new Error('Không lưu được. Kiểm tra đăng nhập và thử lại.');
+        const data=await response.json();if(data.success!==true)throw new Error('Không lưu được trạng thái.');
+        if(value==='MASTERED'){masteredThisVisit.add(item.id);reviewThisVisit.delete(item.id);}
+        else{masteredThisVisit.delete(item.id);reviewThisVisit.add(item.id);}
+        status.textContent=item.word+' — '+(value==='MASTERED'?'Đã lưu: đã thuộc.':'Đã lưu: cần ôn lại.');
+      }catch(error){status.textContent=error.message;}
+      finally{saving=false;renderStudyCard();}
+    }
+    masteredButton.addEventListener('click',()=>mark('MASTERED'));
+    reviewButton.addEventListener('click',()=>mark('LEARNING'));
+    updatePicker();
     const closeStudyButton = document.getElementById('vocab-close-study');
     if (closeStudyButton && flashcardPanel) {
       closeStudyButton.addEventListener('click', function () {
@@ -677,7 +704,13 @@
 
   document.querySelectorAll('.vocab-speak-prompt').forEach(function (button) {
     button.addEventListener('click', function () {
-      speak('', button.dataset.audioUrl).catch(function (error) {
+      /* N11_V44_TTS: practice fallback when no recording is stored. */
+      if (button.dataset.v44Tts && !window.speechSynthesis) {
+        const status=document.getElementById('vocab-dictation-status');
+        if(status) status.textContent='Trình duyệt không hỗ trợ đọc từ. Hãy dùng Edge hoặc Chrome có giọng tiếng Anh.';
+        return;
+      }
+      speak(button.dataset.word || '', button.dataset.audioUrl).catch(function (error) {
         document.getElementById('vocab-dictation-status').textContent = error.message;
       });
     });
