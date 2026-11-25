@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ include file="../../fragments/head.jspf" %>
-<main data-n11-src="admin/listening/index.jsp|1" class="admin-shell listening-admin-page"><div data-n11-src="admin/listening/index.jsp|2" class="container container-n11 listening-container"><div data-n11-src="admin/listening/index.jsp|3" class="row g-4 listening-layout">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-lr-v47.css?v=47.1" />
+<main data-n11-src="admin/listening/index.jsp|1" class="admin-shell listening-admin-page n11-lr-v47"><div data-n11-src="admin/listening/index.jsp|2" class="container container-n11 listening-container"><div data-n11-src="admin/listening/index.jsp|3" class="row g-4 listening-layout">
  <div data-n11-src="admin/listening/index.jsp|4" class="col-lg-3 listening-sidebar-col"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
  <div data-n11-src="admin/listening/index.jsp|5" class="col-lg-9 listening-content-col">
   <!-- N11 FORUM V9: HERO -->
@@ -61,4 +62,5 @@
   </section>
   
  </div></div></div></main>
+<script defer src="${pageContext.request.contextPath}/assets/js/admin-lr-v47.js?v=47"></script>
 <%@ include file="../../fragments/scripts.jspf" %>
