@@ -1,16 +1,21 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ include file="../../fragments/head.jspf" %><%@ include file="../../fragments/header.jspf" %>
-<main class="grammar-page grammar-admin"><div class="container grammar-wrap">
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="activePage" value="admin-vocabulary" scope="request" />
+<%@ include file="../../fragments/head.jspf" %>
+<%-- Bố cục JSP: sidebar, lưới 3/9 và nội dung. Màu/kích thước: admin-content-v19.css. --%>
+<main data-n11-src="vocabulary/admin/lesson.jsp|1" class="admin-shell grammar-page grammar-admin n11-admin-content"><div data-n11-src="vocabulary/admin/lesson.jsp|2" class="container container-n11"><div data-n11-src="vocabulary/admin/lesson.jsp|3" class="row g-4">
+<div data-n11-src="vocabulary/admin/lesson.jsp|4" class="col-lg-3"><%@ include file="../../fragments/admin-sidebar.jspf" %></div>
+<div data-n11-src="vocabulary/admin/lesson.jsp|5" class="col-lg-9 n11-content-main">
 <%@ include file="../../grammar/alerts.jspf" %>
-<a class="grammar-back" href="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}">← Quay lại <c:out value="${topic.title}"/></a>
-<h1 class="h2 mb-4">${empty lesson.id ? 'Thêm bài học' : 'Chỉnh sửa bài học'}</h1>
-<section class="panel-card"><form method="post" action="${pageContext.request.contextPath}/admin/vocabulary/lessons/save">
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><input type="hidden" name="id" value="${lesson.id}"><input type="hidden" name="topicId" value="${lesson.topicId}">
-  <div class="row"><div class="col-md-8 mb-3"><label class="form-label w-100">Tên bài học<input class="form-control" type="text" name="title" value="<c:out value='${lesson.title}'/>" required maxlength="200"></label></div><div class="col-md-4 mb-3"><label class="form-label w-100">Mục tiêu số từ<input class="form-control" type="number" name="targetWordCount" value="${lesson.targetWordCount}" min="10" max="36" required></label></div></div>
-  <div class="mb-3"><label class="form-label w-100">Mô tả<textarea class="form-control" name="description" rows="4" maxlength="2000"><c:out value="${lesson.description}"/></textarea></label></div>
-  <div class="row"><div class="col-md-4 mb-3"><label class="form-label w-100">Thứ tự<input class="form-control" type="number" name="sortOrder" min="0" value="${lesson.sortOrder}" required></label></div><div class="col-md-4"><label class="form-check mt-4"><input class="form-check-input" type="checkbox" name="published" value="true" ${lesson.published ? 'checked' : ''}> Công bố bài học</label></div></div>
-  <button class="btn grammar-btn" type="submit">Lưu bài học</button>
+<a data-n11-src="vocabulary/admin/lesson.jsp|6" class="grammar-back" href="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}">← Quay lại <c:out value="${topic.title}"/></a>
+<h1 data-n11-src="vocabulary/admin/lesson.jsp|7" class="h2 mb-4">${empty lesson.id ? 'Thêm bài học' : 'Chỉnh sửa bài học'}</h1>
+<section data-n11-src="vocabulary/admin/lesson.jsp|8" class="panel-card"><form data-n11-src="vocabulary/admin/lesson.jsp|9" method="post" action="${pageContext.request.contextPath}/admin/vocabulary/lessons/save">
+  <input data-n11-src="vocabulary/admin/lesson.jsp|10" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><input data-n11-src="vocabulary/admin/lesson.jsp|11" type="hidden" name="id" value="${lesson.id}"><input data-n11-src="vocabulary/admin/lesson.jsp|12" type="hidden" name="topicId" value="${lesson.topicId}">
+  <div data-n11-src="vocabulary/admin/lesson.jsp|13" class="row"><div data-n11-src="vocabulary/admin/lesson.jsp|14" class="col-md-8 mb-3"><label data-n11-src="vocabulary/admin/lesson.jsp|15" class="form-label w-100">Tên bài học<input data-n11-src="vocabulary/admin/lesson.jsp|16" class="form-control" type="text" name="title" value="<c:out value='${lesson.title}'/>" required maxlength="200"></label></div><div data-n11-src="vocabulary/admin/lesson.jsp|17" class="col-md-4 mb-3"><label data-n11-src="vocabulary/admin/lesson.jsp|18" class="form-label w-100">Mục tiêu số từ<input data-n11-src="vocabulary/admin/lesson.jsp|19" class="form-control" type="number" name="targetWordCount" value="${lesson.targetWordCount}" min="10" max="36" required></label></div></div>
+  <div data-n11-src="vocabulary/admin/lesson.jsp|20" class="mb-3"><label data-n11-src="vocabulary/admin/lesson.jsp|21" class="form-label w-100">Mô tả<textarea data-n11-src="vocabulary/admin/lesson.jsp|22" class="form-control" name="description" rows="4" maxlength="2000"><c:out value="${lesson.description}"/></textarea></label></div>
+  <div data-n11-src="vocabulary/admin/lesson.jsp|23" class="row"><div data-n11-src="vocabulary/admin/lesson.jsp|24" class="col-md-4 mb-3"><label data-n11-src="vocabulary/admin/lesson.jsp|25" class="form-label w-100">Thứ tự<input data-n11-src="vocabulary/admin/lesson.jsp|26" class="form-control" type="number" name="sortOrder" min="0" value="${lesson.sortOrder}" required></label></div><div data-n11-src="vocabulary/admin/lesson.jsp|27" class="col-md-4"><label data-n11-src="vocabulary/admin/lesson.jsp|28" class="form-check mt-4"><input data-n11-src="vocabulary/admin/lesson.jsp|29" class="form-check-input" type="checkbox" name="published" value="true" ${lesson.published ? 'checked' : ''}> Công bố bài học</label></div></div>
+  <button data-n11-src="vocabulary/admin/lesson.jsp|30" class="btn btn-primary" type="submit">Lưu bài học</button>
 </form></section>
-<c:if test="${not empty lesson.id}"><form method="post" action="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}/lessons/${lesson.id}/delete" onsubmit="return confirm('Xóa bài học này?');"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><button class="btn btn-outline-danger" type="submit">Xóa bài học</button></form></c:if>
-</div></main>
-<%@ include file="../../fragments/footer.jspf" %><%@ include file="../../fragments/scripts.jspf" %>
+<c:if test="${not empty lesson.id}"><form data-n11-src="vocabulary/admin/lesson.jsp|31" method="post" action="${pageContext.request.contextPath}/admin/vocabulary/topics/${topic.id}/lessons/${lesson.id}/delete" onsubmit="return confirm('Xóa bài học này?');"><input data-n11-src="vocabulary/admin/lesson.jsp|32" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><button data-n11-src="vocabulary/admin/lesson.jsp|33" class="btn btn-outline-danger" type="submit">Xóa bài học</button></form></c:if>
+</div></div></div></main>
+<%@ include file="../../fragments/scripts.jspf" %>

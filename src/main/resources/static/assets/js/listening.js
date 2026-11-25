@@ -17,6 +17,10 @@
   
   const safeMedia = value => {
     if (typeof value !== 'string' || !value) return null;
+    // N11_MEDIA_LOCAL_V27: tai audio/anh tu endpoint noi bo, ho tro context path.
+    if (new RegExp('^/listening-media/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}[.](mp3|wav|ogg|png|jpg|jpeg|webp)$').test(value)) {
+      return new URL(base + value, location.origin).href;
+    }
     try {
       const url = new URL(value);
       // Only use HTTPS from public media distribution (Cloudinary or custom CDN domain).

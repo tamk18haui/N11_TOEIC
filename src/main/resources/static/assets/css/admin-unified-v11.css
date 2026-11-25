@@ -1,3 +1,11 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
 /* ========================================================================
  * N11 TOEIC - ADMIN FORUMFLASH V11 / MOT BANG MAU CHO TOAN BO KHU VUC ADMIN
  * ========================================================================
@@ -95,6 +103,7 @@
   box-shadow:var(--n11a-shadow) !important;
   padding:12px !important;
 }
+/* Khối thương hiệu sidebar: background là màu nền, color là màu chữ. */
 .admin-shell .admin-nav-brand {
   display:flex; align-items:center; gap:11px;
   margin:-12px -12px 12px !important; padding:17px 15px !important;
@@ -142,6 +151,7 @@
 .admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(h1,h2,h3,strong) { color:#fff !important; }
 .admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(p,.small-meta,.ff-hero-note) { color:#d8ece5 !important; }
 .admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(.af-hero-kicker,.ff-kicker) { color:#8be8ca !important; }
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
 .admin-shell .af-home-hero .af-hero-actions .btn-primary {
   background:#fff !important; color:var(--n11a-primary) !important;
   border-color:#fff !important;
@@ -228,6 +238,7 @@
 .admin-shell :is(.table,.listening-sets-table,.listening-q-table),
 .grammar-page.grammar-admin .table { color:var(--n11a-text); }
 .admin-shell :is(.table,.listening-sets-table,.listening-q-table) thead th,
+/* Đầu bảng: background là nền, color là màu chữ; padding là khoảng cách bên trong ô. */
 .grammar-page.grammar-admin .table thead th {
   background:#f0f7f2 !important; color:#42675d !important;
   border-bottom:1px solid var(--n11a-border) !important;
@@ -237,6 +248,7 @@
 .grammar-page.grammar-admin .table tbody td { border-color:#edf3ee !important; color:var(--n11a-text); }
 .admin-shell :is(.table,.listening-sets-table,.listening-q-table) tbody tr:hover td,
 .grammar-page.grammar-admin .table tbody tr:hover td { background:#f8fcf9 !important; }
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
 .admin-shell :is(.form-control,.form-select,.input-group-text),
 .grammar-page.grammar-admin :is(.form-control,.form-select,.input-group-text) {
   min-height:42px; color:var(--n11a-text) !important;

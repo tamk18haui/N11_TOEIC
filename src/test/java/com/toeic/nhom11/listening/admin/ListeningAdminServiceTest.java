@@ -52,7 +52,7 @@ class ListeningAdminServiceTest {
     @Test
     void cannotModifySetAfterStudentAttempt() {
         draft(10,1);
-        assertThrows(IllegalArgumentException.class,()->service.saveSet(10,2,"Test",null,"MEDIUM","admin@example.com"));
+        assertThrows(IllegalArgumentException.class,()->service.saveSet(10L,2,"Test",null,"MEDIUM","admin@example.com"));
         verify(dao,never()).updateSet(anyLong(),anyInt(),anyString(),any(),anyString());
     }
 }

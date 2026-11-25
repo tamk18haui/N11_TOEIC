@@ -1,0 +1,33 @@
+/* Nút và menu chọn cấp độ
+   Màu: background/color/border-color. Kích thước: width/height/font-size/padding.
+   Bố cục: display/flex/grid/gap/margin. Bo góc: border-radius. */
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
+/* V21: nút cấp độ nhỏ; chỉ mở menu khi cần. Không tác động trang học viên. */
+.admin-shell .n11-level-compact { display:inline-block; max-width:100%; margin:0; vertical-align:middle; }
+/* Nút chọn cấp độ: background/color là màu nền/chữ; padding, min-height, font-size và border-radius là kích thước, khoảng cách và bo góc. */
+.admin-shell .n11-level-compact summary { display:inline-flex!important; align-items:center; gap:5px; width:max-content; max-width:100%; padding:3px 6px!important; min-height:25px; border:1px solid #d7e6e5; border-radius:6px; color:#526a77!important; background:#fff!important; font:500 11px/1.3 system-ui,sans-serif!important; white-space:nowrap; cursor:pointer; list-style:none; }
+.admin-shell .n11-level-compact summary::-webkit-details-marker { display:none; }
+.admin-shell .n11-level-compact summary::marker { content:""; }
+.admin-shell .n11-level-compact summary:hover,.admin-shell .n11-level-compact[open] summary { border-color:#87b8b3; color:#17665e!important; }
+.admin-shell .n11-level-compact summary:focus-visible { outline:2px solid #339c91; outline-offset:2px; }
+/* Menu opens in normal flow: no clipping by the scrollable table. */
+/* Menu cấp độ: width là chiều rộng, padding là lề trong, border là viền. */
+.admin-shell .n11-level-menu { background:#fff; border:1px solid #d7e6e5; border-radius:8px; padding:7px; margin-top:5px; max-width:100%; width:160px; text-align:left; }
+.admin-shell .n11-level-form { display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin:0!important; }
+.admin-shell .n11-level-form .form-select { flex:1 1 100%; width:100%; min-width:0; min-height:28px!important; padding:4px 24px 4px 7px!important; font-size:11px!important; border-radius:6px!important; }
+.admin-shell .n11-level-form .btn { flex:1 1 auto; min-height:27px!important; padding:4px 6px!important; font-size:11px!important; border-radius:6px!important; white-space:nowrap; }
+.admin-shell .n11-level-form .n11-level-random { background:#f4f6f8!important; color:#475569!important; border:1px solid #dbe2e9!important; }
+.admin-shell .n11-level-hint { font-size:10px; line-height:1.3; display:block; color:#64748b; margin-top:6px; }
+.admin-shell .n11-level-panel { display:flex; align-items:flex-start; flex-wrap:wrap; gap:8px; margin:8px 0 12px; padding:0!important; }
+.admin-shell .n11-level-caption,.admin-shell .n11-level-preview { color:#64748b!important; font-size:11px; line-height:25px; font-weight:500; }
+.admin-shell .n11-level-preview { text-decoration:underline; text-underline-offset:2px; }
+
+/* Thong bao cap do: kich thuoc gon, khong tao banner lon. */
+.admin-shell .n11-level-feedback { display:table; margin:4px 0 10px auto; padding:3px 9px; border:1px solid #b9e3d6; border-radius:7px; color:#236759!important; background:#effbf5!important; font-size:11px; line-height:1.5; }

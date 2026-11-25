@@ -29,20 +29,34 @@
   <%-- Listening V9: thay mau tai file CSS rieng, de sua. --%>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-listening-forum.css?v=9.0" />
   <%-- V10: Giao dien chung cho Admin, KHONG ap dung cho Listening V9. --%>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-forum-global.css?v=10.1" />
-  <%-- Admin V11: mau va bo cuc dong bo, xem CSS de doi mau. --%>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-unified-v11.css?v=11.1" />
-  <%-- V12: Đồng bộ màu Admin; sửa màu trong admin-mint-hover-v12.css. --%>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-mint-hover-v12.css?v=12.0" />
-  <%-- V13: CSS trang tri Admin, tai CUOI cung sau V12. --%>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-polish-v13.css?v=13.0" />
-  <%-- V14 DEV ONLY: bat helper tim code khi chay localhost, KHONG bat tren domain that. --%>
-  <c:if test="${pageContext.request.serverName eq 'localhost' or pageContext.request.serverName eq '127.0.0.1'}">
-    <script defer src="${pageContext.request.contextPath}/assets/js/admin-dev-source-v14.js?v=14.0"></script>
-  </c:if>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-theme-base.css?v=26.0" />
   <%-- V15: helper mo code cua Admin; chi nap o localhost. --%>
   <c:if test="${pageContext.request.serverName eq 'localhost' or pageContext.request.serverName eq '127.0.0.1'}">
-    <script defer src="${pageContext.request.contextPath}/assets/js/admin-dev-source-v14.js?v=15.0"></script>
+    <script defer src="${pageContext.request.contextPath}/assets/js/admin-dev-source-v14.js?v=31.1"></script>
+<script defer src="${pageContext.request.contextPath}/assets/js/admin-visual-v31.js?v=31.1"></script>
   </c:if>
+  <%-- V16: palette pastel cho Admin; giu nguyen helper 7 chuot phai V15. --%>
+  <c:if test="${fn:contains(pageContext.request.requestURI, '/admin') or fn:contains(pageContext.request.servletPath, '/WEB-INF/views/admin/')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-theme-base-2.css?v=26.0" />
+  </c:if>
+  <c:if test="${activePage eq 'listening' and not fn:contains(pageContext.request.requestURI, '/admin')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listening-student-pastel-v16.css?v=16.0" />
+  </c:if>
+  <%-- V17: Pastel visual fix; keep V15 7-click script unchanged. --%>
+  <c:if test="${fn:contains(pageContext.request.requestURI, '/admin') or fn:contains(pageContext.request.servletPath, '/WEB-INF/views/admin/')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-theme-base-3.css?v=26.0" />
+  </c:if>
+  <%-- Admin V18: fresh mint/orange theme; applies only to admin pages. --%>
+  <c:if test="${activePage eq 'admin' or fn:startsWith(activePage, 'admin-')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-theme.css?v=26.0" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-reading.css?v=26.0" />
+  </c:if>
+  <%-- Admin V19: CSS nạp sau V18; bố cục JSP không đổi nghiệp vụ. --%>
+  <c:if test="${activePage eq 'admin' or fn:startsWith(activePage, 'admin-') or fn:contains(pageContext.request.requestURI, '/admin/')}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-content.css?v=26.0" />
+  </c:if>
+<c:if test="${fn:contains(pageContext.request.requestURI, '/admin/') or fn:startsWith(activePage, 'admin-')}"><link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-levels.css?v=26.0"/></c:if>
+  <%-- N11 CSS ORGANIZATION V26 : giữ thứ tự CSS, dùng tên file theo chức năng. --%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-visual-v31.css?v=31.1">
 </head>
 <body>

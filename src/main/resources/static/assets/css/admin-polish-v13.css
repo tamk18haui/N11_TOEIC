@@ -1,3 +1,11 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
 /* ===================================================================
   N11 TOEIC - ADMIN POLISH V13
   Muc dich: giu tong mau mint V12, lam trang quan tri tinh te hon.
@@ -148,6 +156,7 @@
   background: #fff !important;
   box-shadow: var(--v13-shadow) !important;
 }
+/* Ô thống kê: background là nền, border là viền, padding là lề trong, height là chiều cao. */
 .admin-shell.admin-shell .admin-stat {
   border-top: 3px solid var(--v13-mint) !important;
   transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
@@ -190,6 +199,7 @@
   filter: none;
   transform: translateY(-1px);
 }
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
 .admin-shell.admin-shell :is(.form-control,.form-select):hover,
 .grammar-page.grammar-admin :is(.form-control,.form-select):hover { border-color: #a1dacc !important; }
 .admin-shell.admin-shell :is(.form-control,.form-select):focus,

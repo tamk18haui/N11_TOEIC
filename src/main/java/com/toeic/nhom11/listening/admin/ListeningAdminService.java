@@ -117,7 +117,7 @@ public class ListeningAdminService {
     }
 
     @Transactional
-    public void saveQuestion(long setId, Long id, Long passageId, String text, String explanation,
+    public long saveQuestion(long setId, Long id, Long passageId, String text, String explanation,
                              Long audio, Long image, int sort, Map<String,String> raw, String correct) {
         editable(setId);
         if(id!=null) question(setId,id);
@@ -137,6 +137,7 @@ public class ListeningAdminService {
         if (!options.containsKey(correct)) throw new IllegalArgumentException("Hãy chọn đáp án đúng đã nhập.");
         long qid=dao.saveQuestion(id,setId,passageId,text,explanation,audio,image,sort);
         dao.replaceOptions(qid,options,correct);
+        return qid;
     }
     @Transactional
     public void deleteQuestion(long setId, long id) {

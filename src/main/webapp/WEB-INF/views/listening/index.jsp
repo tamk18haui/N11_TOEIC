@@ -52,6 +52,6 @@
     </div>
   </div>
 </main>
-<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=20261120-instant4"></script>
+<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=27-media"></script>
 <%@ include file="../fragments/footer.jspf" %>
 <%@ include file="../fragments/scripts.jspf" %>

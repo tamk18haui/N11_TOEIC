@@ -1,3 +1,11 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
 /* ======================================================================
    N11 TOEIC - ADMIN V12: BẢNG MÀU CHUNG, KHÔNG CÒN XANH NƯỚC BIỂN
    ----------------------------------------------------------------------
@@ -53,6 +61,7 @@
 }
 
 /* 2. MỌI NÚT CHÍNH: màu xanh NGỌC ĐẬM, không dùng cyan / xanh dương. */
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
 .admin-shell.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn),
 .grammar-page.grammar-admin :is(.btn-primary,.btn-info,.btn-success,.grammar-btn) {
   background: var(--mint-dark) !important;
@@ -187,6 +196,7 @@
 
 /* 7. BẢNG: đầu bảng xanh rất nhạt, hover nhẹ giống ForumFlash. */
 .admin-shell.admin-shell :is(.table,.listening-sets-table,.listening-q-table) thead th,
+/* Đầu bảng: background là nền, color là màu chữ; padding là khoảng cách bên trong ô. */
 .grammar-page.grammar-admin .table thead th {
   background: #eff7f2 !important;
   color: var(--mint-text) !important;
@@ -201,11 +211,13 @@
   border-color: #e8f0ea !important;
 }
 /* Khoá/mở khóa giữ màu do trạng thái quyết định, không dùng xanh dương. */
+/* Nút phụ: background/color là màu, border là viền. */
 .admin-shell.admin-shell :is(.account-actions,.listening-row-actions) .btn-soft {
   color: var(--mint-dark) !important;
 }
 
 /* 8. FORM / BỘ LỌC: viền xanh xám nhạt, focus màu mint. */
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
 .admin-shell.admin-shell :is(.form-control,.form-select,.input-group-text),
 .grammar-page.grammar-admin :is(.form-control,.form-select,.input-group-text) {
   background-color: #fff !important;

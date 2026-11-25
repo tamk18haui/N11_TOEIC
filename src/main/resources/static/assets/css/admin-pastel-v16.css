@@ -1,0 +1,120 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
+/* N11 Admin V16 — student Listening/Reading palette, NOT dark ForumFlash.
+   Override legacy V9-V13 safely. Loaded last, only on /admin pages. */
+.admin-shell,
+.grammar-page.grammar-admin {
+  --v13-forest: #253e5f;
+  --v13-deep: #eaf5fc;
+  --v13-mint: #6d9ce7;
+  --v13-soft: #edf5ff;
+  --v13-cream: #f6f9fd;
+  --v13-paper: #ffffff;
+  --v13-line: #dfebf3;
+  --v13-ink: #1b2d49;
+  --v13-muted: #708197;
+  --adm-ink: #1b2d49;
+  --adm-muted: #708197;
+  --adm-border: #e0e9f1;
+  --adm-shadow: 0 7px 24px rgba(39, 75, 113, .055);
+  background: #f6f9fd !important;
+  color: #243550 !important;
+}
+.admin-shell.admin-shell { padding-top: 28px; }
+.admin-shell.admin-shell :is(h1,h2,h3,h4,.account-title,.account-section-title) {color:#1b2d49 !important;letter-spacing:-.025em}
+.admin-shell.admin-shell :is(.small-meta,.text-muted-n11,.admin-nav-group) {color:#708197 !important}
+.admin-shell.admin-shell :is(.admin-sidebar,.admin-nav,.panel-card,.admin-stat,.admin-module-card,.account-panel,.account-form-card,.listening-filter-panel) {
+  background:#fff !important;border:1px solid #e0e9f1 !important;border-radius:23px !important;
+  box-shadow:0 8px 26px rgba(28,67,102,.055) !important;
+}
+/* Sidebar: border là viền, border-radius là bo góc, box-shadow là bóng đổ. */
+.admin-shell.admin-shell .admin-sidebar {top:105px;padding:17px 12px !important}
+.admin-shell.admin-shell .admin-nav-avatar {background:linear-gradient(130deg,#70bbcc,#5e83ed) !important;box-shadow:none !important}
+.admin-shell.admin-shell .admin-nav-intro {background:#f1f7ff !important;color:#577998 !important}
+.admin-shell.admin-shell .admin-nav .admin-link,.admin-shell.admin-shell .admin-sidebar .admin-link {
+  color:#50647d !important;border-radius:13px !important;box-shadow:none !important;
+}
+.admin-shell.admin-shell .admin-nav .admin-link .icon {color:#6d96d4 !important}
+.admin-shell.admin-shell .admin-nav .admin-link:hover,
+.admin-shell.admin-shell .admin-nav .admin-link:focus-visible,
+.admin-shell.admin-shell .admin-nav .admin-link.is-active,
+.admin-shell.admin-shell .admin-sidebar .admin-link:hover,
+.admin-shell.admin-shell .admin-sidebar .admin-link.is-active {
+  color:#2862c1 !important;background:linear-gradient(110deg,#e4f3ff,#f0f5ff) !important;
+  border-color:#d7e9ff !important;box-shadow:inset 3px 0 0 #5f93e7 !important;
+}
+.admin-shell.admin-shell :is(.admin-module-icon,.admin-stat-icon) {
+  color:#4075bc !important;background:#e9f3ff !important;
+}
+.admin-shell.admin-shell :is(.admin-stat,.admin-module-card) {border-top:1px solid #e0e9f1 !important}
+.admin-shell.admin-shell .admin-stat:nth-child(5n+1),
+.admin-shell.admin-shell .admin-stat-sky {background:#f0faf6 !important;border-color:#cdebdc !important}
+.admin-shell.admin-shell .admin-stat-warm {background:#fffaf0 !important;border-color:#f3e9c4 !important}
+.admin-shell.admin-shell .admin-stat-mint {background:#f1f7fe !important;border-color:#cbe5f5 !important}
+.admin-shell.admin-shell .admin-module-card:hover,
+.admin-shell.admin-shell .admin-module-card:focus-visible {
+  background:#f5f9ff !important;border-color:#c8dff6 !important;
+  box-shadow:0 12px 29px rgba(57,93,142,.10) !important;transform:translateY(-2px) !important;
+}
+/* Replace V13 dark forest banner with soft blue, pale green and warm cream. */
+.admin-shell.admin-shell .admin-welcome,
+.admin-shell.admin-shell .admin-welcome.n11-hero-v13 {
+  background:linear-gradient(116deg,#e4f6f2 0%,#f0f8ff 54%,#fff8ec 100%) !important;
+  border:1px solid #d9eaf1 !important;border-radius:25px !important;
+  box-shadow:0 11px 28px rgba(44,91,136,.06) !important;
+}
+.admin-shell.admin-shell .admin-welcome :is(h1,h2,.account-title,.n11-hero-v13__title),
+.admin-shell.admin-shell .admin-welcome.n11-hero-v13 .n11-hero-v13__title {color:#213955 !important}
+.admin-shell.admin-shell .admin-welcome.n11-hero-v13 .n11-hero-v13__title span,
+.admin-shell.admin-shell .admin-welcome .admin-gradient-text {
+  color:#3975b7 !important;background:none !important;-webkit-text-fill-color:initial !important;
+}
+.admin-shell.admin-shell .admin-welcome :is(p,.small-meta,.n11-hero-v13__description,.n11-hero-v13__footer) {color:#667e94 !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__eyebrow {color:#448eaa !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__dot {background:#65bba6 !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__footer b {color:#324f6d !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__footer-sep {background:#c5d6e6 !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__btn-main {color:#fff !important;background:#5b9eb8 !important;border-color:#5b9eb8 !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__btn-outline {background:#fff !important;border-color:#d6e5f0 !important;color:#3a6b96 !important}
+.admin-shell.admin-shell .admin-welcome .n11-hero-v13__art {filter:none !important;opacity:.87}
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
+.admin-shell.admin-shell :is(.btn-primary,.reading-admin-v16 .btn-primary) {
+  background:linear-gradient(105deg,#60b6aa,#5f9bd2) !important;color:white !important;
+  border:0 !important;border-radius:15px !important;box-shadow:0 5px 13px rgba(48,124,169,.12) !important;
+}
+.admin-shell.admin-shell .btn-primary:hover {background:linear-gradient(105deg,#4ba99d,#4d88c7) !important;transform:translateY(-1px)}
+.admin-shell.admin-shell :is(.btn-soft,.btn-outline-primary) {
+  color:#46749d !important;border-color:#d8e8f5 !important;background:#f2f8ff !important;border-radius:14px !important;
+}
+.admin-shell.admin-shell .btn-soft:hover {background:#e5f0fc !important}
+.admin-shell.admin-shell :is(.badge-status.good,.admin-chip-green,.admin-chip,.pill-cyan) {
+  background:#e6f6ee !important;color:#3e8b73 !important;border-color:#c8ead9 !important;
+}
+.admin-shell.admin-shell :is(.badge-status.warn,.pill-orange) {background:#fff1d6 !important;color:#9b7131 !important;border-color:#f8e7b9 !important}
+/* Đầu bảng: background là nền, color là màu chữ; padding là khoảng cách bên trong ô. */
+.admin-shell.admin-shell .table thead th {background:#f3f7fb !important;color:#5a6e85 !important}
+.admin-shell.admin-shell :is(.table,.listening-sets-table,.listening-q-table) tbody tr:hover td {background:#f1f7ff !important}
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
+.admin-shell.admin-shell :is(.form-control,.form-select):focus {border-color:#74a4dc !important;box-shadow:0 0 0 3px #72a6dd26 !important}
+.admin-shell.admin-shell .section-caption,.admin-shell.admin-shell .listening-eyebrow {color:#528db2 !important}
+/* Reading management views — five-color level cues, soft surfaces. */
+/* Tiêu đề Reading: display/flex/gap căn bố cục, padding là lề trong; background và border tạo màu. */
+.reading-admin-v16 .reading-admin-hero {display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:27px 30px;background:linear-gradient(110deg,#eaf8f3,#eff7ff 60%,#fff8e9);border:1px solid #deebf1;border-radius:24px}
+.reading-admin-v16 .reading-admin-hero h1 {font-size:clamp(26px,2.6vw,37px);font-weight:850;margin:10px 0 8px}
+.reading-admin-v16 .reading-admin-hero p {font-size:14px;color:#657c90;margin:0;line-height:1.7}
+.reading-admin-v16 .reading-admin-eyebrow {display:inline-flex;font-size:11px;font-weight:800;letter-spacing:.11em;color:#4c9a94;background:#dff4ed;border-radius:99px;padding:7px 12px}
+.reading-admin-v16 .reading-admin-quick {display:flex;gap:10px;flex-wrap:wrap}
+.reading-admin-v16 .reading-admin-quick a {text-decoration:none;display:inline-flex;align-items:center;background:#fff;border:1px solid #dfeaf4;padding:11px 15px;color:#46759f;border-radius:14px;font-size:13px;font-weight:750}
+.reading-admin-v16 .reading-admin-quick a:hover {background:#eaf5fd;color:#26639d}
+.reading-admin-v16 .reading-admin-part {border-radius:20px;background:#e4f3ff;color:#4879c3;padding:5px 11px;font-weight:800;font-size:12px}
+.reading-admin-v16 .reading-admin-note {color:#7b8b99;font-size:12px;max-width:430px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.reading-admin-v16 .reading-admin-code {font:13px/1.7 Consolas,monospace;tab-size:2;min-height:145px}
+.reading-admin-v16 .table td {font-size:13px;vertical-align:middle}
+@media(max-width:992px){.admin-shell.admin-shell .admin-sidebar{position:static}.reading-admin-v16 .reading-admin-hero{padding:22px}}
+@media(prefers-reduced-motion:reduce){.admin-shell.admin-shell *, .reading-admin-v16 * {transition:none !important;animation:none !important}}

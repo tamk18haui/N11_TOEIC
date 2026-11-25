@@ -1,3 +1,11 @@
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
 /* ===============================================================
    N11 TOEIC - GIAO DIEN ADMIN LISTENING - V9
    Tham khao cach phoi mau ForumFlash (khong sao chep ma nguon).
@@ -58,6 +66,7 @@
   padding: 12px; overflow: hidden;
   box-shadow: 0 8px 28px rgba(2, 51, 48, .035);
 }
+/* Khối thương hiệu sidebar: background là màu nền, color là màu chữ. */
 .admin-shell.listening-admin-page .admin-nav-brand {
   display: flex; align-items: center; gap: 10px;
   margin: -12px -12px 10px; padding: 17px 15px;
@@ -103,6 +112,7 @@
 }
 
 /* 4. KHUNG DAU TRANG: banner mau xanh ngoc dam */
+/* Khối tiêu đề Listening: background là màu nền; padding, min-height và border-radius điều chỉnh hình dáng. */
 .admin-shell.listening-admin-page .ff-hero {
   display: flex; justify-content: space-between; align-items: center;
   gap: 30px; padding: 30px 34px; margin-bottom: 18px;
@@ -165,17 +175,20 @@
   font-size: 12.5px; line-height: 1.4; font-weight: 750;
   white-space: nowrap; box-shadow: none;
 }
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
 .admin-shell.listening-admin-page .btn-primary,
 .admin-shell.listening-admin-page .ff-action-bar .btn-primary {
   color: #fff; background: var(--ff-green); border: 1px solid var(--ff-green);
 }
 .admin-shell.listening-admin-page .btn-primary:hover { background: var(--ff-green-dark); border-color: var(--ff-green-dark); }
+/* Nút phụ: background/color là màu, border là viền. */
 .admin-shell.listening-admin-page .btn-soft {
   background: #e5f5ef; color: var(--ff-green); border: 1px solid #cdeade;
 }
 .admin-shell.listening-admin-page .btn-soft:hover { background: #d6eee4; color: var(--ff-green-dark); }
 .admin-shell.listening-admin-page .btn-outline-danger { border-color: #ffd0c8; color: #ae4d43; background: #fff; }
 .admin-shell.listening-admin-page .btn-outline-danger:hover { color: #fff; background: #be5c54; }
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
 .admin-shell.listening-admin-page .form-control,
 .admin-shell.listening-admin-page .form-select {
   min-height: 43px; border-radius: 10px; border: 1px solid #d9e5df;

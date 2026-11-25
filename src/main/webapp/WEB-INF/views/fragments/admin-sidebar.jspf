@@ -1,3 +1,4 @@
+<%-- N11 SOURCE NOTES V24: JSP dựng bố cục và hiển thị dữ liệu từ Controller. class="..." nối CSS; form action/method xác định endpoint và phương thức gửi. c:forEach lặp dữ liệu; c:if kiểm tra điều kiện; c:out hiển thị văn bản an toàn. Không đặt nghiệp vụ ở JSP. --%>
 <%--
  File: admin-sidebar.jspf
  M&#7909;c &#273;&#237;ch: Thanh menu d&#249;ng chung c&#7911;a to&#224;n b&#7897; giao di&#7879;n Admin.
@@ -5,53 +6,53 @@
 --%>
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<aside class="admin-sidebar admin-nav mb-3 mb-lg-0" aria-label="&#272;i&#7873;u h&#432;&#7899;ng qu&#7843;n tr&#7883;">
+<aside data-n11-src="fragments/admin-sidebar.jspf|1" class="admin-sidebar admin-nav mb-3 mb-lg-0" aria-label="&#272;i&#7873;u h&#432;&#7899;ng qu&#7843;n tr&#7883;">
  <%-- Logo v&#224; t&#234;n h&#7879; th&#7889;ng qu&#7843;n tr&#7883;. --%>
- <div class="admin-nav-brand">
-  <div class="admin-nav-avatar">N11</div>
-  <div><strong>N11 TOEIC Admin</strong><span>H&#7879; th&#7889;ng qu&#7843;n tr&#7883;</span></div>
+ <div data-n11-src="fragments/admin-sidebar.jspf|2" class="admin-nav-brand">
+  <div data-n11-src="fragments/admin-sidebar.jspf|3" class="admin-nav-avatar">N11</div>
+  <div data-n11-src="fragments/admin-sidebar.jspf|4"><strong data-n11-src="fragments/admin-sidebar.jspf|5">N11 TOEIC Admin</strong><span data-n11-src="fragments/admin-sidebar.jspf|6">H&#7879; th&#7889;ng qu&#7843;n tr&#7883;</span></div>
  </div>
- <div class="admin-nav-intro"><span class="admin-online-dot" aria-hidden="true"></span>Qu&#7843;n l&#253; h&#7885;c vi&#234;n v&#224; n&#7897;i dung TOEIC</div>
+ <div data-n11-src="fragments/admin-sidebar.jspf|7" class="admin-nav-intro"><span data-n11-src="fragments/admin-sidebar.jspf|8" class="admin-online-dot" aria-hidden="true"></span>Qu&#7843;n l&#253; h&#7885;c vi&#234;n v&#224; n&#7897;i dung TOEIC</div>
 
  <%-- T&#7893;ng quan. --%>
- <div class="admin-nav-group">T&#7892;NG QUAN</div>
- <a class="admin-link ${activePage eq 'admin' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin">
+ <div data-n11-src="fragments/admin-sidebar.jspf|9" class="admin-nav-group">T&#7892;NG QUAN</div>
+ <a data-n11-src="fragments/admin-sidebar.jspf|10" class="admin-link ${activePage eq 'admin' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>Dashboard</a>
 
  <%-- Qu&#7843;n l&#253; t&#224;i kho&#7843;n. --%>
- <div class="admin-nav-group">NG&#431;&#7900;I D&#217;NG</div>
- <a class="admin-link ${activePage eq 'admin-accounts' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/accounts">
+ <div data-n11-src="fragments/admin-sidebar.jspf|11" class="admin-nav-group">NG&#431;&#7900;I D&#217;NG</div>
+ <a data-n11-src="fragments/admin-sidebar.jspf|12" class="admin-link ${activePage eq 'admin-accounts' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/accounts">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#users"></use></svg>Qu&#7843;n l&#253; t&#224;i kho&#7843;n</a>
 
  <%-- Qu&#7843;n l&#253; n&#7897;i dung h&#7885;c TOEIC. --%>
- <div class="admin-nav-group">N&#7896;I DUNG H&#7884;C</div>
- <a class="admin-link ${activePage eq 'admin-vocabulary' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/vocabulary">
+ <div data-n11-src="fragments/admin-sidebar.jspf|13" class="admin-nav-group">N&#7896;I DUNG H&#7884;C</div>
+ <a data-n11-src="fragments/admin-sidebar.jspf|14" class="admin-link ${activePage eq 'admin-vocabulary' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/vocabulary">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book-open"></use></svg>T&#7915; v&#7921;ng</a>
- <a class="admin-link ${activePage eq 'admin-grammar' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/grammar">
+ <a data-n11-src="fragments/admin-sidebar.jspf|15" class="admin-link ${activePage eq 'admin-grammar' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/grammar">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#book"></use></svg>Ng&#7919; ph&#225;p</a>
 
  <%-- Luy&#7879;n t&#7853;p v&#224; thi th&#7917;. --%>
- <div class="admin-nav-group">LUY&#7878;N T&#7852;P &amp; THI TH&#7916;</div>
- <a class="admin-link ${activePage eq 'admin-listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/listening">
+ <div data-n11-src="fragments/admin-sidebar.jspf|16" class="admin-nav-group">LUY&#7878;N T&#7852;P &amp; THI TH&#7916;</div>
+ <a data-n11-src="fragments/admin-sidebar.jspf|17" class="admin-link ${activePage eq 'admin-listening' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/listening">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#headphones"></use></svg>Listening (Part 1&#8211;4)</a>
- <a class="admin-link ${activePage eq 'admin-reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/reading">
+ <a data-n11-src="fragments/admin-sidebar.jspf|18" class="admin-link ${activePage eq 'admin-reading' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/reading">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg>Reading (Part 5&#8211;7)</a>
- <a class="admin-link ${activePage eq 'admin-exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/exams">
+ <a data-n11-src="fragments/admin-sidebar.jspf|19" class="admin-link ${activePage eq 'admin-exams' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/exams">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#file-text"></use></svg>&#272;&#7873; thi th&#7917; TOEIC</a>
 
  <%-- Theo d&#245;i l&#7897; tr&#236;nh v&#224; ti&#7871;n &#273;&#7897; h&#7885;c t&#7853;p. --%>
- <div class="admin-nav-group">THEO D&#213;I H&#7884;C T&#7852;P</div>
- <a class="admin-link ${activePage eq 'admin-roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/roadmap">
+ <div data-n11-src="fragments/admin-sidebar.jspf|20" class="admin-nav-group">THEO D&#213;I H&#7884;C T&#7852;P</div>
+ <a data-n11-src="fragments/admin-sidebar.jspf|21" class="admin-link ${activePage eq 'admin-roadmap' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/roadmap">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>L&#7897; tr&#236;nh h&#7885;c</a>
- <a class="admin-link ${activePage eq 'admin-progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/progress">
+ <a data-n11-src="fragments/admin-sidebar.jspf|22" class="admin-link ${activePage eq 'admin-progress' ? 'is-active' : ''}" href="${pageContext.request.contextPath}/admin/progress">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#trend"></use></svg>Ti&#7871;n &#273;&#7897; &amp; th&#7889;ng k&#234;</a>
 
  <%-- Quay v&#7873; giao di&#7879;n h&#7885;c vi&#234;n v&#224; &#273;&#259;ng xu&#7845;t an to&#224;n. --%>
- <div class="admin-nav-divider"></div>
- <a class="admin-link" href="${pageContext.request.contextPath}/">
+ <div data-n11-src="fragments/admin-sidebar.jspf|23" class="admin-nav-divider"></div>
+ <a data-n11-src="fragments/admin-sidebar.jspf|24" class="admin-link" href="${pageContext.request.contextPath}/">
   <svg class="icon" aria-hidden="true"><use href="${pageContext.request.contextPath}/assets/img/icons.svg#arrow-right"></use></svg>V&#7873; trang h&#7885;c vi&#234;n</a>
- <form method="post" action="${pageContext.request.contextPath}/logout" class="admin-logout-form">
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-  <button type="submit" class="btn btn-soft w-100">&#272;&#259;ng xu&#7845;t</button>
+ <form data-n11-src="fragments/admin-sidebar.jspf|25" method="post" action="${pageContext.request.contextPath}/logout" class="admin-logout-form">
+  <%-- CSRF token bảo vệ yêu cầu POST. --%><input data-n11-src="fragments/admin-sidebar.jspf|26" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  <button data-n11-src="fragments/admin-sidebar.jspf|27" type="submit" class="btn btn-soft w-100">&#272;&#259;ng xu&#7845;t</button>
  </form>
 </aside>

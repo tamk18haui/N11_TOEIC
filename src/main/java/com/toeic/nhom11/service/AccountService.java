@@ -74,7 +74,11 @@ public class AccountService {
         String name = name(form.getFullName());
         String phone = phone(form.getPhone());
         String role = role(form.getRole());
-        String hash = password(form.getPassword(), false);
+        // N11_PASSWORD_UPDATE_DISABLED: Admin chỉ sửa thông tin, không đổi mật khẩu.
+        if (form.getPassword() != null && !form.getPassword().isEmpty()) {
+            throw new AccountException("Không thể đổi mật khẩu qua chức năng sửa tài khoản.");
+        }
+        String hash = null; // DAO giữ nguyên password_hash.
         if (id == editorId && !"ADMIN".equals(role)) {
             throw new AccountException("Không thể tự hạ quyền Admin của chính mình.");
         }

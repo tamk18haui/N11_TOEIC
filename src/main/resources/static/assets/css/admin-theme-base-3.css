@@ -1,0 +1,233 @@
+/* Nhóm quy tắc từ admin-pastel-v17.css
+   Màu: background/color/border-color. Kích thước: width/height/font-size/padding.
+   Bố cục: display/flex/grid/gap/margin. Bo góc: border-radius. */
+/* N11 SOURCE NOTES V24 — chú thích chỉnh giao diện.
+   background/background-color: màu nền; color: màu chữ; border-color: màu viền.
+   width/height/min-height: kích thước; font-size/font-weight: cỡ chữ/độ đậm.
+   padding: lề trong; margin: lề ngoài; gap: khoảng cách giữa phần tử.
+   border-radius: bo góc; box-shadow: bóng; :hover: trạng thái rê chuột.
+   display/flex/grid/align-items/justify-content: bố cục và căn chỉnh.
+   !important tăng ưu tiên; xem thứ tự nạp CSS trong fragments/head.jspf.
+*/
+/* N11 Admin Pastel V17 — account screen and all admin pages.
+   Load after V9-V16 styles. CSS-only, never modifies user data or scripts. */
+.admin-shell,
+.grammar-page.grammar-admin {
+  --adm-ink:#20314d;
+  --adm-muted:#6f8297;
+  --adm-border:#dfeaf2;
+  --adm-white:#fff;
+  --adm-shadow:0 7px 24px rgba(40,83,122,.07);
+  --n11a-primary:#567fc7;
+  --n11a-primary-hover:#446db5;
+  --n11a-background:#f6f9fe;
+  --n11a-soft:#eaf3ff;
+  --n11a-card:#fff;
+  --n11a-border:#dfeaf2;
+  --n11a-mint:#69bfad;
+  --ff-primary:#5b8ecc;
+  --af-primary:#5b8ecc;
+  background:#f6f9fe !important;
+  color:#20314d !important;
+}
+body:has(.admin-shell) {background:#f6f9fe !important;}
+.admin-shell.admin-shell {background:#f6f9fe !important;}
+.admin-shell.admin-shell :is(h1,h2,h3,h4,h5,.account-title,.account-section-title) {
+  color:#20314d !important;
+}
+.admin-shell.admin-shell :is(.small-meta,.text-muted-n11) {color:#718397 !important;}
+.admin-shell.admin-shell :is(.section-caption,.listening-eyebrow,.admin-eyebrow) {color:#4e95b4 !important;}
+
+/* Key fix: V13 explicitly paints the sidebar brand dark, V16 did not override it. */
+.admin-shell.admin-shell .admin-sidebar.admin-nav,
+.admin-shell.admin-shell .admin-nav {
+  background:#fff !important;
+  border:1px solid #e0eaf3 !important;
+  border-radius:24px !important;
+  box-shadow:0 10px 30px rgba(44,81,123,.07) !important;
+  overflow:hidden;
+}
+/* Khối thương hiệu sidebar: background là màu nền, color là màu chữ. */
+.admin-shell.admin-shell .admin-nav-brand {
+  background:linear-gradient(110deg,#dcf4ed 0%,#e7f4ff 55%,#eff0ff 100%) !important;
+  border:0 !important;
+  border-bottom:1px solid #deebf4 !important;
+  box-shadow:none !important;
+  padding:17px 15px !important;
+  color:#26415e !important;
+}
+.admin-shell.admin-shell .admin-nav-brand strong {
+  color:#203b59 !important;
+  font-weight:850 !important;
+}
+.admin-shell.admin-shell .admin-nav-brand span {
+  color:#66839e !important;
+  opacity:1 !important;
+}
+.admin-shell.admin-shell .admin-nav-avatar {
+  color:#fff !important;
+  background:linear-gradient(140deg,#67bda9,#608ce1) !important;
+  box-shadow:0 6px 14px rgba(78,142,187,.15) !important;
+  border-radius:14px !important;
+}
+.admin-shell.admin-shell .admin-nav-intro {
+  background:#edf8f5 !important;
+  color:#487d77 !important;
+  border:1px solid #d5eee5 !important;
+}
+.admin-shell.admin-shell .admin-online-dot {background:#62bda6 !important;}
+.admin-shell.admin-shell .admin-nav-group {color:#8999a8 !important;}
+.admin-shell.admin-shell .admin-sidebar .admin-link,
+.admin-shell.admin-shell .admin-nav .admin-link {
+  background:transparent !important;
+  color:#536a84 !important;
+  border-color:transparent !important;
+  border-radius:12px !important;
+  box-shadow:none !important;
+  transition:background .18s ease,transform .18s ease,color .18s ease;
+}
+.admin-shell.admin-shell .admin-sidebar .admin-link .icon {color:#75a1cb !important;}
+.admin-shell.admin-shell .admin-sidebar .admin-link:hover,
+.admin-shell.admin-shell .admin-nav .admin-link:hover {
+  background:#edf5ff !important;
+  color:#426fac !important;
+  border-color:#dceafb !important;
+  box-shadow:none !important;
+  transform:translateX(2px);
+}
+.admin-shell.admin-shell .admin-sidebar .admin-link.is-active,
+.admin-shell.admin-shell .admin-nav .admin-link.is-active {
+  background:linear-gradient(100deg,#e3f5ee,#ebf4ff) !important;
+  color:#3974a7 !important;
+  border-color:#d1e8e9 !important;
+  box-shadow:inset 3px 0 0 #68b9ae !important;
+}
+.admin-shell.admin-shell .admin-sidebar .admin-link.is-active .icon {color:#5d92c1 !important;}
+.admin-shell.admin-shell .admin-nav-divider {background:#e2ebf3 !important;}
+
+/* Every account statistic becomes a distinct pastel card, like the student levels. */
+/* Ô thống kê: background là nền, border là viền, padding là lề trong, height là chiều cao. */
+.admin-shell.admin-shell .row.g-3 > div:nth-child(4n+1) > .admin-stat {
+  background:#eefaf4 !important;border-color:#cce9dc !important;
+  --stat-accent:#56ad96;
+}
+.admin-shell.admin-shell .row.g-3 > div:nth-child(4n+2) > .admin-stat {
+  background:#eff8ff !important;border-color:#cde6f7 !important;
+  --stat-accent:#5c9acb;
+}
+.admin-shell.admin-shell .row.g-3 > div:nth-child(4n+3) > .admin-stat {
+  background:#fffaf0 !important;border-color:#f4e8bf !important;
+  --stat-accent:#d69c45;
+}
+.admin-shell.admin-shell .row.g-3 > div:nth-child(4n+4) > .admin-stat {
+  background:#fff4f8 !important;border-color:#f2d6e2 !important;
+  --stat-accent:#d47caa;
+}
+.admin-shell.admin-shell .row.g-3 > div > .admin-stat {
+  border-radius:21px !important;
+  box-shadow:0 5px 19px rgba(54,81,113,.045) !important;
+  position:relative;
+  overflow:hidden;
+}
+.admin-shell.admin-shell .row.g-3 > div > .admin-stat::before {
+  content:'' !important;
+  display:block !important;
+  position:absolute !important;
+  top:0 !important;left:0 !important;right:0 !important;
+  width:100% !important;height:4px !important;
+  border-radius:0 !important;
+  background:var(--stat-accent,#7bb1c7) !important;
+}
+.admin-shell.admin-shell .row.g-3 > div > .admin-stat .num,
+.admin-shell.admin-shell .row.g-3 > div > .admin-stat .num strong {
+  color:#294962 !important;
+  font-weight:850 !important;
+}
+.admin-shell.admin-shell .row.g-3 > div > .admin-stat .small-meta {color:#75859a !important;}
+
+/* White surfaces, softer tables and fields — covers accounts, reading, listening. */
+.admin-shell.admin-shell :is(.panel-card,.account-panel,.account-form-card,.listening-filter-panel,.admin-module-card,.stat-card,.reading-admin-card) {
+  background:#fff !important;
+  border:1px solid #dfeaf2 !important;
+  border-radius:22px !important;
+  box-shadow:0 8px 26px rgba(42,81,123,.065) !important;
+}
+/* Tiêu đề: font-size là cỡ chữ, font-weight là độ đậm, margin là lề ngoài. */
+.admin-shell.admin-shell .account-title {color:#20314d !important;}
+.admin-shell.admin-shell .account-section-title {color:#273c5a !important;}
+.admin-shell.admin-shell .account-table thead th,
+/* Đầu bảng: background là nền, color là màu chữ; padding là khoảng cách bên trong ô. */
+.admin-shell.admin-shell .table thead th {
+  background:#f0f6fb !important;
+  color:#536c85 !important;
+  border-color:#e0ebf2 !important;
+}
+.admin-shell.admin-shell .account-table tbody tr:hover td,
+.admin-shell.admin-shell .table tbody tr:hover td {background:#f6faff !important;}
+.admin-shell.admin-shell .account-role,
+.admin-shell.admin-shell .badge-status.good {
+  background:#e4f5ed !important;color:#357e65 !important;
+  border-color:#ccead9 !important;
+}
+.admin-shell.admin-shell .account-role-admin {
+  background:#fff2d9 !important;color:#a37831 !important;
+}
+.admin-shell.admin-shell .badge-status.warn {background:#fff0f2 !important;color:#b24d69 !important;}
+/* Ô nhập: padding, width, height, font-size và border-radius điều chỉnh kích thước; background, color và border-color điều chỉnh màu. */
+.admin-shell.admin-shell .form-control,
+.admin-shell.admin-shell .form-select {
+  background-color:#fff !important;
+  color:#334e67 !important;
+  border:1px solid #d7e5f0 !important;
+  border-radius:13px !important;
+}
+.admin-shell.admin-shell .form-control:focus,
+.admin-shell.admin-shell .form-select:focus {
+  border-color:#91b6e2 !important;
+  box-shadow:0 0 0 3px rgba(119,170,222,.16) !important;
+}
+.admin-shell.admin-shell .form-label {color:#3e637f !important;}
+
+/* Main CTAs are now sky-blue / mint rather than forest green. */
+/* Nút chính: background là màu nền, color là màu chữ, border-color là màu viền. padding/min-height/font-size quyết định kích thước. */
+.admin-shell.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn) {
+  color:#fff !important;
+  background:linear-gradient(105deg,#67b7ac,#5b91ce) !important;
+  background-image:linear-gradient(105deg,#67b7ac,#5b91ce) !important;
+  border-color:#70a8c8 !important;
+  border-radius:14px !important;
+  box-shadow:0 4px 12px rgba(79,136,187,.14) !important;
+}
+.admin-shell.admin-shell :is(.btn-primary,.btn-info,.btn-success,.grammar-btn):hover {
+  background:linear-gradient(105deg,#57a99e,#497fbf) !important;
+  color:#fff !important;
+}
+.admin-shell.admin-shell :is(.btn-soft,.btn-outline-primary,.btn-outline-info,.btn-outline-success,.btn-light) {
+  color:#497bab !important;
+  background:#edf6ff !important;
+  border-color:#d6e7f5 !important;
+  border-radius:12px !important;
+}
+.admin-shell.admin-shell :is(.btn-soft,.btn-outline-primary,.btn-outline-info,.btn-outline-success,.btn-light):hover {
+  background:#e0f0ff !important;color:#316d9e !important;
+}
+.admin-shell.admin-shell .admin-module-card:hover {background:#f5faff !important;}
+.admin-shell.admin-shell .admin-module-card strong {color:#315375 !important;}
+.admin-shell.admin-shell .admin-module-icon {background:#eaf4ff !important;color:#5a91c9 !important;}
+.admin-shell.admin-shell .admin-info-strip {background:#ebf7f1 !important;color:#51796c !important;}
+.admin-shell.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) {
+  background:linear-gradient(114deg,#e7f7ee,#edf6ff 54%,#fff9e9) !important;
+  border-color:#d6e8f0 !important;
+  color:#273d57 !important;
+}
+.admin-shell.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(h1,h2,h3,strong) {color:#253d5b !important;}
+.admin-shell.admin-shell :is(.admin-welcome,.af-home-hero,.ff-hero) :is(p,.small-meta) {color:#607e97 !important;}
+.admin-shell.admin-shell .admin-gradient-text {color:#4e85bd !important;background:none !important;-webkit-text-fill-color:initial !important;}
+
+@media(max-width:991.98px){
+ .admin-shell.admin-shell .admin-sidebar.admin-nav{position:static !important;}
+}
+@media(prefers-reduced-motion:reduce){
+ .admin-shell.admin-shell *{transition:none !important;animation:none !important;}
+}
+

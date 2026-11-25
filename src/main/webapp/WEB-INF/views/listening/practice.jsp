@@ -51,5 +51,5 @@
   </div>
   <input type="hidden" id="lCsrf" value="${_csrf.token}" data-header="${_csrf.headerName}" />
 </main>
-<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=20261120-instant4"></script>
+<script defer src="${pageContext.request.contextPath}/assets/js/listening.js?v=27-media"></script>
 <%@ include file="../fragments/scripts.jspf" %>
